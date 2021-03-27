@@ -6,20 +6,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "user_tbl")
-public class Empleados {
+@Entity(name="EmpleadoEntity")
+@Table(name = "DEMPLEADO")
+public class EmpleadoEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	private String password;
 	private int age;
 
-	public Empleados() {
+	public EmpleadoEntity() {
 	}
 
-	public Empleados(String name, int age) {
+	public EmpleadoEntity(String name, int age) {
 		this.name = name;
 		this.age = age;
 	}
@@ -48,8 +49,11 @@ public class Empleados {
 		this.age = age;
 	}
 
-	@Override
-	public String toString() {
-		return "User{" + ", name='" + name + '\'' + ", Age=" + age + '}';
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
