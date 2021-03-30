@@ -1,0 +1,52 @@
+<div class="container-fluid" id="registerPage">
+  <div class="d-flex justify-content-center h-100">
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Registro</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input class="form-control" type="text" formControlName="user" placeholder="username">
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input class="form-control" type="password" formControlName="password" placeholder="password">
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <input class="form-control" type="password" formControlName="confirmedPassword"
+              placeholder="confirmar password">
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-archway"></i></span>
+            </div>
+            <input class="form-control" type="text" formControlName="empresa" placeholder="empresa">
+          </div>
+
+          <div class="form-group">
+            <button class="btn float-right login_btn" type="submit" [disabled]="!registroForm.valid">Submit</button>
+          </div>
+
+        </form>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-center links">
+          ¿Ya tienes una cuenta?<a routerLink="">Iniciar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

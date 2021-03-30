@@ -5,6 +5,9 @@ import { LogInComponent } from './pages/log-in/log-in.component';
 import { QuienesSomosComponent } from './pages/quienes-somos/quienes-somos.component';
 import { LogInPlantillaComponent } from './pages/log-in-plantilla/log-in-plantilla.component';
 import { SharedModule } from '../shared/shared-module.module';
+import { RegisterComponent } from './pages/register/register.component';
+import { AppRoutingModule } from './app-routing.module';
+import { OlvidadoContrasenaComponent } from './pages/olvidado-contrasena/olvidado-contrasena.component';
 
 
 
@@ -14,10 +17,13 @@ import { SharedModule } from '../shared/shared-module.module';
     LogInComponent,
     QuienesSomosComponent,
     LogInPlantillaComponent,
+    RegisterComponent,
+    OlvidadoContrasenaComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     SharedModule
   ],
   exports: [

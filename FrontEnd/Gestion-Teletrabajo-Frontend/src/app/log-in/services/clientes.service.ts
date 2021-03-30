@@ -8,22 +8,20 @@ import { Empleado } from '../interfaces/logIn.interface';
 export class ClientesService {
 
   constructor(private http: HttpClient) { }
-  private empleado: Empleado;
+  private empleadoBuscado: Empleado;
   private servicioUrl = 'http://localhost:8080';
 
-
-  getEmpleado(): Empleado {
-    return this.empleado;
+  get empleado(): Empleado {
+    return {...this.empleadoBuscado};
   }
 
 
-  cargarEmpleado(name: string): void {
-    const params = new HttpParams().set('name', name);
+  cargarEmpleado(name: string, password: string): void {
+    const params = new HttpParams().set('username', name).set('password', password);
 
     this.http.get<Empleado>(`${this.servicioUrl}/empleado`, { params })
       .subscribe((resp) => {
-        console.log(resp);
-        this.empleado = resp;
+         return this.empleadoBuscado = resp;
       });
   }
 

@@ -1,12 +1,18 @@
 <div class="container-fluid" id="logInPage">
   <div class="d-flex justify-content-center h-100">
-    <div class="card">
 
+
+
+    <div class="card">
       <div class="card-header">
         <h3>Sign In</h3>
       </div>
 
       <div class="card-body">
+        <div *ngIf="showErrorMessage" class="alert alert-danger animate__animated animate__tada" role="alert">
+          Usuario o Contraseña Incorrecta
+        </div>
+
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
@@ -34,10 +40,10 @@
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-center links">
-          Don't have an account?<a href="#">Sign Up</a>
+          ¿Quieres registrar tu empresa? <a routerLink="register"> Registrate</a>
         </div>
         <div class="d-flex justify-content-center">
-          <a href="#">Forgot your password?</a>
+          <a routerLink="recuperarPassword">¿Olvidaste la password?</a>
         </div>
       </div>
     </div>

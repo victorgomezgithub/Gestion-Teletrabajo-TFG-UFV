@@ -10,7 +10,7 @@ import { ClientesService } from '../../services/clientes.service';
 export class LogInComponent {
 
   constructor(private clienteService: ClientesService) { }
-
+  showErrorMessage = false;
 
   loginForm = new FormGroup({
     user: new FormControl(''),
@@ -19,9 +19,16 @@ export class LogInComponent {
 
 
   onSubmit(): void {
-    console.log(this.loginForm.controls.user.value);
-    this.clienteService.cargarEmpleado(this.loginForm.controls.user.value);
-    console.log(this.clienteService.getEmpleado());
+    this.showErrorMessage = false;
+    if (this.loginForm.controls.user.value !== '') {
+      this.clienteService.cargarEmpleado(this.loginForm.controls.user.value, this.loginForm.controls.password.value);
+      if (this.clienteService.empleado.id != null) {
+        console.log('Logeado');
+      } else {
+        this.showErrorMessage = true;
+        console.log(this.clienteService.empleado);
+      }
+    }
   }
 
 
