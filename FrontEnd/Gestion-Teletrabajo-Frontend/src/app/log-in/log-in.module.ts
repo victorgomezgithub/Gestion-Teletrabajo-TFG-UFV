@@ -6,9 +6,8 @@ import { QuienesSomosComponent } from './pages/quienes-somos/quienes-somos.compo
 import { LogInPlantillaComponent } from './pages/log-in-plantilla/log-in-plantilla.component';
 import { SharedModule } from '../shared/shared-module.module';
 import { RegisterComponent } from './pages/register/register.component';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from '../app-routing.module';
 import { OlvidadoContrasenaComponent } from './pages/olvidado-contrasena/olvidado-contrasena.component';
-
 
 
 
@@ -27,7 +26,7 @@ import { OlvidadoContrasenaComponent } from './pages/olvidado-contrasena/olvidad
     SharedModule
   ],
   exports: [
-    LogInPlantillaComponent
+    LogInPlantillaComponent,
   ]
 })
 export class LogInModule { }

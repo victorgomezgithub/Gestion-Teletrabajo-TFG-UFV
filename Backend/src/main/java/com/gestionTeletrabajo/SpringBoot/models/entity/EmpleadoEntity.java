@@ -16,6 +16,7 @@ public class EmpleadoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEmpleado;
+	
 	private String username;
 	private String password;
 	private String rol;
@@ -25,6 +26,11 @@ public class EmpleadoEntity {
     @JoinColumn(name = "id_empresa_fk", referencedColumnName = "idEmpresa")
     private EmpresaEntity idEmpresaFK;
 	
+    
+    public EmpleadoEntity() {
+    	
+    }
+    
 	public EmpleadoEntity(String username, String password, String rol, EmpresaEntity empresa) {
 		this.username = username;
 		this.password = password;
@@ -40,12 +46,12 @@ public class EmpleadoEntity {
 		this.idEmpleado = id;
 	}
 
-	public String getName() {
+	public String getUsername() {
 		return username;
 	}
 
-	public void setName(String name) {
-		this.username = name;
+	public void setName(String username) {
+		this.username = username;
 	}
 	
 	public String getPassword() {

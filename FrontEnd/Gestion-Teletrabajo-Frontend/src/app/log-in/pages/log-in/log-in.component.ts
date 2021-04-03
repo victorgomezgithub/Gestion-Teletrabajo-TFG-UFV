@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ClientesService } from '../../services/clientes.service';
+import { Empleado } from '../../interfaces/logIn.interface';
 
 @Component({
   selector: 'app-log-in',
@@ -9,7 +12,7 @@ import { ClientesService } from '../../services/clientes.service';
 })
 export class LogInComponent {
 
-  constructor(private clienteService: ClientesService) { }
+  constructor(private clienteService: ClientesService, private router: Router) { }
   showErrorMessage = false;
 
   loginForm = new FormGroup({
@@ -19,15 +22,20 @@ export class LogInComponent {
 
 
   onSubmit(): void {
-    this.showErrorMessage = false;
+    const controls = this.loginForm.controls;
     if (this.loginForm.controls.user.value !== '') {
-      this.clienteService.cargarEmpleado(this.loginForm.controls.user.value, this.loginForm.controls.password.value);
-      if (this.clienteService.empleado.id != null) {
-        console.log('Logeado');
-      } else {
-        this.showErrorMessage = true;
-        console.log(this.clienteService.empleado);
-      }
+      const empleadoObservable: Observable<Empleado> = this.clienteService.cargarEmpleado(controls.user.value, controls.password.value);
+
+      empleadoObservable.subscribe((resp) => {
+        if (resp.id != null) {
+          console.log('Logeado');
+          this.router.navigate(['/listadoReuniones']);
+        } else {
+          this.showErrorMessage = true;
+          console.log(resp);
+        }
+      });
+
     }
   }
 

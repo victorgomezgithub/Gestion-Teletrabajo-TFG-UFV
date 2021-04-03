@@ -1,0 +1,31 @@
+<app-sidebar></app-sidebar>
+
+<div class="main">
+  <div class="d-flex justify-content-center">
+    <div class="form-outline">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+
+    <table id="tablaUsuarios" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Rol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let empleado of empleadosFiltrados; let i = index">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{empleado.name}}</td>
+          <td>{{empleado.rol}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

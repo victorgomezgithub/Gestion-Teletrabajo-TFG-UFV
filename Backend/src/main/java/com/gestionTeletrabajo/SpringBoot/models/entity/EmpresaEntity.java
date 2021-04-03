@@ -16,6 +16,11 @@ public class EmpresaEntity {
 	
 	private String nombreEmpresa;
 
+	public EmpresaEntity() {
+		
+	}
+	
+	
 	public EmpresaEntity(String nombreEmpresa) {
 		this.nombreEmpresa = nombreEmpresa;
 	}

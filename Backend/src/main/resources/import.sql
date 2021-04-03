@@ -1,4 +1,3 @@
-
 INSERT INTO DEMPRESAS (nombre_empresa) VALUES ('Atmira');
 
 

@@ -1,7 +1,7 @@
 
 export interface Empleado {
   id: number;
-  name: string;
+  username: string;
   password: string;
-  age: number;
+  rol: number;
 }
