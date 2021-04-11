@@ -2,22 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BusquedaUsuariosComponent } from './pages/busqueda-usuarios/busqueda-usuarios.component';
 import { SharedModule } from '../shared/shared-module.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModalFormComponent } from './pages/modal-form/modal-form.component';
 
 @NgModule({
   declarations: [
-    BusquedaUsuariosComponent
+    BusquedaUsuariosComponent,
+    ModalFormComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
-    MatFormFieldModule
+    FormsModule
   ],
   exports: [
-    BusquedaUsuariosComponent
+    BusquedaUsuariosComponent,
   ]
 })
 export class UsuariosModule { }

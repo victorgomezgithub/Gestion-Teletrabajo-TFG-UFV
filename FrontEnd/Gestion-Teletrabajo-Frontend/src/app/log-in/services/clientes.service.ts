@@ -24,20 +24,13 @@ export class ClientesService {
 
   cargarEmpleado(name: string, password: string): Observable<Empleado> {
     const params = new HttpParams().set('username', name).set('password', password);
-
     return this.http.get<Empleado>(`${this.servicioUrl}/login`, { params });
-     /* .subscribe((resp) => {
-         return this.empleadoBuscado = resp;
-      });*/
   }
 
 
-  registrarEmpleado(username: string, password: string, nombreEmpresa: string): void {
+  registrarEmpleado(username: string, password: string, nombreEmpresa: string): Observable<Empleado> {
     const params = new HttpParams().set('username', username).set('password', password).set('rol', 'A').set('nombreEmpresa', nombreEmpresa);
-    this.http.post<Empleado>(`${this.servicioUrl}/registerEmpleado`,  params )
-      .subscribe((resp) => {
-        return this.empleadoBuscado = resp;
-      });
+    return this.http.post<Empleado>(`${this.servicioUrl}/registerEmpleado`,  params );
   }
 
 
@@ -45,5 +38,7 @@ export class ClientesService {
     const params = new HttpParams().set('empresa', empresa);
     return this.http.get<Empleado[]>(`${this.servicioUrl}/getEmpleadosEmpresa`,  { params } );
   }
+
+
 
 }

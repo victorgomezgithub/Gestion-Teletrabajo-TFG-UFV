@@ -22,12 +22,13 @@ export class LogInComponent {
 
 
   onSubmit(): void {
+    this.showErrorMessage = false;
     const controls = this.loginForm.controls;
     if (this.loginForm.controls.user.value !== '') {
       const empleadoObservable: Observable<Empleado> = this.clienteService.cargarEmpleado(controls.user.value, controls.password.value);
 
       empleadoObservable.subscribe((resp) => {
-        if (resp.id != null) {
+        if (resp) {
           console.log('Logeado');
           this.router.navigate(['/listadoReuniones']);
         } else {

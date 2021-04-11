@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import { LogInModule } from './log-in/log-in.module';
 import { SharedModule } from './shared/shared-module.module';
 import { ReunionesModule } from './reuniones/reuniones.module';
-import { BusquedaUsuariosComponent } from './usuarios/pages/busqueda-usuarios/busqueda-usuarios.component';
 import { UsuariosModule } from './usuarios/usuarios.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { UsuariosModule } from './usuarios/usuarios.module';
     LogInModule,
     ReunionesModule,
     SharedModule,
-    UsuariosModule
+    UsuariosModule,
+    NgbModule,
+
     ],
   providers: [],
   bootstrap: [AppComponent]

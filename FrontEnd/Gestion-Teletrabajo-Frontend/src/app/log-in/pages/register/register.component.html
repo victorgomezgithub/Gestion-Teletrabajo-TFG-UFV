@@ -47,6 +47,9 @@
           ¿Ya tienes una cuenta?<a routerLink="">Iniciar Sesión</a>
         </div>
       </div>
+      <div *ngIf="showErrorMessage" class="alert alert-danger animate__animated animate__tada" role="alert">
+        {{messageOut}}
+      </div>
     </div>
   </div>
 </div>
