@@ -14,7 +14,9 @@ export class ModalFormComponent {
   constructor(private modalService: NgbModal) {}
 
   addUserForm = new FormGroup({
-    filtradoPorNombre: new FormControl('')
+    user: new FormControl(''),
+    password: new FormControl(''),
+    confirmedPassword: new FormControl('')
   });
 
 

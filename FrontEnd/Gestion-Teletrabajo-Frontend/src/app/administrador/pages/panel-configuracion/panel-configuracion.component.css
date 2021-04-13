@@ -1,0 +1,13 @@
+.duracionReuniones {
+  width: 10%;
+  border-radius: 5px;
+}
+
+.titulo {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.restriccion {
+  padding-right: 10%;
+}

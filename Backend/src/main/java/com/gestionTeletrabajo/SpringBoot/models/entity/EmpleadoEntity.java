@@ -1,5 +1,8 @@
 package com.gestionTeletrabajo.SpringBoot.models.entity;
 
+import java.sql.Time;
+
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity(name="EmpleadoEntity")
 @Table(name = "DEMPLEADOS")
@@ -20,7 +24,12 @@ public class EmpleadoEntity {
 	private String username;
 	private String password;
 	private String rol;
-	
+	private String equipo;
+    @Basic
+    private Time horaEntrada;
+    @Basic
+    private Time horaSalida;
+
 	
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_empresa_fk", referencedColumnName = "idEmpresa")
@@ -68,5 +77,29 @@ public class EmpleadoEntity {
 
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+	public Time getHoraEntrada() {
+		return horaEntrada;
+	}
+
+	public void setHoraEntrada(Time horaEntrada) {
+		this.horaEntrada = horaEntrada;
+	}
+
+	public Time getHoraSalida() {
+		return horaSalida;
+	}
+
+	public void setHoraSalida(Time horaSalida) {
+		this.horaSalida = horaSalida;
+	}
+
+	public String getEquipo() {
+		return equipo;
+	}
+
+	public void setEquipo(String equipo) {
+		this.equipo = equipo;
 	}
 }

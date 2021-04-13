@@ -2,13 +2,14 @@
   width: 100%;
   margin-top: 15%;
   border: 1px solid black;
-  border-radius: 7px;
+  border-radius: 5px;
   opacity:1;
+  border: 3px solid black;
+  color: #9DBFAF;
 }
 
 #busquedaInput:hover{
-    opacity:0.5;
-
+ opacity:0.5;
 }
 
 .crearUsuario {

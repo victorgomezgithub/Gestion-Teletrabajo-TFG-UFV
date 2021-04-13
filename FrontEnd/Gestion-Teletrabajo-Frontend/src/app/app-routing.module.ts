@@ -5,6 +5,7 @@ import { RegisterComponent } from './log-in/pages/register/register.component';
 import { OlvidadoContrasenaComponent } from './log-in/pages/olvidado-contrasena/olvidado-contrasena.component';
 import { ListadoReunionesComponent } from './reuniones/pages/listado-reuniones/listado-reuniones.component';
 import { BusquedaUsuariosComponent } from './usuarios/pages/busqueda-usuarios/busqueda-usuarios.component';
+import { PanelConfiguracionComponent } from './administrador/pages/panel-configuracion/panel-configuracion.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'busquedaUsuarios',
     component: BusquedaUsuariosComponent
+  },
+  {
+    path: 'panelConfiguracion',
+    component: PanelConfiguracionComponent
   },
   {
     path: '**',
