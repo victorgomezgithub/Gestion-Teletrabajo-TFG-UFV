@@ -22,6 +22,7 @@ public class EmpleadoEntity {
 	private Long idEmpleado;
 	
 	private String username;
+	private String email;
 	private String password;
 	private String rol;
 	private String equipo;
@@ -101,5 +102,13 @@ public class EmpleadoEntity {
 
 	public void setEquipo(String equipo) {
 		this.equipo = equipo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
