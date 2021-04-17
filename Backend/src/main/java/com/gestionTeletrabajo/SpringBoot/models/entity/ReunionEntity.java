@@ -16,37 +16,41 @@ public class ReunionEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idReunion;
 	
-	private String nombreReunion;
-	private Date horaInicio;
-	private Date horaFin;
-	private String documentoAdjunto;
+	private String title;
+	private Date start;
+	private Date end;
+	private String documento;
 	
 	
-	 
-	public String getNombreReunion() {
-		return nombreReunion;
+	public Long getIdReunion() {
+		return idReunion;
 	}
-	public void setNombreReunion(String nombreReunion) {
-		this.nombreReunion = nombreReunion;
+	
+	public Date getEnd() {
+		return end;
 	}
-	public Date getHoraInicio() {
-		return horaInicio;
+	public void setEnd(Date end) {
+		this.end = end;
 	}
-	public void setHoraInicio(Date horaInicio) {
-		this.horaInicio = horaInicio;
+	public String getTitle() {
+		return title;
 	}
-	public Date getHoraFin() {
-		return horaFin;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public void setHoraFin(Date horaFin) {
-		this.horaFin = horaFin;
+	public String getDocumento() {
+		return documento;
 	}
-	public String getDocumentoAdjunto() {
-		return documentoAdjunto;
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
-	public void setDocumentoAdjunto(String documentoAdjunto) {
-		this.documentoAdjunto = documentoAdjunto;
+	public Date getStart() {
+		return start;
 	}
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	
 	
 	
 

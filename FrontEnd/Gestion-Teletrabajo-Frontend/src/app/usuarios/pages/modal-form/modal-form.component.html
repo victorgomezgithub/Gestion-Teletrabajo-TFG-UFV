@@ -1,8 +1,8 @@
 <div class="d-flex justify-content-center">
 
 <ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Añadir Usuario</h4>
+  <div class="modal-header" >
+    <h4 class="modal-title">Añadir Usuario</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -37,7 +37,7 @@
   </div>
 </ng-template>
 
-<button class="btn btn-lg btn-success" (click)="open(content)">Añadir Usuario</button>
+<button class="btn btn-lg btn-success"  id="botonUsuario" (click)="open(content)">Añadir Usuario</button>
 
 <hr>
 

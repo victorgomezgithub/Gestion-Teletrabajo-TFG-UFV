@@ -29,11 +29,9 @@ export class LogInComponent {
 
       empleadoObservable.subscribe((resp) => {
         if (resp) {
-          console.log('Logeado');
-          this.router.navigate(['/listadoReuniones']);
+          this.router.navigate(['/listadoReuniones/' + resp.id]);
         } else {
           this.showErrorMessage = true;
-          console.log(resp);
         }
       });
 

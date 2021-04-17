@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity(name="ReunionPorEmpleadoEntity")
@@ -16,7 +15,7 @@ public class ReunionPorEmpleadoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long relacionReunion;
+	private Long idRelacionReunion;
 	
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -28,5 +27,13 @@ public class ReunionPorEmpleadoEntity {
     @JoinColumn(name = "id_empleado_fk", referencedColumnName = "idEmpleado")
     private EmpleadoEntity idEmpleadoFK;
 	
+    
+    public Long getIdReunionFK() {
+    	return idReunionFK.getIdReunion();
+    }
+    
+    public Long getIdEmpleadoFk() {
+    	return idEmpleadoFK.getId();
+    }
 
 }

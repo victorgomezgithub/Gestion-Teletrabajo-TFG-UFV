@@ -22,15 +22,15 @@ const routes: Routes = [
     component: OlvidadoContrasenaComponent,
   },
   {
-    path: 'listadoReuniones',
+    path: 'listadoReuniones/:id',
     component: ListadoReunionesComponent
   },
   {
-    path: 'busquedaUsuarios',
+    path: 'busquedaUsuarios/:id',
     component: BusquedaUsuariosComponent
   },
   {
-    path: 'panelConfiguracion',
+    path: 'panelConfiguracion/:id',
     component: PanelConfiguracionComponent
   },
   {

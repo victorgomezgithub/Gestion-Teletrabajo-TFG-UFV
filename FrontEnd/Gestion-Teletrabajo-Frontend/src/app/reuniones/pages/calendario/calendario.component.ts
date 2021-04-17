@@ -1,30 +1,10 @@
-import { DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
-
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
+import { ActivatedRoute } from '@angular/router';
+import { ReunionesService } from '../../services/reuniones.service';
 
 const colors: any = {
   red: {
@@ -40,14 +20,14 @@ const colors: any = {
     secondary: '#FDF1BA',
   },
 };
+
 @Component({
   selector: 'app-calendario',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './calendario.component.html',
-  styleUrls: ['./calendario.component.css']
+  styleUrls: ['calendario.component.css'],
+  templateUrl: 'calendario.component.html',
 })
-export class CalendarioComponent {
-
+export class CalendarioComponent implements OnInit{
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
@@ -81,50 +61,29 @@ export class CalendarioComponent {
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen = true;
 
-  constructor(private modal: NgbModal) {}
+
+  public id: string;
+
+  constructor(private modal: NgbModal, private route: ActivatedRoute, private reunionService: ReunionesService) { }
+
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    const reuniones = this.reunionService.cargarReunionesEmpleado(this.id);
+
+    if (reuniones){
+      reuniones.subscribe((resp) => {
+        if (resp) {
+          console.log('Reuniones');
+          console.log(resp);
+          this.events = {...resp};
+        }
+      });
+    }
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -180,17 +139,15 @@ export class CalendarioComponent {
     ];
   }
 
-  deleteEvent(eventToDelete: CalendarEvent): any {
+  deleteEvent(eventToDelete: CalendarEvent): void {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
-  setView(view: CalendarView): any {
+  setView(view: CalendarView): void {
     this.view = view;
   }
 
-  closeOpenMonthViewDay(): any {
+  closeOpenMonthViewDay(): void {
     this.activeDayIsOpen = false;
   }
-
-
 }

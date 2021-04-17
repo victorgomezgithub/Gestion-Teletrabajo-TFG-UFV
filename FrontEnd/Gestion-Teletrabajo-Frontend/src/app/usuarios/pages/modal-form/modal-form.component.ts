@@ -6,7 +6,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'ngbd-modal-basic',
-  templateUrl: './modal-form.component.html'
+  templateUrl: './modal-form.component.html',
+  styleUrls: ['./modal-form.component.css']
 })
 export class ModalFormComponent {
   closeResult = '';

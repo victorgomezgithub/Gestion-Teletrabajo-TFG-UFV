@@ -4,6 +4,7 @@ import { BusquedaUsuariosComponent } from './pages/busqueda-usuarios/busqueda-us
 import { SharedModule } from '../shared/shared-module.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalFormComponent } from './pages/modal-form/modal-form.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ModalFormComponent } from './pages/modal-form/modal-form.component';
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    DataTablesModule
   ],
   exports: [
     BusquedaUsuariosComponent,

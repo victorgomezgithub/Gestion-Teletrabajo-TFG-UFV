@@ -24,7 +24,8 @@ import { AdministradorModule } from './administrador/administrador.module';
     SharedModule,
     UsuariosModule,
     NgbModule,
-    AdministradorModule
+    AdministradorModule,
+
 
     ],
   providers: [],
