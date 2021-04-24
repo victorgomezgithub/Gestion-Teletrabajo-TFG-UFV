@@ -32,6 +32,10 @@ public class ReunionPorEmpleadoEntity {
     	return idReunionFK.getIdReunion();
     }
     
+    public ReunionEntity getReunion() {
+    	return idReunionFK;
+    }
+    
     public Long getIdEmpleadoFk() {
     	return idEmpleadoFK.getId();
     }

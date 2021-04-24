@@ -4,6 +4,7 @@ export interface Empleado {
   nombre: string;
   username: string;
   password: string;
+  disponibilidad: string;
   rol: number;
   email: string;
   equipo: string;

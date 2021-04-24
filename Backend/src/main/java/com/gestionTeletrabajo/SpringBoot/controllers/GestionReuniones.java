@@ -35,10 +35,9 @@ public class GestionReuniones {
 		ArrayList<ReunionEntity> reunionesEmpleado = new ArrayList<>();
 		Optional<EmpleadoEntity> empleado = clienteRepo.findById(Long.parseLong(idEmpleado));
 		if (!empleado.isEmpty()) {
-			Optional<ReunionPorEmpleadoEntity[]> idReuniones = reunionEmpleadoRepo
-					.findAllReunionesPorIdEmpleado(empleado.get());
+			List<ReunionPorEmpleadoEntity> idReuniones = reunionEmpleadoRepo.findAllReunionesPorIdEmpleado(empleado.get());
 			if (!idReuniones.isEmpty()) {
-				for (ReunionPorEmpleadoEntity relacionEmpleadoReunion : idReuniones.get()) {
+				for (ReunionPorEmpleadoEntity relacionEmpleadoReunion : idReuniones) {
 					reunionesEmpleado.add(reunionRepo.getOne(relacionEmpleadoReunion.getIdReunionFK()));
 				}
 			}

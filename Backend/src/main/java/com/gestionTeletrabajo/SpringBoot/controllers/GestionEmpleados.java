@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gestionTeletrabajo.SpringBoot.models.dao.IClienteRespository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IEmpresaRespository;
+import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionPorEmpleadoRespository;
 import com.gestionTeletrabajo.SpringBoot.models.entity.EmpleadoEntity;
 import com.gestionTeletrabajo.SpringBoot.models.entity.EmpresaEntity;
 
@@ -33,6 +34,13 @@ public class GestionEmpleados {
 	private IEmpresaRespository empresaDao;
 	
 	
+	@Autowired
+	private IClienteRespository empleados;
+	
+	
+	@Autowired
+	private IReunionPorEmpleadoRespository reunionesEmpleado;
+	
 	@GetMapping("/findAll")
 	@ResponseBody
 	public List<EmpleadoEntity> getEmpleados() {
@@ -43,7 +51,14 @@ public class GestionEmpleados {
 	@GetMapping("/getEmpleadosEmpresa")
 	@ResponseBody
 	public List<EmpleadoEntity> getEmpleadosPorEmpresa(@RequestParam String idEmpleado) {
-      return clienteDao.findAllByCompany(Long.parseLong(idEmpleado));
+	  
+		List<EmpleadoEntity> empleadosEmpresa = clienteDao.findAllByCompany(Long.parseLong(idEmpleado));
+		
+		for(EmpleadoEntity empleado: empleadosEmpresa) {
+			empleado.calculaDisponibilidad(reunionesEmpleado.findAllReunionesPorIdEmpleado(empleado));
+			empleados.save(empleado);	
+		}
+		return empleadosEmpresa;
 	}
 	
 	

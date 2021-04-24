@@ -1,6 +1,8 @@
 package com.gestionTeletrabajo.SpringBoot.models.entity;
 
 import java.sql.Time;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -12,8 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.sun.istack.Nullable;
 
-@Entity(name="EmpleadoEntity")
+@Entity(name = "EmpleadoEntity")
 @Table(name = "DEMPLEADOS")
 public class EmpleadoEntity {
 
@@ -26,23 +29,23 @@ public class EmpleadoEntity {
 	private String password;
 	private String rol;
 	private String equipo;
-	
-    @Basic
-    private Time horaEntrada;
-    @Basic
-    private Time horaSalida;
 
-	
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_empresa_fk", referencedColumnName = "idEmpresa")
-    private EmpresaEntity idEmpresaFK;
-	
-    
-    public EmpleadoEntity() {
-    	
-    }
-    
-	public EmpleadoEntity(String name,String username, String password, String rol, String email, String equipo, Time horaEntrada, Time horaSalida, EmpresaEntity empresa) {
+	@Basic
+	private Time horaEntrada;
+	@Basic
+	private Time horaSalida;
+
+	@Nullable
+	private String disponibilidad;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_empresa_fk", referencedColumnName = "idEmpresa")
+	private EmpresaEntity idEmpresaFK;
+
+	public EmpleadoEntity() {	}
+
+	public EmpleadoEntity(String name, String username, String password, String rol, String email, String equipo,
+			Time horaEntrada, Time horaSalida, EmpresaEntity empresa) {
 		this.nombre = name;
 		this.username = username;
 		this.password = password;
@@ -52,6 +55,23 @@ public class EmpleadoEntity {
 		this.horaEntrada = horaEntrada;
 		this.horaSalida = horaSalida;
 		this.idEmpresaFK = empresa;
+	}
+
+	public void calculaDisponibilidad(List<ReunionPorEmpleadoEntity> reunionesTotalesEmpleado) {
+
+		Date fechaActual = new Date();
+
+		for (ReunionPorEmpleadoEntity reunionIndividual : reunionesTotalesEmpleado) {
+
+			if (reunionIndividual.getReunion().getStart().before(fechaActual)
+					&& reunionIndividual.getReunion().getEnd().after(fechaActual)) {
+				this.disponibilidad = "ocupado";
+				return;
+			}
+		}
+		
+		this.disponibilidad = "disponible";
+
 	}
 
 	public Long getId() {
@@ -69,7 +89,7 @@ public class EmpleadoEntity {
 	public void setName(String username) {
 		this.username = username;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -124,5 +144,13 @@ public class EmpleadoEntity {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getDisponibilidad() {
+		return disponibilidad;
+	}
+
+	public void setDisponibilidad(String disponibilidad) {
+		this.disponibilidad = disponibilidad;
 	}
 }

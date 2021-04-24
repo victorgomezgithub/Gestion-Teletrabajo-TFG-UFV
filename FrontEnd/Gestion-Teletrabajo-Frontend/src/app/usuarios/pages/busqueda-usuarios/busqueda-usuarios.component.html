@@ -22,7 +22,8 @@
           <td>{{empleado.email}}</td>
           <td>{{empleado.equipo}}</td>
           <td>{{empleado.horaEntrada + '-' + empleado.horaSalida}}</td>
-          <td class="botones"><button id="noDisponible" type="button"></button></td>
+          <td *ngIf="empleado.disponibilidad==='ocupado';else elseBlock" class="botones"><button id="noDisponible" type="button"></button></td>
+          <ng-template #elseBlock><td class="botones"><button id="disponible" type="button"></button></td></ng-template>
         </tr>
       </tbody>
     </table>
