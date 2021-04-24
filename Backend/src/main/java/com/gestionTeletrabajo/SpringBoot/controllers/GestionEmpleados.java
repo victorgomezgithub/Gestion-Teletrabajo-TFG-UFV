@@ -1,9 +1,11 @@
 package com.gestionTeletrabajo.SpringBoot.controllers;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,8 +42,8 @@ public class GestionEmpleados {
 	
 	@GetMapping("/getEmpleadosEmpresa")
 	@ResponseBody
-	public List<EmpleadoEntity> getEmpleadosPorEmpresa(@RequestParam String empresa) {
-      return clienteDao.findAllByCompany(empresa);
+	public List<EmpleadoEntity> getEmpleadosPorEmpresa(@RequestParam String idEmpleado) {
+      return clienteDao.findAllByCompany(Long.parseLong(idEmpleado));
 	}
 	
 	
@@ -56,12 +57,23 @@ public class GestionEmpleados {
 	
 	@PostMapping("/registerEmpleado")
 	@ResponseBody
-	public ResponseEntity<EmpleadoEntity> registerEmpleado(@RequestParam String username, @RequestParam String password,@RequestParam String rol, @RequestParam String nombreEmpresa) {
+	public ResponseEntity<EmpleadoEntity> registerEmpleado(@RequestParam String nombre,@RequestParam String username, @RequestParam String password,@RequestParam String rol,@RequestParam String email,@RequestParam String equipo, @RequestParam String nombreEmpresa,@RequestParam String horaEntrada,@RequestParam String horaSalida) {
 		EmpresaEntity empresaNueva = new EmpresaEntity(nombreEmpresa);
 		this.empresaDao.save(empresaNueva);
-		EmpleadoEntity empleadoRegistrado = new EmpleadoEntity(username,password,rol,empresaNueva);
-		this.clienteDao.save(empleadoRegistrado).getId();
-		return new ResponseEntity<>(empleadoRegistrado,HttpStatus.OK);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+		 
+		EmpleadoEntity empleadoRegistrado;
+		try {
+			empleadoRegistrado = new EmpleadoEntity(nombre,username,password,rol,email,equipo,new Time(sdf.parse(horaEntrada).getTime()),new Time(sdf.parse(horaSalida).getTime()),empresaNueva);
+			this.clienteDao.save(empleadoRegistrado).getId();
+			return new ResponseEntity<>(empleadoRegistrado,HttpStatus.OK);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+
 	}
 	
 	

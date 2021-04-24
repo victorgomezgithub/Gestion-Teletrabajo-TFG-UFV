@@ -20,12 +20,13 @@ public class EmpleadoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEmpleado;
-	
+	private String nombre;
 	private String username;
 	private String email;
 	private String password;
 	private String rol;
 	private String equipo;
+	
     @Basic
     private Time horaEntrada;
     @Basic
@@ -41,10 +42,15 @@ public class EmpleadoEntity {
     	
     }
     
-	public EmpleadoEntity(String username, String password, String rol, EmpresaEntity empresa) {
+	public EmpleadoEntity(String name,String username, String password, String rol, String email, String equipo, Time horaEntrada, Time horaSalida, EmpresaEntity empresa) {
+		this.nombre = name;
 		this.username = username;
 		this.password = password;
 		this.rol = rol;
+		this.email = email;
+		this.equipo = equipo;
+		this.horaEntrada = horaEntrada;
+		this.horaSalida = horaSalida;
 		this.idEmpresaFK = empresa;
 	}
 
@@ -110,5 +116,13 @@ public class EmpleadoEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 }

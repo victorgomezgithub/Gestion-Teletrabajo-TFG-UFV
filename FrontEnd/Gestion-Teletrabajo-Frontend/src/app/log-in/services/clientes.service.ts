@@ -28,14 +28,16 @@ export class ClientesService {
   }
 
 
-  registrarEmpleado(username: string, password: string, nombreEmpresa: string): Observable<Empleado> {
-    const params = new HttpParams().set('username', username).set('password', password).set('rol', 'A').set('nombreEmpresa', nombreEmpresa);
+  // tslint:disable-next-line:max-line-length
+  registrarEmpleado(nombreCompleto: string, username: string,  email: string, password: string, horarioEntrada: string, horarioSalida: string, empresa: string, equipo: string): Observable<Empleado> {
+    // tslint:disable-next-line:max-line-length
+    const params = new HttpParams().set('nombre', nombreCompleto).set('username', username).set('email', email).set('password', password).set('rol', 'A').set('nombreEmpresa', empresa).set('horaEntrada', horarioEntrada).set('horaSalida', horarioSalida).set('equipo', equipo);
     return this.http.post<Empleado>(`${this.servicioUrl}/registerEmpleado`,  params );
   }
 
 
-  cargarEmpleadosDeUnaEmpresa(empresa: string): Observable<Empleado[]> {
-    const params = new HttpParams().set('empresa', empresa);
+  cargarEmpleadosDeUnaEmpresa(idEmpleado: string): Observable<Empleado[]> {
+    const params = new HttpParams().set('idEmpleado', idEmpleado);
     return this.http.get<Empleado[]>(`${this.servicioUrl}/getEmpleadosEmpresa`,  { params } );
   }
 

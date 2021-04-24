@@ -28,23 +28,24 @@ public class GestionReuniones {
 	private IReunionRespository reunionRepo;
 	@Autowired
 	private IClienteRespository clienteRepo;
-	
+
 	@GetMapping("/findReunionesEmpleado")
 	@ResponseBody
-	public List<ReunionEntity> getReunionesEmpleado(@RequestParam String idEmpleado) {
+	public Object[] getReunionesEmpleado(@RequestParam String idEmpleado) {
 		ArrayList<ReunionEntity> reunionesEmpleado = new ArrayList<>();
 		Optional<EmpleadoEntity> empleado = clienteRepo.findById(Long.parseLong(idEmpleado));
-		if( empleado != null && !empleado.isEmpty()) {
-		Optional<ReunionPorEmpleadoEntity[]> idReuniones = reunionEmpleadoRepo.findAllReunionesPorIdEmpleado(empleado.get());
-		if (!idReuniones.isEmpty()) {
-			for (ReunionPorEmpleadoEntity relacionEmpleadoReunion : idReuniones.get()) {
-				reunionesEmpleado.add(reunionRepo.getOne(relacionEmpleadoReunion.getIdReunionFK()));
+		if (!empleado.isEmpty()) {
+			Optional<ReunionPorEmpleadoEntity[]> idReuniones = reunionEmpleadoRepo
+					.findAllReunionesPorIdEmpleado(empleado.get());
+			if (!idReuniones.isEmpty()) {
+				for (ReunionPorEmpleadoEntity relacionEmpleadoReunion : idReuniones.get()) {
+					reunionesEmpleado.add(reunionRepo.getOne(relacionEmpleadoReunion.getIdReunionFK()));
+				}
 			}
+
 		}
-		
-		}
-		
-		return reunionesEmpleado;
+
+		return reunionesEmpleado.toArray();
 
 	}
 

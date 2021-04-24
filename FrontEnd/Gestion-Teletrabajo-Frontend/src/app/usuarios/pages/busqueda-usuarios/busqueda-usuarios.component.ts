@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientesService } from '../../../log-in/services/clientes.service';
 import { Empleado } from '../../../log-in/interfaces/logIn.interface';
 import { Observable } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-busqueda-usuarios',
@@ -12,9 +12,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class BusquedaUsuariosComponent {
 
   empleadosTotales: Empleado[] = [];
+  public id: string;
 
-  constructor(private empleadoService: ClientesService) {
-    const empleadosEmpresa: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa('Atmira');
+  constructor(private empleadoService: ClientesService,  private route: ActivatedRoute) {
+    this.id = this.route.snapshot.paramMap.get('id');
+    const empleadosEmpresa: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
     empleadosEmpresa.subscribe((resp) => {
       console.log(resp);
       this.empleadosTotales = [...resp];

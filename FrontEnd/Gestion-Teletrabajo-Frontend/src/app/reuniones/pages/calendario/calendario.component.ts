@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit, ChangeDetectorRef } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -68,7 +68,8 @@ export class CalendarioComponent implements OnInit{
 
   public id: string;
 
-  constructor(private modal: NgbModal, private route: ActivatedRoute, private reunionService: ReunionesService) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private modal: NgbModal, private route: ActivatedRoute, private reunionService: ReunionesService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -79,7 +80,14 @@ export class CalendarioComponent implements OnInit{
         if (resp) {
           console.log('Reuniones');
           console.log(resp);
-          this.events = {...resp};
+          this.events = [...resp];
+
+          this.events.forEach(element => {
+            element.start = new Date(element.start);
+            element.end = new Date(element.end);
+          });
+
+          this.cd.markForCheck();
         }
       });
     }

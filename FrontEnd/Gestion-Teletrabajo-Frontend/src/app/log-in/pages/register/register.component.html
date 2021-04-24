@@ -11,7 +11,21 @@
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
+            <input class="form-control" type="text" formControlName="nombreCompleto" placeholder="nombre completo">
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
             <input class="form-control" type="text" formControlName="user" placeholder="username">
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input class="form-control" type="text" formControlName="email" placeholder="email">
           </div>
 
           <div class="input-group form-group">
@@ -31,9 +45,34 @@
 
           <div class="input-group form-group">
             <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+
+            <input class="form-control" type="time" id="timepicker" formControlName="horarioEntrada" placeholder="hora entrada">
+
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+
+            <input class="form-control" min="00:00" max="24:00" id="timepickerSalida" type="time" formControlName="horarioSalida" placeholder="hora salida">
+
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-archway"></i></span>
             </div>
             <input class="form-control" type="text" formControlName="empresa" placeholder="empresa">
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-archway"></i></span>
+            </div>
+            <input class="form-control" type="text" formControlName="equipo" placeholder="equipo">
           </div>
 
           <div class="form-group">
@@ -53,6 +92,3 @@
     </div>
   </div>
 </div>
-
-<app-quienes-somos></app-quienes-somos>
-<app-footer></app-footer>

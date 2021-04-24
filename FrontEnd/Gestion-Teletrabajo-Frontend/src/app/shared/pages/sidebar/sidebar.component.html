@@ -1,7 +1,7 @@
 <div class="sidenav">
-  <a routerLink = "/listadoReuniones" ><i class="fa fa-fw fa-calendar-alt"></i></a>
-  <a routerLink = '/pricing' ><i class="fa fa-fw fa-building"></i></a>
-  <a routerLink = '/busquedaUsuarios' ><i class="fa fa-fw fa-users"></i></a>
-  <a routerLink = '/estadisticas' ><i class="fa fa-fw fa-chart-pie"></i></a>
-  <a routerLink = '/panelConfiguracion' ><i class="fa fa-fw fa-wrench"></i></a>
+  <a [routerLink]="['/listadoReuniones/', id]"><i class="fa fa-fw fa-calendar-alt"></i></a>
+  <a [routerLink]="['/pricing/', id]"><i class="fa fa-fw fa-building"></i></a>
+  <a [routerLink]="['/busquedaUsuarios/', id]"><i class="fa fa-fw fa-users"></i></a>
+  <a [routerLink]="['/estadisticas/', id]"><i class="fa fa-fw fa-chart-pie"></i></a>
+  <a [routerLink]="['/panelConfiguracion/', id]"><i class="fa fa-fw fa-wrench"></i></a>
 </div>

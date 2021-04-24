@@ -5,7 +5,6 @@ import { ClientesService } from '../../services/clientes.service';
 import { Observable } from 'rxjs';
 import { Empleado } from '../../interfaces/logIn.interface';
 import { PasswordCheckService } from '../../services/password.service';
-import { trackByHourSegment } from 'angular-calendar/modules/common/util';
 
 @Component({
   selector: 'app-register',
@@ -18,21 +17,22 @@ export class RegisterComponent {
   messageOut = '';
   constructor(private clienteService: ClientesService, private router: Router, private checkPassword: PasswordCheckService) { }
   registroForm = new FormGroup({
+    nombreCompleto: new FormControl(''),
     user: new FormControl(''),
+    email: new FormControl(''),
     password: new FormControl(''),
     confirmedPassword: new FormControl(''),
-    empresa: new FormControl('')
+    horarioEntrada: new FormControl(''),
+    horarioSalida: new FormControl(''),
+    empresa: new FormControl(''),
+    equipo: new FormControl('')
   });
 
 
   onSubmit(): void {
     this.showErrorMessage = false;
     const controls = this.registroForm.controls;
-    const observableUsername: Observable<Empleado> =
-      this.clienteService.registrarEmpleado(controls.user.value, controls.password.value, controls.empresa.value);
-    observableUsername.subscribe((resp) => {
-      if (!resp) {
-        if (this.checkForEmptyValuesinForm()) {
+    if (this.checkForEmptyValuesinForm()) {
           if (this.checkForSamePasswords()) {
             if (this.checkPassword.checkPasswordStrength(controls.password.value) > 2) {
               this.registrarUsuario(controls);
@@ -48,11 +48,6 @@ export class RegisterComponent {
           this.showErrorMessage = true;
           this.messageOut = 'Todos los campos deben estar rellenos';
         }
-      } else {
-        this.showErrorMessage = true;
-        this.messageOut = 'Este username ya está cogido';
-      }
-    });
   }
 
 
@@ -60,7 +55,8 @@ export class RegisterComponent {
 
   public registrarUsuario(controls): void {
     const observableRegistro: Observable<Empleado> =
-      this.clienteService.registrarEmpleado(controls.user.value, controls.password.value, controls.empresa.value);
+      // tslint:disable-next-line:max-line-length
+      this.clienteService.registrarEmpleado(controls.nombreCompleto.value, controls.user.value, controls.email.value, controls.password.value,  controls.horarioEntrada.value, controls.horarioSalida.value, controls.empresa.value, controls.equipo.value);
     observableRegistro.subscribe((resp) => {
       if (resp) {
         this.router.navigate(['']);

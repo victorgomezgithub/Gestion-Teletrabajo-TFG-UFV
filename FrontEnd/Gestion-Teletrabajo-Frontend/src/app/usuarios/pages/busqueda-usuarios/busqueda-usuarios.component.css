@@ -9,3 +9,25 @@
 #tablaUsuarios {
   margin-top: 8%;
 }
+
+#disponible {
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  align-items: center;
+  background-color: #4CAF50;
+}
+
+#noDisponible {
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  align-items: center;
+  background-color: #f44336;
+}
+
+.botones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
