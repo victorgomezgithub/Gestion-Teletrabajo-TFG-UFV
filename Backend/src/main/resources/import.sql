@@ -1,4 +1,8 @@
-INSERT INTO DEMPRESAS (nombre_empresa) VALUES ('Atmira');
+INSERT INTO DEMPRESAS (id_empresa,nombre_empresa) VALUES (1,'Atmira');
+
+
+INSERT INTO DCONFIGURACION (id_configuracion, id_empresa_fk, requisito, parametro, obligatoriedad) VALUES (1,1,'Duración máxima de las reuniones','60','Aviso');
+INSERT INTO DCONFIGURACION (id_configuracion, id_empresa_fk, requisito, parametro, obligatoriedad) VALUES (2,1,'Descanso entre reuniones','30','Aviso');
 
 INSERT INTO DEMPLEADOS (username,nombre,email,password,rol,hora_entrada,hora_salida,id_empresa_fk,equipo) VALUES ('user1','Levi Ackerman','emailInventado@gmail.com','1234','Empleado','09:00','17:00','1','IT');
 INSERT INTO DEMPLEADOS (username,nombre,email,password,rol,hora_entrada,hora_salida,id_empresa_fk,equipo) VALUES ('user2','Sancho Panza', 'emailInventado@gmail.com','1234','Empleado' ,'09:00','17:00','1','IT');

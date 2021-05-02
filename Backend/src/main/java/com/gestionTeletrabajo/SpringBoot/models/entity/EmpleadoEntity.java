@@ -40,7 +40,16 @@ public class EmpleadoEntity {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_empresa_fk", referencedColumnName = "idEmpresa")
+	
 	private EmpresaEntity idEmpresaFK;
+
+	public EmpresaEntity getIdEmpresaFK() {
+		return idEmpresaFK;
+	}
+
+	public void setIdEmpresaFK(EmpresaEntity idEmpresaFK) {
+		this.idEmpresaFK = idEmpresaFK;
+	}
 
 	public EmpleadoEntity() {	}
 
@@ -153,4 +162,6 @@ public class EmpleadoEntity {
 	public void setDisponibilidad(String disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
+	
+	
 }

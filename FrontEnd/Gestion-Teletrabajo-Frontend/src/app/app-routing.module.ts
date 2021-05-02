@@ -6,6 +6,7 @@ import { OlvidadoContrasenaComponent } from './log-in/pages/olvidado-contrasena/
 import { ListadoReunionesComponent } from './reuniones/pages/listado-reuniones/listado-reuniones.component';
 import { BusquedaUsuariosComponent } from './usuarios/pages/busqueda-usuarios/busqueda-usuarios.component';
 import { PanelConfiguracionComponent } from './administrador/pages/panel-configuracion/panel-configuracion.component';
+import { CoworkingMapComponent } from './coworkingMaps/coworking-module/pages/coworking-map/coworking-map.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'listadoReuniones/:id',
     component: ListadoReunionesComponent
+  },
+  {
+    path: 'coworkingMaps/:id',
+    component: CoworkingMapComponent
   },
   {
     path: 'busquedaUsuarios/:id',

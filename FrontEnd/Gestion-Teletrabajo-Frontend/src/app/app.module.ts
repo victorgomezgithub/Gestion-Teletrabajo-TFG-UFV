@@ -8,8 +8,8 @@ import { SharedModule } from './shared/shared-module.module';
 import { ReunionesModule } from './reuniones/reuniones.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PanelConfiguracionComponent } from './administrador/pages/panel-configuracion/panel-configuracion.component';
 import { AdministradorModule } from './administrador/administrador.module';
+import { CoworkingModuleModule } from './coworkingMaps/coworking-module/coworking-module.module';
 
 
 @NgModule({
@@ -25,7 +25,7 @@ import { AdministradorModule } from './administrador/administrador.module';
     UsuariosModule,
     NgbModule,
     AdministradorModule,
-
+    CoworkingModuleModule,
 
     ],
   providers: [],

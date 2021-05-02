@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gestionTeletrabajo.SpringBoot.models.dao.IClienteRespository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IEmpresaRespository;
+import com.gestionTeletrabajo.SpringBoot.models.dao.IPanelDeConfiguracionRepository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionPorEmpleadoRespository;
 import com.gestionTeletrabajo.SpringBoot.models.entity.EmpleadoEntity;
 import com.gestionTeletrabajo.SpringBoot.models.entity.EmpresaEntity;
+import com.gestionTeletrabajo.SpringBoot.models.entity.PanelDeConfiguracionEntity;
 
 @Controller
 @RequestMapping(value = "/empleados")
@@ -33,6 +35,8 @@ public class GestionEmpleados {
 	@Autowired
 	private IEmpresaRespository empresaDao;
 	
+	@Autowired
+	private IPanelDeConfiguracionRepository panelDeConfiguracionRepository;
 	
 	@Autowired
 	private IClienteRespository empleados;
@@ -73,8 +77,10 @@ public class GestionEmpleados {
 	@PostMapping("/registerEmpleado")
 	@ResponseBody
 	public ResponseEntity<EmpleadoEntity> registerEmpleado(@RequestParam String nombre,@RequestParam String username, @RequestParam String password,@RequestParam String rol,@RequestParam String email,@RequestParam String equipo, @RequestParam String nombreEmpresa,@RequestParam String horaEntrada,@RequestParam String horaSalida) {
-		EmpresaEntity empresaNueva = new EmpresaEntity(nombreEmpresa);
-		this.empresaDao.save(empresaNueva);
+		EmpresaEntity empresaNueva = generaNuevaEmpresa(nombreEmpresa);
+		
+		generaPanelDeConfiguracion(empresaNueva);
+		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 		 
@@ -90,7 +96,41 @@ public class GestionEmpleados {
 		return null;
 
 	}
+
+
+	private EmpresaEntity generaNuevaEmpresa(String nombreEmpresa) {
+		EmpresaEntity empresaNueva = new EmpresaEntity(nombreEmpresa);
+		this.empresaDao.save(empresaNueva);
+		return empresaNueva;
+	}
 	
+	
+	private void generaPanelDeConfiguracion(EmpresaEntity empresaNueva) {
+		panelDeConfiguracionRepository.save(new PanelDeConfiguracionEntity(empresaNueva,"Duración máxima de las reuniones","60","Aviso"));
+		panelDeConfiguracionRepository.save(new PanelDeConfiguracionEntity(empresaNueva,"Descanso entre reuniones","15","Aviso"));
+	}
+
+
+	@PostMapping("/anadirUsuario")
+	@ResponseBody
+	public ResponseEntity<EmpleadoEntity> anadirUsuario(@RequestParam String idEmpleado,@RequestParam String nombre,@RequestParam String username, @RequestParam String password,@RequestParam String rol,@RequestParam String email,@RequestParam String equipo,@RequestParam String horaEntrada,@RequestParam String horaSalida) {
+		
+		EmpresaEntity empresa = this.empresaDao.findEmpresaPorIdEmpleado(Long.parseLong(idEmpleado));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+		 
+		EmpleadoEntity empleadoRegistrado;
+		try {
+			empleadoRegistrado = new EmpleadoEntity(nombre,username,password,rol,email,equipo,new Time(sdf.parse(horaEntrada).getTime()),new Time(sdf.parse(horaSalida).getTime()),empresa);
+			this.clienteDao.save(empleadoRegistrado).getId();
+			return new ResponseEntity<>(empleadoRegistrado,HttpStatus.OK);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+
+	}
 	
 	
 	

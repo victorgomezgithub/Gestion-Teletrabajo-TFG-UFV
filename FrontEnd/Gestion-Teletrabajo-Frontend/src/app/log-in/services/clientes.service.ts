@@ -31,7 +31,7 @@ export class ClientesService {
   // tslint:disable-next-line:max-line-length
   registrarEmpleado(nombreCompleto: string, username: string,  email: string, password: string, horarioEntrada: string, horarioSalida: string, empresa: string, equipo: string): Observable<Empleado> {
     // tslint:disable-next-line:max-line-length
-    const params = new HttpParams().set('nombre', nombreCompleto).set('username', username).set('email', email).set('password', password).set('rol', 'A').set('nombreEmpresa', empresa).set('horaEntrada', horarioEntrada).set('horaSalida', horarioSalida).set('equipo', equipo);
+    const params = new HttpParams().set('nombre', nombreCompleto).set('username', username).set('email', email).set('password', password).set('rol', 'administrador').set('nombreEmpresa', empresa).set('horaEntrada', horarioEntrada).set('horaSalida', horarioSalida).set('equipo', equipo);
     return this.http.post<Empleado>(`${this.servicioUrl}/registerEmpleado`,  params );
   }
 
@@ -41,6 +41,13 @@ export class ClientesService {
     return this.http.get<Empleado[]>(`${this.servicioUrl}/getEmpleadosEmpresa`,  { params } );
   }
 
+  // tslint:disable-next-line:max-line-length
+  anadirUsuario(idEmpleado: string, nombreCompleto: string, username: string,  email: string, password: string, rol: string, horarioEntrada: string, horarioSalida: string, equipo: string): Observable<Empleado> {
 
+    // tslint:disable-next-line:max-line-length
+    const params = new HttpParams().set('idEmpleado', idEmpleado).set('nombre', nombreCompleto).set('username', username).set('email', email).set('password', password).set('horaEntrada', horarioEntrada).set('rol', rol).set('horaSalida', horarioSalida).set('equipo', equipo);
+
+    return this.http.post<Empleado>(`${this.servicioUrl}/anadirUsuario`,  params );
+  }
 
 }

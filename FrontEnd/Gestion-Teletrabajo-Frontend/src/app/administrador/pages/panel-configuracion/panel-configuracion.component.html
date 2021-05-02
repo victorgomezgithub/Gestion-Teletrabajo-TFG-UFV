@@ -1,40 +1,29 @@
 <app-sidebar></app-sidebar>
 
-<div class="container-fluid" id="logInPage">
-  <div class="d-flex justify-content-center h-100 titulo">
-    <h3>Panel De Configuración</h3>
-  </div>
-  <div class="d-flex justify-content-center h-100">
-    <form [formGroup]="configuracionForm" (ngSubmit)="onSubmit()">
-      <div class="input-group form-group">
-        <label class="restriccion" for="quantity">Duracion máxima de las reuniones (minutos): </label>
-        <input type="number" id="quantity" value="15" name="quantity" class="duracionReuniones" min="0">
-      </div>
-      <div class="input-group form-group">
-        <label class="restriccion" for="quantity">Respetar máxima duracion de las reuniones: </label>
-        <select name="Restriccion" id="cars">
-          <option value="volvo">Obligatorio</option>
-          <option value="saab">Aviso</option>
-          <option value="opel">Opcional</option>
-        </select>
-      </div>
-      <div class="input-group form-group">
-        <label class="restriccion" for="quantity">Descanso entre reuniones (minutos): </label>
-        <input type="number" id="quantity" value="15" name="quantity" min="0" class="duracionReuniones">
-      </div>
-      <div class="input-group form-group">
-        <label class="restriccion" for="quantity">Respetar descanso entre reuniones: </label>
-        <select name="Restriccion" id="cars">
-          <option value="volvo">Obligatorio</option>
-          <option value="saab">Aviso</option>
-          <option value="opel">Opcional</option>
-        </select>
-      </div>
-      <div class="d-flex justify-content-center h-100">
 
-        <div class="form-group">
-          <button class="btn btn-success" type="submit">Save</button>
-        </div>
+<div class="d-flex justify-content-center h-100" id="titulo">
+  <h3>Panel De Configuración</h3>
+</div>
+
+
+   <div *ngFor="let conf of configuraciones; index as i">
+    <form [formGroup]="formArray.controls[i]" id="configuracion">
+      <div class="form-group row">
+      <label for="inputPassword" class="col-sm-3 col-form-label">{{conf.requisito}}:</label>
+      <div class="col-sm-2">
+        <input type="number" formControlName="parametro" class="form-control" id="inputPassword" placeholder="{{conf.parametro}}">
       </div>
+      <div class="col-sm-2">
+        <select class="form-control" formControlName="obligatoriedad" name="select">
+          <option value="conf.obligatoriedad" selected hidden>{{conf.obligatoriedad}}</option>
+          <option class="aviso" value="Aviso" >Aviso</option>
+          <option class="obligatorio" value="Obligatorio">Obligatorio</option>
+          <option class="noconsiderar" value="No considerar">No considerar</option>
+        </select>
+      </div>
+    </div>
     </form>
+  </div>
+  <div class="d-flex justify-content-center h-100" id="titulo">
+    <button class="btn btn-lg btn-success"  id="botonUsuario" (click)="onClick()">Añadir Usuario</button>
   </div>

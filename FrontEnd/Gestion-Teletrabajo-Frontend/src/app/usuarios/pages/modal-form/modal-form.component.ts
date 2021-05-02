@@ -1,7 +1,11 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ClientesService } from '../../../log-in/services/clientes.service';
+import { Observable } from 'rxjs';
+import { Empleado } from '../../../log-in/interfaces/logIn.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -12,18 +16,37 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class ModalFormComponent {
   closeResult = '';
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private clienteService: ClientesService, private route: ActivatedRoute) { }
+  public id: string;
 
   addUserForm = new FormGroup({
+    nombreCompleto: new FormControl(''),
+    rol: new FormControl(''),
     user: new FormControl(''),
+    email: new FormControl(''),
     password: new FormControl(''),
-    confirmedPassword: new FormControl('')
+    confirmedPassword: new FormControl(''),
+    horarioEntrada: new FormControl(''),
+    horarioSalida: new FormControl(''),
+    equipo: new FormControl('')
   });
 
 
   open(content): any {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
+      console.log(this.closeResult);
+      if (result === 'Save click') {
+        this.id = this.route.snapshot.paramMap.get('id');
+        const controls = this.addUserForm.controls;
+        console.log(controls.rol.value);
+        // tslint:disable-next-line:max-line-length
+        const nuevoEmpleado: Observable<Empleado> = this.clienteService.anadirUsuario(this.id, controls.nombreCompleto.value, controls.user.value, controls.email.value, controls.password.value, controls.rol.value, controls.horarioEntrada.value, controls.horarioSalida.value, controls.equipo.value);
+        nuevoEmpleado.subscribe((resp) => {
+          if (resp) {
+          }
+        });
+      }
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
