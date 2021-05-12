@@ -1,10 +1,6 @@
-
-
-
 .tableUsers {
   margin-top: 5%;
 }
-
 
 #tablaUsuarios {
   margin-top: 8%;
@@ -30,4 +26,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.boton {
+  display: block;
+  margin: auto;
 }

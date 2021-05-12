@@ -19,9 +19,8 @@ export class ConfiguracionService {
 
   guardarConfiguraciones(configuracionesParametro: Configuracion[]): Observable<Configuracion[]> {
 
-    console.log(JSON.stringify(configuracionesParametro));
     const configuraciones = JSON.stringify(configuracionesParametro);
-
+    console.log(JSON.stringify(configuracionesParametro));
     const params = new HttpParams().set('configuraciones', configuraciones);
     return this.http.post<Configuracion[]>(`${this.servicioUrl}/modificacionConfiguracion`, { params });
   }

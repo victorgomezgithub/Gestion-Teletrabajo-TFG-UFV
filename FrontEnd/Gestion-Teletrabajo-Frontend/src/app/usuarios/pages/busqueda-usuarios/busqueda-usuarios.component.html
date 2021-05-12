@@ -13,6 +13,7 @@
           <th scope="col">Equipo</th>
           <th scope="col">Jornada</th>
           <th scope="col">Disponibilidad</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -22,8 +23,9 @@
           <td>{{empleado.email}}</td>
           <td>{{empleado.equipo}}</td>
           <td>{{empleado.horaEntrada + '-' + empleado.horaSalida}}</td>
-          <td *ngIf="empleado.disponibilidad==='ocupado';else elseBlock" class="botones"><button id="noDisponible" type="button"></button></td>
-          <ng-template #elseBlock><td class="botones"><button id="disponible" type="button"></button></td></ng-template>
+          <td *ngIf="empleado.disponibilidad==='ocupado';else elseBlock" class="botones"><i class="fas fa-times-circle"></i></td>
+          <ng-template #elseBlock><td class="botones"><i class="fas fa-check-circle"></i></td></ng-template>
+          <td><button class="boton" (click)="borrarEmpleado(empleado.id)" type="button" class="boton btn btn-outline-danger"><i class="fas fa-trash"></i></button></td>
         </tr>
       </tbody>
     </table>

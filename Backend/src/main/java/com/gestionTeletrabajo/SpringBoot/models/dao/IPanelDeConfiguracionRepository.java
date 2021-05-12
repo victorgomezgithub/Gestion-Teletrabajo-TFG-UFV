@@ -10,7 +10,7 @@ import com.gestionTeletrabajo.SpringBoot.models.entity.PanelDeConfiguracionEntit
 public interface IPanelDeConfiguracionRepository extends JpaRepository<PanelDeConfiguracionEntity, Long> {
 
     @Query("SELECT P FROM PanelDeConfiguracionEntity P where P.idEmpresaFK = (SELECT EP.idEmpresaFK FROM EmpleadoEntity EP where EP.idEmpleado = ?1)") 
-    List<PanelDeConfiguracionEntity> findAllByidEmpleado(Long idEmpleado);
+    PanelDeConfiguracionEntity[] findAllByidEmpleado(Long idEmpleado);
 	
 	
 }

@@ -44,16 +44,15 @@ export class PanelConfiguracionComponent implements OnInit{
 
   onClick(): void {
     this.formArray.controls.forEach((formGroup, index) => {
+      if (formGroup.value.parametro && formGroup.value.obligatoriedad) {
       this.configuraciones[index].parametro = formGroup.value.parametro;
-      this.configuraciones[index].parametro = formGroup.value.obligatoriedad;
+      this.configuraciones[index].obligatoriedad = formGroup.value.obligatoriedad;
+      }
   });
 
     const updateConfiguraciones = this.configuracionService.guardarConfiguraciones(this.configuraciones);
 
     updateConfiguraciones.subscribe((resp) => {
-      if (resp) {
-        console.log('Funciono?');
-      }
     });
   }
 }

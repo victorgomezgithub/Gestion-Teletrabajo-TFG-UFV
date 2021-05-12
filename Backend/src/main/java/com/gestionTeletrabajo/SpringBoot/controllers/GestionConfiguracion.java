@@ -1,6 +1,5 @@
 package com.gestionTeletrabajo.SpringBoot.controllers;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gestionTeletrabajo.SpringBoot.models.dao.IClienteRespository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IPanelDeConfiguracionRepository;
-import com.gestionTeletrabajo.SpringBoot.models.entity.EmpresaEntity;
 import com.gestionTeletrabajo.SpringBoot.models.entity.PanelDeConfiguracionEntity;
+import com.gestionTeletrabajo.SpringBoot.parseadores.ParseadorJSON;
 
 @Controller
 @RequestMapping(value = "/configuracion")
@@ -25,21 +23,29 @@ public class GestionConfiguracion {
 	
 	@GetMapping("/findConfiguracion")
 	@ResponseBody
-	public List<PanelDeConfiguracionEntity> getConfiguraciones(@RequestParam long idEmpleado) {
+	public  PanelDeConfiguracionEntity[] getConfiguraciones(@RequestParam long idEmpleado) {
       return panelDeConfiguracionRepository.findAllByidEmpleado(idEmpleado);
 	}
 	
 	
 	@PostMapping("/modificacionConfiguracion")
 	@ResponseBody
-	public List<PanelDeConfiguracionEntity> getEmpleados(@RequestParam  List<PanelDeConfiguracionEntity> configuraciones) {
+	public PanelDeConfiguracionEntity[] guardarConfiguraciones(@RequestBody  String configuraciones) {
 		
+	  ParseadorJSON parser = new ParseadorJSON(); 	
 	  
-	  for(PanelDeConfiguracionEntity configuracion: configuraciones) {	  
-		  panelDeConfiguracionRepository.save(configuracion);
+	  PanelDeConfiguracionEntity[] configuracionesEntitity = parser.parserStringToArrayConfiguracionEntity(configuraciones);
+	  
+	  if (configuracionesEntitity != null) {
+		  for(PanelDeConfiguracionEntity configuracion: configuracionesEntitity)
+		  {
+			  if(!configuracion.getObligatoriedad().isEmpty() && !configuracion.getParametro().isEmpty()) {
+			  panelDeConfiguracionRepository.save(configuracion);
+			  }
+		  }
 	  }
 	  
-      return configuraciones;
+      return configuracionesEntitity;
 	}
 	
 	

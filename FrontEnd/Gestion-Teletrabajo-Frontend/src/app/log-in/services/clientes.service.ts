@@ -50,4 +50,13 @@ export class ClientesService {
     return this.http.post<Empleado>(`${this.servicioUrl}/anadirUsuario`,  params );
   }
 
+
+  borrarUsuario(idEmpleado: string): Observable<Empleado> {
+
+    const params = new HttpParams().set('idEmpleado', idEmpleado);
+
+    return this.http.post<Empleado>(`${this.servicioUrl}/borrarUsuario`,  params );
+  }
+
+
 }

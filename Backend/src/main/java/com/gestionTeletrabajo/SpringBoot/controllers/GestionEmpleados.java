@@ -132,6 +132,23 @@ public class GestionEmpleados {
 
 	}
 	
+	@PostMapping("/borrarUsuario")
+	@ResponseBody
+	public EmpleadoEntity borrarUsuario(@RequestParam String idEmpleado) {
+		
+		Optional<EmpleadoEntity> empleadoBorrado = empleados.findById(Long.parseLong(idEmpleado));
+		
+		if(empleadoBorrado.isPresent()) {
+			reunionesEmpleado.deleteAllReunionesPorIdEmpleado(empleadoBorrado.get());
+			empleados.deleteById(Long.parseLong(idEmpleado));
+			
+			return empleadoBorrado.get();
+		}
+		
+		return null;
+
+	}
+	
 	
 	
 }

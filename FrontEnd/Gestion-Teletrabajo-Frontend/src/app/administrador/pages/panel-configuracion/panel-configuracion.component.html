@@ -14,9 +14,9 @@
         <input type="number" formControlName="parametro" class="form-control" id="inputPassword" placeholder="{{conf.parametro}}">
       </div>
       <div class="col-sm-2">
-        <select class="form-control" formControlName="obligatoriedad" name="select">
-          <option value="conf.obligatoriedad" selected hidden>{{conf.obligatoriedad}}</option>
-          <option class="aviso" value="Aviso" >Aviso</option>
+        <select class="form-control" formControlName="obligatoriedad">
+          <option value="" hidden selected>{{conf.obligatoriedad}}</option>
+          <option class="aviso" value="Aviso">Aviso</option>
           <option class="obligatorio" value="Obligatorio">Obligatorio</option>
           <option class="noconsiderar" value="No considerar">No considerar</option>
         </select>
@@ -25,5 +25,5 @@
     </form>
   </div>
   <div class="d-flex justify-content-center h-100" id="titulo">
-    <button class="btn btn-lg btn-success"  id="botonUsuario" (click)="onClick()">Añadir Usuario</button>
+    <button class="btn btn-lg btn-primary"  id="botonUsuario" (click)="onClick()">Guardar</button>
   </div>
