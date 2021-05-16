@@ -53,8 +53,15 @@ export class CalendarioComponent implements OnInit{
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        const borrarReunion =  this.reunionService.deleteReunion((event as any).idReunion);
+        borrarReunion.subscribe((resp) => {
+          if (resp) {
+            this.events = this.events.filter((iEvent) => iEvent !== event);
+            this.handleEvent('Deleted', event);
+            this.cd.detectChanges();
+          }
+        });
+
       },
     },
   ];
@@ -85,6 +92,7 @@ export class CalendarioComponent implements OnInit{
           this.events.forEach(element => {
             element.start = new Date(element.start);
             element.end = new Date(element.end);
+            element.actions = this.actions;
           });
 
           this.cd.markForCheck();
@@ -128,27 +136,6 @@ export class CalendarioComponent implements OnInit{
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent): void {
-    this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
   setView(view: CalendarView): void {

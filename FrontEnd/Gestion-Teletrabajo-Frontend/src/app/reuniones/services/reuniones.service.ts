@@ -18,4 +18,16 @@ export class ReunionesService {
     const params = new HttpParams().set('idEmpleado', id);
     return this.http.get<CalendarEvent[]>(`${this.servicioUrl}/findReunionesEmpleado`, { params });
   }
+
+
+  nuevaReunion(parametrosReunion: any): Observable<any[]> {
+    const params = new HttpParams().set('parametrosReunion', JSON.stringify(parametrosReunion));
+    return this.http.post<any[]>(`${this.servicioUrl}/nuevaReunion`, { params });
+  }
+
+
+  deleteReunion(idReunion: string): Observable<any[]> {
+    const params = new HttpParams().set('idReunion', idReunion);
+    return this.http.post<any[]>(`${this.servicioUrl}/deleteReunion`, { params });
+  }
 }

@@ -27,6 +27,14 @@ public class ReunionPorEmpleadoEntity {
     @JoinColumn(name = "id_empleado_fk", referencedColumnName = "idEmpleado")
     private EmpleadoEntity idEmpleadoFK;
 	
+    public ReunionPorEmpleadoEntity() {
+    	
+    }
+    
+    public ReunionPorEmpleadoEntity(ReunionEntity idReunionFK,  EmpleadoEntity idEmpleadoFK) {
+    	this.idReunionFK = idReunionFK;
+    	this.idEmpleadoFK = idEmpleadoFK;
+    }
     
     public Long getIdReunionFK() {
     	return idReunionFK.getIdReunion();

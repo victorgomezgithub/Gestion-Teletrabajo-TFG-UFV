@@ -9,8 +9,8 @@ INSERT INTO DEMPLEADOS (username,nombre,email,password,rol,hora_entrada,hora_sal
 INSERT INTO DEMPLEADOS (username,nombre,email,password,rol,hora_entrada,hora_salida,id_empresa_fk,equipo) VALUES ('user3','Victor Gomez', 'emailInventado@gmail.com','1234','Empleado' ,'09:00','17:00','1','RH');
 INSERT INTO DEMPLEADOS (username,nombre,email,password,rol,hora_entrada,hora_salida,id_empresa_fk,equipo) VALUES ('user4','Paco Sanchez', 'emailInventado@gmail.com','1234','Empleado' ,'09:00','17:00','1','RH');
 
-INSERT INTO DREUNIONES (id_reunion,title,start,end,documento) VALUES (1,'Reunion 1','2021-04-24 18:00:00','2021-04-25 10:00:00','Word');
-INSERT INTO DREUNIONES (id_reunion,title,start,end,documento) VALUES (2,'Reunion 2','2021-04-24 18:00:00','2021-04-25 10:00:00','Excel');
+INSERT INTO DREUNIONES (id_reunion,title,description,start,end,documento) VALUES (1,'Reunion 1','Descripcion reunion 1','2021-05-19 18:00:00','2021-05-19 10:00:00','Word');
+INSERT INTO DREUNIONES (id_reunion,title,description,start,end,documento) VALUES (2,'Reunion 2','Descripcion reunion 2','2021-05-24 18:00:00','2021-05-25 10:00:00','Excel');
 
 
 INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (1,1,1);

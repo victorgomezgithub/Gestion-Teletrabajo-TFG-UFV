@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Empleado } from '../../../log-in/interfaces/logIn.interface';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientesService } from '../../../log-in/services/clientes.service';
 import { ActivatedRoute } from '@angular/router';
+import { ReunionesService } from '../../services/reuniones.service';
 
 @Component({
   selector: 'app-modal-form-reunion',
@@ -14,20 +15,33 @@ import { ActivatedRoute } from '@angular/router';
 export class ModalFormReunionComponent {
 
   closeResult = '';
-
-  constructor(private modalService: NgbModal, private clienteService: ClientesService, private route: ActivatedRoute) { }
+  empleadosTotales: Empleado[]  = [];
+  integrantesReunion: number[] = [];
   public id: string;
+  uploadFiles: any[] = [];
 
-  addUserForm = new FormGroup({
-    nombreCompleto: new FormControl(''),
-    rol: new FormControl(''),
-    user: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    confirmedPassword: new FormControl(''),
-    horarioEntrada: new FormControl(''),
-    horarioSalida: new FormControl(''),
-    equipo: new FormControl('')
+
+  // tslint:disable-next-line:max-line-length
+  constructor(private cd: ChangeDetectorRef, private empleadoService: ClientesService, private modalService: NgbModal, private reunionesService: ReunionesService, private route: ActivatedRoute) {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.integrantesReunion.push(+this.id);
+    const reunionesPorEmpleado: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
+    reunionesPorEmpleado.subscribe((resp) => {
+      console.log(resp);
+      this.empleadosTotales = [...resp];
+      this.cd.markForCheck();
+    });
+
+
+  }
+
+  addReunionForm = new FormGroup({
+    titulo: new FormControl('', Validators.minLength(1)),
+    descripcion: new FormControl(''),
+    fechaInicio: new FormControl(''),
+    fechaFin: new FormControl(''),
+    files: new FormControl(''),
+    integrante: new FormControl('')
   });
 
 
@@ -37,12 +51,24 @@ export class ModalFormReunionComponent {
       console.log(this.closeResult);
       if (result === 'Save click') {
         this.id = this.route.snapshot.paramMap.get('id');
-        const controls = this.addUserForm.controls;
-        console.log(controls.rol.value);
-        // tslint:disable-next-line:max-line-length
-        const nuevoEmpleado: Observable<Empleado> = this.clienteService.anadirUsuario(this.id, controls.nombreCompleto.value, controls.user.value, controls.email.value, controls.password.value, controls.rol.value, controls.horarioEntrada.value, controls.horarioSalida.value, controls.equipo.value);
+        const controls = this.addReunionForm.controls;
+        const parametrosReunion: any = {};
+        parametrosReunion.creador = this.id;
+        parametrosReunion.title = controls.titulo.value;
+        parametrosReunion.description = controls.descripcion.value;
+        parametrosReunion.fechaInicio = controls.fechaInicio.value;
+        parametrosReunion.fechaFin = controls.fechaFin.value;
+        parametrosReunion.files = this.uploadFiles;
+        parametrosReunion.integrantes = this.integrantesReunion;
+
+        const nuevoEmpleado: Observable<any[]> = this.reunionesService.nuevaReunion(parametrosReunion);
         nuevoEmpleado.subscribe((resp) => {
           if (resp) {
+            const reunionesPorEmpleado: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
+            reunionesPorEmpleado.subscribe((response) => {
+              console.log(response);
+              this.empleadosTotales = [...response];
+            });
           }
         });
       }
@@ -61,4 +87,16 @@ export class ModalFormReunionComponent {
     }
   }
 
+
+  addCourse(): void{
+    console.log(this.addReunionForm.controls.integrante.value);
+    this.integrantesReunion.push(this.empleadosTotales[this.addReunionForm.controls.integrante.value - 1].id);
+    this.addReunionForm.controls.integrante.reset();
+  }
+
+  handleUpload(files): void {
+    // const file = files.item(0);
+    // console.log("file");
+    this.uploadFiles.push('file');
+  }
 }

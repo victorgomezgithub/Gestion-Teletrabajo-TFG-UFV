@@ -35,11 +35,9 @@ export class ModalFormComponent {
   open(content): any {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      console.log(this.closeResult);
       if (result === 'Save click') {
         this.id = this.route.snapshot.paramMap.get('id');
         const controls = this.addUserForm.controls;
-        console.log(controls.rol.value);
         // tslint:disable-next-line:max-line-length
         const nuevoEmpleado: Observable<Empleado> = this.clienteService.anadirUsuario(this.id, controls.nombreCompleto.value, controls.user.value, controls.email.value, controls.password.value, controls.rol.value, controls.horarioEntrada.value, controls.horarioSalida.value, controls.equipo.value);
         nuevoEmpleado.subscribe((resp) => {

@@ -2,25 +2,25 @@
 
   <ng-template #content let-modal>
     <div class="modal-header" >
-      <h4 class="modal-title">Añadir Usuario</h4>
+      <h4 class="modal-title">Nueva Reunión</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="addReunionForm" (ngSubmit)="onSubmit()">
         <div class="input-group form-group">
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-heading"></i></span>
           </div>
-          <input class="form-control" type="text" formControlName="nombreCompleto" placeholder="titulo">
+          <input class="form-control" type="text" formControlName="titulo" placeholder="titulo">
         </div>
 
         <div class="input-group form-group">
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-quote-right"></i></span>
           </div>
-          <input class="form-control" type="text" formControlName="nombreCompleto" placeholder="descripcion">
+          <input class="form-control" type="text" formControlName="descripcion" placeholder="descripcion">
         </div>
 
         <div class="input-group form-group">
@@ -28,7 +28,7 @@
             <span class="input-group-text"><i class="fas fa-hourglass-start"></i></span>
           </div>
 
-          <input class="form-control" type="datetime-local" id="timepicker" formControlName="horarioEntrada" placeholder="Fecha Inicio">
+          <input class="form-control" type="datetime-local" id="timepicker" formControlName="fechaInicio" placeholder="Fecha Inicio">
 
         </div>
 
@@ -37,17 +37,37 @@
             <span class="input-group-text"><i class="fas fa-hourglass-end"></i></span>
           </div>
 
-          <input class="form-control" id="timepickerSalida" type="datetime-local" formControlName="horarioSalida" placeholder="Fecha Fin">
+          <input class="form-control" id="timepickerSalida" type="datetime-local" formControlName="fechaFin" placeholder="Fecha Fin">
 
         </div>
 
+        <div class="input-group form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-users"></i></span>
+          </div>
+          <input type="text" list="FavoriteColor" id="course" name="course" class="form-control" formControlName="integrante" placeholder="integrantes">
+          <datalist id="FavoriteColor">
+            <option *ngFor="let empleado of this.empleadosTotales" value="{{empleado.id}}" >{{empleado.nombre}}</option>
+          </datalist>
+            <div class="input-group-append">
+              <button class="btn  btn-light btn-outline-secondary" type="button"(click)="addCourse()">Añadir</button>
+            </div>
+        </div>
+        <ul>
+          <li *ngFor="let empleado of this.integrantesReunion">
+            <i class="fas fa-hands-helping"></i>
+              {{empleado}}
+          </li>
+        </ul>
         <!--https://stackblitz.com/edit/angular-hzh42b-->
+
+
 
         <div class="form-group row justify-content-center">
           <div class="uploadImages col-sm-9 col-md-7 col-lg-7">
-            <input type="file" name="file" id="file" class="inputfile" accept="image/png, image/jpeg" multiple/>
+            <input (change)="handleUpload($event.target.files)" type="file" name="file" id="file" class="inputfile" multiple/>
             <label for="file">
-              <img src="../../../../assets/images/upload.png" alt="icon" class="upload animate__animated animate__flip">
+              <img src="../../../../assets/images/upload.png"  alt="icon" class="upload animate__animated animate__flip">
               <p class="imgDescription">Documentos de la Reunión</p>
             </label>
             <div class="invalid-feedback" style="text-align: left;">

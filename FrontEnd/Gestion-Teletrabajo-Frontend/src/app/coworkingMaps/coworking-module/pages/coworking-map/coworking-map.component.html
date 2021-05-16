@@ -1,6 +1,25 @@
 <app-sidebar></app-sidebar>
 
+<ul class="list-group">
+  <li class="list-group-item list-group-item-info"
+      (click)="agregarMarcador()">
+      + Agregar
+  </li>
 
-<div id="content1"><div #map id="map"></div></div>
-<div id="content2">content 2</div>
-<!--https://stackblitz.com/angular/kmgaeeoobqe?file=src%2Fapp%2Fheroes%2Fheroes.component.html-->
+  <li class="list-group-item"
+      *ngFor="let marcador of marcadores; let i = index"
+      (click)="irMarcador( marcador.marker )"
+      (dblclick)="borrarMarcador( i )"
+      [ngStyle]="{
+          'background-color': marcador.color
+      }">
+      marker {{ i + 1 }}
+  </li>
+</ul>
+
+
+
+
+
+<div #mapa class="mapa-container"></div>
+

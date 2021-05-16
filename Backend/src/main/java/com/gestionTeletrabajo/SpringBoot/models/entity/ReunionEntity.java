@@ -17,10 +17,22 @@ public class ReunionEntity {
 	private Long idReunion;
 	
 	private String title;
+	private String description;
 	private Date start;
 	private Date end;
 	private String documento;
 	
+	public ReunionEntity() {
+		
+	}
+	
+	public ReunionEntity(String title, String description, Date start, Date end, String documento) {
+		this.title = title;
+		this.description = description;
+		this.start = start;
+		this.end = end;
+		this.documento = documento;
+	}
 	
 	public Long getIdReunion() {
 		return idReunion;
@@ -49,6 +61,14 @@ public class ReunionEntity {
 	}
 	public void setStart(Date start) {
 		this.start = start;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

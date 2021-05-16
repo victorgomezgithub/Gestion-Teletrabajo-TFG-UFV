@@ -36,6 +36,7 @@
     "date-fns": "^2.19.0",
     "flatpickr": "^4.6.9",
     "jquery": "^3.4.1",
+    "mapbox-gl": "^2.2.0",
     "mdbootstrap": "^4.19.2",
     "ngx-bootstrap": "^6.2.0",
     "rxjs": "~6.6.0",
