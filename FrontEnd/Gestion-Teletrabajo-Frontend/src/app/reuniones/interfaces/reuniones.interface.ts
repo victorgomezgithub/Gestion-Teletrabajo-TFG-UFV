@@ -1,11 +1,10 @@
 
-export interface Empleado {
-  id: number;
-  username: string;
-  password: string;
-  rol: number;
-  email: string;
-  equipo: string;
-  horaEntrada: string;
-  horaSalida: string;
+export interface Reunion {
+  mensaje: string;
+  obligatorio: boolean;
+}
+
+export interface Alert {
+  type: string;
+  message: string;
 }

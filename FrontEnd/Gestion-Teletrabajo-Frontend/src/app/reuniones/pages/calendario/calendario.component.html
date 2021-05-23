@@ -61,7 +61,39 @@
     </div>
     <div>
       Event:
-      <pre>{{ modalData?.event | json }}</pre>
+      <pre>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-heading"></i></span>
+            </div>
+            <input class="form-control" type="text" value="{{modalData?.event.title}}" disabled>
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-quote-right"></i></span>
+            </div>
+            <input class="form-control" type="text" value="{{modalData?.event.description}}" disabled>
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-hourglass-start"></i></span>
+            </div>
+
+            <input class="form-control" type="text" value="{{modalData?.event.start}}" disabled>
+
+          </div>
+
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-hourglass-end"></i></span>
+            </div>
+
+            <input class="form-control" type="text" value="{{modalData?.event.end}}" disabled>
+
+          </div>
+      </pre>
     </div>
   </div>
   <div class="modal-footer">

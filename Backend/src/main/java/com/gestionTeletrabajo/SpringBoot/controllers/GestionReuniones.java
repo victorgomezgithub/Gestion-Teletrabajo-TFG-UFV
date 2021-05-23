@@ -3,12 +3,10 @@ package com.gestionTeletrabajo.SpringBoot.controllers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +29,8 @@ import com.gestionTeletrabajo.SpringBoot.reuniones.MensajesReunion;
 import com.gestionTeletrabajo.SpringBoot.strategyReuniones.DescansoEntreReunionesStrategy;
 import com.gestionTeletrabajo.SpringBoot.strategyReuniones.DuracionMáximaReunionStrategy;
 import com.gestionTeletrabajo.SpringBoot.strategyReuniones.IReunionStrategy;
+import com.gestionTeletrabajo.SpringBoot.strategyReuniones.MaximoNumeroDeRunionesStrategy;
+import com.gestionTeletrabajo.SpringBoot.strategyReuniones.TiempoRespetoHorarioStrategy;
 
 @Controller
 @RequestMapping(value = "/reuniones")
@@ -46,7 +46,11 @@ public class GestionReuniones {
 	private IPanelDeConfiguracionRepository panelDeConfiguracionRepository;
 	@Autowired
 	private DescansoEntreReunionesStrategy descansoEntreReunionesStrategy;
-
+	@Autowired
+	private MaximoNumeroDeRunionesStrategy maximoDeReunionesStrategy;
+	@Autowired
+	private TiempoRespetoHorarioStrategy tiempoRespetoHorarioStrategy;
+	
 	@Autowired
 	ParseadorJSON parser;
 	
@@ -62,7 +66,6 @@ public class GestionReuniones {
 					reunionesEmpleado.add(reunionRepo.getOne(relacionEmpleadoReunion.getIdReunionFK()));
 				}
 			}
-
 		}
 		return reunionesEmpleado.toArray();
 	}
@@ -88,6 +91,8 @@ public class GestionReuniones {
 	  
 	  ArrayList<IReunionStrategy> reunionesStrategy = new ArrayList<>();
 	  reunionesStrategy.add(descansoEntreReunionesStrategy);
+	  reunionesStrategy.add(maximoDeReunionesStrategy);
+	  reunionesStrategy.add(tiempoRespetoHorarioStrategy);
 	  reunionesStrategy.add(new DuracionMáximaReunionStrategy());
 	  boolean hayAvisoObligatorio = false;
 	  for(IReunionStrategy estrategiaReunion: reunionesStrategy) {

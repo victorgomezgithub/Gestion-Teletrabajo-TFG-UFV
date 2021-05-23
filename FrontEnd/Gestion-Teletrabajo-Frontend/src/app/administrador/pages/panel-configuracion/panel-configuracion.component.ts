@@ -13,21 +13,14 @@ import { isConstructorDeclaration } from 'typescript';
 export class PanelConfiguracionComponent implements OnInit{
 
 
-   formArray = new FormArray([
-    new FormGroup({
-      parametro: new FormControl(''),
-      obligatoriedad: new FormControl('')
-    }),
-    new FormGroup({
-      parametro: new FormControl(''),
-      obligatoriedad: new FormControl('')
-    })
- ]);
+   formArray = new FormArray([]);
 
   configuraciones: Configuracion[] = [];
   public id: string;
 
-  constructor(private configuracionService: ConfiguracionService, private route: ActivatedRoute) { }
+  constructor(private configuracionService: ConfiguracionService, private route: ActivatedRoute) {
+
+  }
 
 
   ngOnInit(): void {
@@ -37,7 +30,9 @@ export class PanelConfiguracionComponent implements OnInit{
     observableConfiguracion.subscribe((resp) => {
       if (resp) {
         this.configuraciones = [...resp];
-        console.log(resp);
+        this.configuraciones.forEach(() => {
+          this.formArray.push(new FormGroup({parametro: new FormControl(''), obligatoriedad: new FormControl('')}));
+        });
       }
     });
   }

@@ -10,6 +10,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdministradorModule } from './administrador/administrador.module';
 import { CoworkingModuleModule } from './coworkingMaps/coworking-module/coworking-module.module';
+import { GraficasModule } from './graficas/graficas.module';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { CoworkingModuleModule } from './coworkingMaps/coworking-module/coworkin
     NgbModule,
     AdministradorModule,
     CoworkingModuleModule,
-
+    GraficasModule
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,12 @@
-<div class="d-flex justify-content-center">
+<p *ngFor="let alert of this.ALERTSAVI">
+  <ngb-alert [type]="alert.type" (closed)="close(alert)">{{ alert.message }}</ngb-alert>
+</p>
 
+<div class="d-flex justify-content-center">
   <ng-template #content let-modal>
+    <p *ngFor="let alert of this.ALERTSOBL">
+      <ngb-alert [type]="alert.type" (closed)="close(alert)">{{ alert.message }}</ngb-alert>
+    </p>
     <div class="modal-header" >
       <h4 class="modal-title">Nueva Reunión</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -78,7 +84,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Save</button>
+      <button type="button" class="btn btn-primary" (click)="guardar(modal);">Save</button>
     </div>
   </ng-template>
 

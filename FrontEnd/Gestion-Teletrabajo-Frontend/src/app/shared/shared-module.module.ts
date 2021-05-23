@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   exports: [
-    SidebarComponent
+    SidebarComponent,
   ],
 })
 export class SharedModule { }

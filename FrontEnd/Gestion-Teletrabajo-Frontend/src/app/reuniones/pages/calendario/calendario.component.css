@@ -1,5 +1,67 @@
+#botonUsuario {
+  margin-top: 3%;
+}
 
-.ng-star-inserted {
-  font-size: 15px;
+.uploadImages {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+}
+
+
+.inputfile + label {
+  background-color: white;
+  display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover .imgDescription{
+  visibility: visible;
+  opacity: 1;
+}
+
+.imgDescription {
+  position: relative;
+  color: black;
+  visibility: hidden;
+  margin-bottom: 0%;
+  opacity: 0;
+  transition: opacity .2s, visibility .2s;
+}
+
+.inputfile + label {
+	cursor: pointer;
+}
+
+.inputfile:focus + label {
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+
+.inputfile + label * {
+	pointer-events: none;
+}
+
+.upload {
+  width: 20%;
+  display: block;
+  margin: auto;
+}
+
+.imgDescription {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

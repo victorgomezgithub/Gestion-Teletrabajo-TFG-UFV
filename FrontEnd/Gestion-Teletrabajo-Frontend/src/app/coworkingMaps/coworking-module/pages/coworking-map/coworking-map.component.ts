@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from '../../../../../environments/environment';
+import { CoworkingService } from '../../services/coworking.service';
+import { ActivatedRoute } from '@angular/router';
+import { Coworking } from '../../interfaces/coworking';
 
 
 interface MarcadorColor {
@@ -19,14 +22,53 @@ export class CoworkingMapComponent implements AfterViewInit {
   @ViewChild('mapa') divMapa!: ElementRef;
   mapa!: mapboxgl.Map;
   zoomLevel = 15;
-  center: [number, number] = [ -75.921029433568, 45.28719674822362 ];
+  center: [number, number] = [-3.7027435849639327, 40.40651967652269];
+
+  public id: string;
+
+  coworkings: Coworking[] = [];
 
   // Arreglo de marcadores
   marcadores: MarcadorColor[] = [];
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private coworkingService: CoworkingService) { }
 
   ngAfterViewInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    const coworkings = this.coworkingService.cargarCoworkingEmpleado(this.id);
+
+    if (coworkings) {
+      coworkings.subscribe((resp) => {
+        if (resp) {
+
+          this.coworkings = [...resp];
+
+          this.coworkings.forEach(element => {
+
+            const color = element.color;
+
+            const nuevoMarcador = new mapboxgl.Marker({
+              draggable: true,
+              color
+            })
+              .setLngLat([element.ejeX, element.ejeY])
+              .addTo(this.mapa);
+
+
+            nuevoMarcador.on('dragend', () => {
+              this.guardarMarcadoresLocalStorage();
+            });
+            this.marcadores.push({
+              color,
+              marker: nuevoMarcador
+            });
+          });
+        }
+
+        console.log(this.marcadores);
+      });
+    }
+
 
     mapboxgl.accessToken = environment.mapboxToken;
 
@@ -36,16 +78,6 @@ export class CoworkingMapComponent implements AfterViewInit {
       center: this.center,
       zoom: this.zoomLevel
     });
-
-    this.leerLocalStorage();
-
-    // const markerHtml: HTMLElement = document.createElement('div');
-    // markerHtml.innerHTML = 'Hola Mundo';
-
-    // new mapboxgl.Marker()
-    //   .setLngLat( this.center )
-    //   .addTo( this.mapa );
-
   }
 
 
@@ -58,13 +90,21 @@ export class CoworkingMapComponent implements AfterViewInit {
       draggable: true,
       color
     })
-      .setLngLat( this.center )
-      .addTo( this.mapa );
+      .setLngLat(this.center)
+      .addTo(this.mapa);
 
     this.marcadores.push({
       color,
       marker: nuevoMarcador
     });
+
+    const coworkingNuevo = this.coworkingService.createCoworking(this.center[0].toString(), this.center[1].toString(), color, this.id);
+    coworkingNuevo.subscribe((resp) => {
+      if (resp) {
+      }
+    });
+
+
 
     this.guardarMarcadoresLocalStorage();
 
@@ -74,7 +114,7 @@ export class CoworkingMapComponent implements AfterViewInit {
 
   }
 
-  irMarcador( marker: any ): void {
+  irMarcador(marker: any): void {
     this.mapa.flyTo({
       center: marker.getLngLat()
     });
@@ -85,7 +125,7 @@ export class CoworkingMapComponent implements AfterViewInit {
 
     const lngLatArr: MarcadorColor[] = [];
 
-    this.marcadores.forEach( m => {
+    this.marcadores.forEach((m, index) => {
 
       const color = m.color;
       // tslint:disable-next-line:no-non-null-assertion
@@ -93,32 +133,38 @@ export class CoworkingMapComponent implements AfterViewInit {
 
       lngLatArr.push({
         color,
-        centro: [ lng, lat ]
+        centro: [lng, lat]
+      });
+
+      const updateCoworking = this.coworkingService.updateCoworking(lng, lat, this.coworkings[index].idCoworking.toString());
+      updateCoworking.subscribe((resp) => {
+        if (resp) {
+        }
       });
     });
 
-    localStorage.setItem('marcadores', JSON.stringify(lngLatArr) );
+    localStorage.setItem('marcadores', JSON.stringify(lngLatArr));
 
   }
 
   leerLocalStorage(): void {
 
-    if ( !localStorage.getItem('marcadores') ) {
+    if (!localStorage.getItem('marcadores')) {
       return;
     }
 
     // tslint:disable-next-line:no-non-null-assertion
-    const lngLatArr: MarcadorColor[] = JSON.parse( localStorage.getItem('marcadores')! );
+    const lngLatArr: MarcadorColor[] = JSON.parse(localStorage.getItem('marcadores')!);
 
-    lngLatArr.forEach( m => {
+    lngLatArr.forEach(m => {
 
       const newMarker = new mapboxgl.Marker({
         color: m.color,
         draggable: true
       })
         // tslint:disable-next-line:no-non-null-assertion
-        .setLngLat( m.centro! )
-        .addTo( this.mapa );
+        .setLngLat(m.centro!)
+        .addTo(this.mapa);
 
       this.marcadores.push({
         marker: newMarker,
@@ -128,16 +174,25 @@ export class CoworkingMapComponent implements AfterViewInit {
       newMarker.on('dragend', () => {
         this.guardarMarcadoresLocalStorage();
       });
-
-
     });
 
   }
 
-  borrarMarcador( i: number ): void {
+  borrarMarcador(i: number): void {
 
     this.marcadores[i].marker?.remove();
-    this.marcadores.splice( i, 1);
+    this.marcadores.splice(i, 1);
     this.guardarMarcadoresLocalStorage();
+
+    console.log(this.coworkings[i].idCoworking);
+
+    const deleteCoworking = this.coworkingService.deleteCoworking(this.coworkings[i].idCoworking);
+    if (deleteCoworking) {
+      deleteCoworking.subscribe((resp) => {
+        if (resp) {
+          this.coworkings.splice(i, 1);
+        }
+      });
+    }
   }
 }

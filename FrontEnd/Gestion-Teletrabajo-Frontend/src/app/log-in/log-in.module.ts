@@ -6,7 +6,6 @@ import { LogInPlantillaComponent } from './pages/log-in-plantilla/log-in-plantil
 import { SharedModule } from '../shared/shared-module.module';
 import { RegisterComponent } from './pages/register/register.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { OlvidadoContrasenaComponent } from './pages/olvidado-contrasena/olvidado-contrasena.component';
 
 
 
@@ -14,8 +13,7 @@ import { OlvidadoContrasenaComponent } from './pages/olvidado-contrasena/olvidad
   declarations: [
     LogInComponent,
     LogInPlantillaComponent,
-    RegisterComponent,
-    OlvidadoContrasenaComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,

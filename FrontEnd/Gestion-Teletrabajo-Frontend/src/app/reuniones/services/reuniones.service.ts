@@ -14,9 +14,9 @@ export class ReunionesService {
   private servicioUrl = 'http://localhost:8080/reuniones';
 
 
-  cargarReunionesEmpleado(id: string): Observable<CalendarEvent[]> {
+  cargarReunionesEmpleado(id: string): Observable<any[]> {
     const params = new HttpParams().set('idEmpleado', id);
-    return this.http.get<CalendarEvent[]>(`${this.servicioUrl}/findReunionesEmpleado`, { params });
+    return this.http.get<any[]>(`${this.servicioUrl}/findReunionesEmpleado`, { params });
   }
 
 

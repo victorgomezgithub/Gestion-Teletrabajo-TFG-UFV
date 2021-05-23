@@ -72,8 +72,8 @@ public class EmpleadoEntity {
 
 		for (ReunionPorEmpleadoEntity reunionIndividual : reunionesTotalesEmpleado) {
 
-			if (reunionIndividual.getReunion().getStart().before(fechaActual)
-					&& reunionIndividual.getReunion().getEnd().after(fechaActual)) {
+			if (reunionIndividual.getReunion().getStartDate().before(fechaActual)
+					&& reunionIndividual.getReunion().getEndDate().after(fechaActual)) {
 				this.disponibilidad = "ocupado";
 				return;
 			}

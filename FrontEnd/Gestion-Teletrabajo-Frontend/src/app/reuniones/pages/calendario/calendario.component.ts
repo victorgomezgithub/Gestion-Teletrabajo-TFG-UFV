@@ -43,16 +43,10 @@ export class CalendarioComponent implements OnInit{
 
   actions: CalendarEventAction[] = [
     {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
+        console.log(event);
         const borrarReunion =  this.reunionService.deleteReunion((event as any).idReunion);
         borrarReunion.subscribe((resp) => {
           if (resp) {
@@ -68,7 +62,7 @@ export class CalendarioComponent implements OnInit{
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [];
+  events: any[] = [];
 
   activeDayIsOpen = true;
 
@@ -90,12 +84,12 @@ export class CalendarioComponent implements OnInit{
           this.events = [...resp];
 
           this.events.forEach(element => {
-            element.start = new Date(element.start);
-            element.end = new Date(element.end);
+            element.start = new Date(element.startDate);
+            element.end = new Date(element.endDate);
             element.actions = this.actions;
           });
 
-          this.cd.markForCheck();
+          this.cd.detectChanges();
         }
       });
     }

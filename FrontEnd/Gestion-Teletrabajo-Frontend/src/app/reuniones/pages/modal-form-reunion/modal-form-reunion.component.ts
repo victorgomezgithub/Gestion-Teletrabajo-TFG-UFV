@@ -6,6 +6,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientesService } from '../../../log-in/services/clientes.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReunionesService } from '../../services/reuniones.service';
+import { Reunion, Alert } from '../../interfaces/reuniones.interface';
+import { AlertService } from 'alert-service';
+
 
 @Component({
   selector: 'app-modal-form-reunion',
@@ -19,10 +22,13 @@ export class ModalFormReunionComponent {
   integrantesReunion: number[] = [];
   public id: string;
   uploadFiles: any[] = [];
-
+  isGuardar = false;
+  mensajes: Reunion[] = [];
+  ALERTSOBL: Alert[] = [];
+  ALERTSAVI: Alert[] = [];
 
   // tslint:disable-next-line:max-line-length
-  constructor(private cd: ChangeDetectorRef, private empleadoService: ClientesService, private modalService: NgbModal, private reunionesService: ReunionesService, private route: ActivatedRoute) {
+  constructor(public alertService: AlertService, private cd: ChangeDetectorRef, private empleadoService: ClientesService, private modalService: NgbModal, private reunionesService: ReunionesService, private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.integrantesReunion.push(+this.id);
     const reunionesPorEmpleado: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
@@ -31,8 +37,6 @@ export class ModalFormReunionComponent {
       this.empleadosTotales = [...resp];
       this.cd.markForCheck();
     });
-
-
   }
 
   addReunionForm = new FormGroup({
@@ -48,34 +52,13 @@ export class ModalFormReunionComponent {
   open(content): any {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      console.log(this.closeResult);
       if (result === 'Save click') {
-        this.id = this.route.snapshot.paramMap.get('id');
-        const controls = this.addReunionForm.controls;
-        const parametrosReunion: any = {};
-        parametrosReunion.creador = this.id;
-        parametrosReunion.title = controls.titulo.value;
-        parametrosReunion.description = controls.descripcion.value;
-        parametrosReunion.fechaInicio = controls.fechaInicio.value;
-        parametrosReunion.fechaFin = controls.fechaFin.value;
-        parametrosReunion.files = this.uploadFiles;
-        parametrosReunion.integrantes = this.integrantesReunion;
-
-        const nuevoEmpleado: Observable<any[]> = this.reunionesService.nuevaReunion(parametrosReunion);
-        nuevoEmpleado.subscribe((resp) => {
-          if (resp) {
-            const reunionesPorEmpleado: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
-            reunionesPorEmpleado.subscribe((response) => {
-              console.log(response);
-              this.empleadosTotales = [...response];
-            });
-          }
-        });
       }
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -97,6 +80,66 @@ export class ModalFormReunionComponent {
   handleUpload(files): void {
     // const file = files.item(0);
     // console.log("file");
-    this.uploadFiles.push('file');
+    this.uploadFiles.push(files.item(0));
+  }
+
+  guardar(modal: any): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    const controls = this.addReunionForm.controls;
+    const parametrosReunion: any = {};
+    parametrosReunion.creador = this.id;
+    parametrosReunion.title = controls.titulo.value;
+    parametrosReunion.description = controls.descripcion.value;
+    parametrosReunion.fechaInicio = controls.fechaInicio.value;
+    parametrosReunion.fechaFin = controls.fechaFin.value;
+    parametrosReunion.files = this.uploadFiles;
+    parametrosReunion.integrantes = this.integrantesReunion;
+
+    const nuevoEmpleado: Observable<any[]> = this.reunionesService.nuevaReunion(parametrosReunion);
+    this.cd.detectChanges();
+    nuevoEmpleado.subscribe((resp) => {
+      if (resp) {
+        this.mensajes = [...resp];
+        this.procesarMensajes();
+        if (!this.isMensajesObligatorios()) {
+          const reunionesPorEmpleado: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
+          reunionesPorEmpleado.subscribe((response) => {
+            this.empleadosTotales = [...response];
+            this.cd.checkNoChanges();
+            modal.close('Save click');
+          });
+        }
+        this.cd.markForCheck();
+      }
+    });
+  }
+
+  procesarMensajes(): void {
+    this.mensajes.forEach((element) => {
+      if (element.obligatorio) {
+        const alerta: Alert = {type: 'danger', message: element.mensaje};
+        this.ALERTSOBL.push(alerta);
+      } else {
+        const alerta: Alert = {type: 'warning', message: element.mensaje};
+        this.ALERTSAVI.push(alerta);
+      }
+    });
+    this.cd.detectChanges();
+  }
+
+  isMensajesObligatorios(): boolean {
+    let mensajeObligatorio = false;
+    this.mensajes.forEach((element) => {
+      if (element.obligatorio) {
+        mensajeObligatorio = true;
+        return;
+      }
+    });
+    return mensajeObligatorio;
+  }
+
+
+  close(alert: Alert): void {
+    this.ALERTSOBL.splice(this.ALERTSOBL.indexOf(alert), 1);
   }
 }

@@ -1,6 +1,5 @@
-package com.gestionTeletrabajo.SpringBoot.strategyReuniones;
+ package com.gestionTeletrabajo.SpringBoot.strategyReuniones;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,13 +8,9 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import com.gestionTeletrabajo.SpringBoot.constantes.Constantes;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IClienteRespository;
-import com.gestionTeletrabajo.SpringBoot.models.dao.IPanelDeConfiguracionRepository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionPorEmpleadoRespository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionRespository;
 import com.gestionTeletrabajo.SpringBoot.models.entity.EmpleadoEntity;
@@ -34,8 +29,7 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 	private IReunionRespository reunionRepo;
 	@Autowired
 	private IClienteRespository clienteRepo;
-	@Autowired
-	private IPanelDeConfiguracionRepository panelDeConfiguracionRepository;
+
 
 	@Override
 	public boolean isPosibleReunion(DatosReunion datosReunion, PanelDeConfiguracionEntity[] configuracionesEmpresa, List<MensajesReunion> mensajesReunion) {
@@ -74,7 +68,7 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 	private boolean checkDescansoPreReunionRespetado(ReunionEntity reunion, DatosReunion datosReunion, String parametro) {
 		try {
 			Date fechaInicio = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaFin());
-			Date fechaFin = reunion.getStart();
+			Date fechaFin = reunion.getStartDate();
 			long diffInMillies = Math.abs(fechaFin.getTime() - fechaInicio.getTime());
 		    long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		    
@@ -91,7 +85,7 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 	private boolean checkDescansoPostReunionRespetado(ReunionEntity reunion, DatosReunion datosReunion, String parametro) {
 		try {
 			Date fechaInicio = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaInicio());
-			Date fechaFin = reunion.getEnd();
+			Date fechaFin = reunion.getEndDate();
 			long diffInMillies = Math.abs(fechaFin.getTime() - fechaInicio.getTime());
 		    long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		    

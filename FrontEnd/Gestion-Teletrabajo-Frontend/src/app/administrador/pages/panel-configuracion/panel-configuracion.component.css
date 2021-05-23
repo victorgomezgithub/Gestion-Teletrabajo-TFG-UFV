@@ -13,11 +13,11 @@
 }
 
 .aviso {
-  background-color: #cccc00;
+  background-color: hsl(60, 100%, 76%);
 }
 
 .obligatorio {
-  background-color: #f44336;
+  background-color: #ff837a;
 }
 
 .noconsiderar {

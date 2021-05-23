@@ -18,19 +18,19 @@ public class ReunionEntity {
 	
 	private String title;
 	private String description;
-	private Date start;
-	private Date end;
+	private Date startDate;
+	private Date endDate;
 	private String documento;
 	
 	public ReunionEntity() {
 		
 	}
 	
-	public ReunionEntity(String title, String description, Date start, Date end, String documento) {
+	public ReunionEntity(String title, String description, Date startDate, Date endDate, String documento) {
 		this.title = title;
 		this.description = description;
-		this.start = start;
-		this.end = end;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		this.documento = documento;
 	}
 	
@@ -38,11 +38,11 @@ public class ReunionEntity {
 		return idReunion;
 	}
 	
-	public Date getEnd() {
-		return end;
+	public Date getEndDate() {
+		return endDate;
 	}
-	public void setEnd(Date end) {
-		this.end = end;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 	public String getTitle() {
 		return title;
@@ -56,11 +56,11 @@ public class ReunionEntity {
 	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
-	public Date getStart() {
-		return start;
+	public Date getStartDate() {
+		return startDate;
 	}
-	public void setStart(Date start) {
-		this.start = start;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 	public String getDescription() {
