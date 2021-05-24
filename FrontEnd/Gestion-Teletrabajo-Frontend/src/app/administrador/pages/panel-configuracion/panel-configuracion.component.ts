@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { ConfiguracionService } from '../../services/configuraciones.service';
 import { Configuracion } from '../../interfaces/configuracion.interface';
-import { ActivatedRoute } from '@angular/router';
-import { isConstructorDeclaration } from 'typescript';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Alert } from '../../../reuniones/interfaces/reuniones.interface';
 
 @Component({
   selector: 'app-panel-configuracion',
@@ -12,14 +12,19 @@ import { isConstructorDeclaration } from 'typescript';
 })
 export class PanelConfiguracionComponent implements OnInit{
 
+  alerta: Alert = {type: 'success', message: ''};
 
-   formArray = new FormArray([]);
-
+  formArray = new FormArray([]);
+  guardado = false;
   configuraciones: Configuracion[] = [];
   public id: string;
 
-  constructor(private configuracionService: ConfiguracionService, private route: ActivatedRoute) {
+  constructor(private router: Router, private configuracionService: ConfiguracionService, private route: ActivatedRoute) {
+    this.id = this.route.snapshot.paramMap.get('id');
 
+    if (localStorage.getItem('auth') !== ('autentificado_' + this.id) || localStorage.getItem('rol') !== 'administrador') {
+      this.router.navigate(['/']);
+    }
   }
 
 
@@ -48,6 +53,11 @@ export class PanelConfiguracionComponent implements OnInit{
     const updateConfiguraciones = this.configuracionService.guardarConfiguraciones(this.configuraciones);
 
     updateConfiguraciones.subscribe((resp) => {
+      this.guardado = true;
     });
+  }
+
+  close(): any {
+    this.guardado = false;
   }
 }

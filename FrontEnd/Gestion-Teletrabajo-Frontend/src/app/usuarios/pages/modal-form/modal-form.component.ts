@@ -15,9 +15,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ModalFormComponent {
   closeResult = '';
-
-  constructor(private modalService: NgbModal, private clienteService: ClientesService, private route: ActivatedRoute) { }
   public id: string;
+  public rol: string;
+
+  constructor(private modalService: NgbModal, private clienteService: ClientesService, private route: ActivatedRoute) {
+    this.rol = localStorage.getItem('rol');
+  }
 
   addUserForm = new FormGroup({
     nombreCompleto: new FormControl(''),

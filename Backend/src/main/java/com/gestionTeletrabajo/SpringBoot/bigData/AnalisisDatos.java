@@ -5,28 +5,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gestionTeletrabajo.SpringBoot.models.dao.IClienteRespository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.ICoworkingRepository;
-import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionPorEmpleadoRespository;
-import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionRespository;
-import com.gestionTeletrabajo.SpringBoot.models.entity.ReunionEntity;
+import com.gestionTeletrabajo.SpringBoot.models.dao.IPanelDeConfiguracionRepository;
+import com.gestionTeletrabajo.SpringBoot.models.dao.ICoworkingRepository.ChartCircularEmployee;
+import com.gestionTeletrabajo.SpringBoot.models.dao.ICoworkingRepository.ChartCircularObligatoriedad;
+import com.gestionTeletrabajo.SpringBoot.models.dao.ICoworkingRepository.ChartDataSets;
 
 @Component
 public class AnalisisDatos {
 	
 	@Autowired
-	private IReunionPorEmpleadoRespository reunionEmpleadoRepo;
-	@Autowired
-	private IReunionRespository reunionRepo;
-	@Autowired
-	private IClienteRespository clienteRepo;
-
-	@Autowired
-	private ICoworkingRepository coworkingRepo;
+	private ICoworkingRepository analisisRepo;
 	
-	
-	public ChartDataSets[] getAnalisisDatosReunionesPorMes() {
-		return coworkingRepo.findCoworkingPorMesAno();
+	public List<ChartDataSets> getAnalisisDatosReunionesPorMes() {
+		return analisisRepo.findDataPorMesAno();
 	}
+	
+	public List<ChartCircularEmployee> getEmpleadosPorReus() {
+		return analisisRepo.findIntegrantesPorReunion();
+	}
+	
+	public List<ChartCircularObligatoriedad> getConfigStats() {
+		return analisisRepo.getConfigStats();
+	}
+	
 	
 }

@@ -13,7 +13,15 @@ export class BarrasService {
 
   private servicioUrl = 'http://localhost:8080/analisis';
 
-  deleteReunion(): Observable<any[]> {
+  getReunionesTot(): Observable<any[]> {
     return this.http.get<any[]>(`${this.servicioUrl}/findGraficaReusTot`, {  });
+  }
+
+  getEmpleadosPorReu(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.servicioUrl}/findEmpleadosPorReu`, {  });
+  }
+
+  getConfTipos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.servicioUrl}/findConfigStats`, {  });
   }
 }

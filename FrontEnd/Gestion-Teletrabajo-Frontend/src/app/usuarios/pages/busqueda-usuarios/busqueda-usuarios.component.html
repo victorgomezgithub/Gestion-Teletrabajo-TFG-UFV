@@ -1,10 +1,11 @@
 <app-sidebar></app-sidebar>
 
+
 <div class="main">
 
   <div class="tableUsers d-flex justify-content-center">
 
-    <table datatable class="table table-striped row-border hover" id="tablaUsuarios">
+    <table *ngIf="this.empleadosTotales.length > 0" datatable="ng" class="table table-striped row-border hover" id="tablaUsuarios">
       <thead>
         <tr>
           <th scope="col">Nombre</th>
@@ -13,7 +14,7 @@
           <th scope="col">Equipo</th>
           <th scope="col">Jornada</th>
           <th scope="col">Disponibilidad</th>
-          <th scope="col"></th>
+          <th *ngIf="rol === 'administrador'" scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -25,7 +26,7 @@
           <td>{{empleado.horaEntrada + '-' + empleado.horaSalida}}</td>
           <td *ngIf="empleado.disponibilidad==='ocupado';else elseBlock" class="botones"><i class="fas fa-times-circle"></i></td>
           <ng-template #elseBlock><td class="botones"><i class="fas fa-check-circle"></i></td></ng-template>
-          <td><button class="boton" (click)="borrarEmpleado(empleado.id)" type="button" class="boton btn btn-outline-danger"><i class="fas fa-trash"></i></button></td>
+          <td *ngIf="rol === 'administrador'"><button class="boton" (click)="borrarEmpleado(empleado.id)" type="button" class="boton btn btn-outline-danger"><i class="fas fa-trash"></i></button></td>
         </tr>
       </tbody>
     </table>

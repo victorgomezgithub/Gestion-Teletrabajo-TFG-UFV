@@ -2,25 +2,37 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ClientesService } from '../../../log-in/services/clientes.service';
 import { Empleado } from '../../../log-in/interfaces/logIn.interface';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-busqueda-usuarios',
   templateUrl: './busqueda-usuarios.component.html',
   styleUrls: ['./busqueda-usuarios.component.css']
 })
-export class BusquedaUsuariosComponent {
+export class BusquedaUsuariosComponent implements OnInit{
 
   empleadosTotales: Empleado[] = [];
   public id: string;
-
-  constructor(private cd: ChangeDetectorRef, private empleadoService: ClientesService, private route: ActivatedRoute) {
+  public rol: string;
+  // tslint:disable-next-line:max-line-length
+  constructor(private router: Router, private cd: ChangeDetectorRef, private empleadoService: ClientesService, private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.rol = localStorage.getItem('rol');
+
+
+    if (localStorage.getItem('auth') !== ('autentificado_' + this.id)) {
+      this.router.navigate(['/']);
+    }
+
+  }
+
+  ngOnInit(): void {
+    this.cd.detectChanges();
+
     const empleadosEmpresa: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
     empleadosEmpresa.subscribe((resp) => {
-      console.log(resp);
       this.empleadosTotales = [...resp];
-      cd.detectChanges();
+      this.cd.detectChanges();
     });
   }
 

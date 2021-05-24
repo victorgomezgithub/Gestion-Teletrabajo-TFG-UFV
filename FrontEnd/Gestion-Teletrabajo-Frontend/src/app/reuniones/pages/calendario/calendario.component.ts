@@ -3,7 +3,7 @@ import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMo
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReunionesService } from '../../services/reuniones.service';
 
 const colors: any = {
@@ -70,7 +70,14 @@ export class CalendarioComponent implements OnInit{
   public id: string;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private modal: NgbModal, private route: ActivatedRoute, private reunionService: ReunionesService, private cd: ChangeDetectorRef) { }
+  constructor(private router: Router, private modal: NgbModal, private route: ActivatedRoute, private reunionService: ReunionesService, private cd: ChangeDetectorRef) {
+    this.id = this.route.snapshot.paramMap.get('id');
+
+    if (localStorage.getItem('auth') !== ('autentificado_' + this.id)) {
+      this.router.navigate(['/']);
+    }
+
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');

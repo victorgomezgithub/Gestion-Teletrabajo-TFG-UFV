@@ -16,7 +16,7 @@ public interface IClienteRespository extends JpaRepository<EmpleadoEntity, Long>
 	
     
     
-    @Query("SELECT E FROM EmpleadoEntity E where E.idEmpresaFK = (SELECT EP.idEmpresaFK FROM EmpleadoEntity EP where EP.idEmpleado = ?1)") 
+    @Query("SELECT E FROM EmpleadoEntity E where E.idEmpresaFK = (SELECT EP.idEmpresaFK FROM EmpleadoEntity EP where EP.idEmpleado = ?1) AND E.idEmpleado != ?1") 
     List<EmpleadoEntity> findAllByCompany(Long idEmpleado);
 	
 }

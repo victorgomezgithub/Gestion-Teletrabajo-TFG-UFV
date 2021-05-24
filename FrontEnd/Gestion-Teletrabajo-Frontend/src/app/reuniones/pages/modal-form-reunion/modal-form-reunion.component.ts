@@ -20,6 +20,7 @@ export class ModalFormReunionComponent {
   closeResult = '';
   empleadosTotales: Empleado[]  = [];
   integrantesReunion: number[] = [];
+  nombresEmpleado: string[] = [];
   public id: string;
   uploadFiles: any[] = [];
   isGuardar = false;
@@ -35,6 +36,11 @@ export class ModalFormReunionComponent {
     reunionesPorEmpleado.subscribe((resp) => {
       console.log(resp);
       this.empleadosTotales = [...resp];
+      this.empleadosTotales.forEach(element => {
+        if (element.id === +this.id) {
+          this.nombresEmpleado.push(element.nombre);
+        }
+      });
       this.cd.markForCheck();
     });
   }
@@ -74,13 +80,17 @@ export class ModalFormReunionComponent {
   addCourse(): void{
     console.log(this.addReunionForm.controls.integrante.value);
     this.integrantesReunion.push(this.empleadosTotales[this.addReunionForm.controls.integrante.value - 1].id);
+    this.nombresEmpleado.push(this.empleadosTotales[this.addReunionForm.controls.integrante.value - 1].nombre);
     this.addReunionForm.controls.integrante.reset();
   }
 
   handleUpload(files): void {
-    // const file = files.item(0);
-    // console.log("file");
-    this.uploadFiles.push(files.item(0));
+    const file = files.item(0);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.uploadFiles.push(reader.result);
+    };
   }
 
   guardar(modal: any): void {

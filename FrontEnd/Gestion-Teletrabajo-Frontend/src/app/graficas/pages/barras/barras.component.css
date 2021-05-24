@@ -1,6 +1,20 @@
-#grafica {
-  width: 20%;
-  height: auto;
-  margin-left: 3.5%;
-  margin-top: 5%;
+#titulo {
+  margin-top: 1%;
 }
+#grafica {
+  width: 80%;
+  height: auto;
+  margin-left: 8%;
+  margin-top: 2%;
+}
+
+#pieRow {
+  margin-left: 32%;
+  margin-top: 3%;
+}
+
+.pieDiv {
+  width: 700px;
+  height: auto;
+}
+

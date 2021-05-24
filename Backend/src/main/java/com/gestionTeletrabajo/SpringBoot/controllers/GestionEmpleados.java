@@ -108,6 +108,9 @@ public class GestionEmpleados {
 	private void generaPanelDeConfiguracion(EmpresaEntity empresaNueva) {
 		panelDeConfiguracionRepository.save(new PanelDeConfiguracionEntity(empresaNueva,"Duración máxima de las reuniones","60","Aviso"));
 		panelDeConfiguracionRepository.save(new PanelDeConfiguracionEntity(empresaNueva,"Descanso entre reuniones","15","Aviso"));
+		panelDeConfiguracionRepository.save(new PanelDeConfiguracionEntity(empresaNueva,"Numero máximo de reuniones diarias","5","Aviso"));
+		panelDeConfiguracionRepository.save(new PanelDeConfiguracionEntity(empresaNueva,"Tiempo de respeto para la entrada y la salida","10","Aviso"));
+		panelDeConfiguracionRepository.save(new PanelDeConfiguracionEntity(empresaNueva,"Maximo de integrantes por reunión","5","Aviso"));
 	}
 
 

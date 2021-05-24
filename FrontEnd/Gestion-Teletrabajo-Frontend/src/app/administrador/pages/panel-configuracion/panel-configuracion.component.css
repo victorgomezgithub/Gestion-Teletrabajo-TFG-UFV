@@ -2,6 +2,10 @@
   margin-top: 2%;
 }
 
+#aviso {
+  width: 20%;
+}
+
 #configuracion {
   margin-top: 2%;
   margin-left: 30%;
@@ -13,7 +17,7 @@
 }
 
 .aviso {
-  background-color: hsl(60, 100%, 76%);
+  background-color: #ffff85;
 }
 
 .obligatorio {

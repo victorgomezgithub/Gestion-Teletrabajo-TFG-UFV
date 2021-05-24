@@ -86,7 +86,7 @@
   </div>
 </ng-template>
 
-<button class="btn btn-lg btn-success"  id="botonUsuario" (click)="open(content)">Añadir Usuario</button>
+<button *ngIf="rol === 'administrador'" class="btn btn-lg btn-success"  id="botonUsuario" (click)="open(content)">Añadir Usuario</button>
 
 <hr>
 

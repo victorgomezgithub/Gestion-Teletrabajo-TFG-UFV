@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from '../../../../../environments/environment';
 import { CoworkingService } from '../../services/coworking.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Coworking } from '../../interfaces/coworking';
 
 
@@ -31,7 +31,13 @@ export class CoworkingMapComponent implements AfterViewInit {
   // Arreglo de marcadores
   marcadores: MarcadorColor[] = [];
 
-  constructor(private route: ActivatedRoute, private coworkingService: CoworkingService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private coworkingService: CoworkingService) {
+    this.id = this.route.snapshot.paramMap.get('id');
+
+    if (localStorage.getItem('auth') !== ('autentificado_' + this.id)) {
+      this.router.navigate(['/']);
+    }
+   }
 
   ngAfterViewInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -101,6 +107,7 @@ export class CoworkingMapComponent implements AfterViewInit {
     const coworkingNuevo = this.coworkingService.createCoworking(this.center[0].toString(), this.center[1].toString(), color, this.id);
     coworkingNuevo.subscribe((resp) => {
       if (resp) {
+        this.coworkings.push(resp);
       }
     });
 

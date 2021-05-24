@@ -25,26 +25,31 @@ public class TiempoRespetoHorarioStrategy implements IReunionStrategy {
 	@Override
 	public boolean isPosibleReunion(DatosReunion datosReunion, PanelDeConfiguracionEntity[] configuracionesEmpresa, List<MensajesReunion> mensajesReunion) {
 		boolean hayMensajeObligatorio = false;
-
-		try {
 			
-			Date fechaInicio = new SimpleDateFormat("HH:mm").parse(datosReunion.getFechaInicio());
-			Date fechaFin = new SimpleDateFormat("HH:mm").parse(datosReunion.getFechaFin());
-			for(Long idEmpleado: datosReunion.getIntegrantes()) {
-				if(isFechaAfterHorario(fechaInicio,clienteRepo.getOne(idEmpleado),Long.parseLong(configuracionesEmpresa[3].getParametro())) || isFechaAfterHorario(fechaFin,clienteRepo.getOne(idEmpleado),Long.parseLong(configuracionesEmpresa[3].getParametro()))) {
-				    if (configuracionesEmpresa[3].getObligatoriedad().equals(Constantes.Obligatoriedad_Aviso)) {
-				    	mensajesReunion.add(new MensajesReunion("Respeto de horarios recomendados excedidos para " + clienteRepo.getOne(idEmpleado).getNombre(), false));
-				    }
-				    
-				    if (configuracionesEmpresa[3].getObligatoriedad().equals(Constantes.Obligatoriedad_Obligatorio)) {
-				    	mensajesReunion.add(new MensajesReunion("Respeto de horarios obligatorios excedidos para " + clienteRepo.getOne(idEmpleado).getNombre(), true));
-				    	hayMensajeObligatorio = true;
-				    }
+			;
+			try {
+				Date fechaInicio = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaInicio());
+				Date fechaFin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaFin());
+				
+				for(Long idEmpleado: datosReunion.getIntegrantes()) {
+					if(isFechaAfterHorario(fechaInicio,clienteRepo.getOne(idEmpleado),Long.parseLong(configuracionesEmpresa[3].getParametro())) || isFechaAfterHorario(fechaFin,clienteRepo.getOne(idEmpleado),Long.parseLong(configuracionesEmpresa[3].getParametro()))) {
+					    if (configuracionesEmpresa[3].getObligatoriedad().equals(Constantes.Obligatoriedad_Aviso)) {
+					    	mensajesReunion.add(new MensajesReunion("Respeto de horarios recomendados excedidos para " + clienteRepo.getOne(idEmpleado).getNombre(), false));
+					    }
+					    
+					    if (configuracionesEmpresa[3].getObligatoriedad().equals(Constantes.Obligatoriedad_Obligatorio)) {
+					    	mensajesReunion.add(new MensajesReunion("Respeto de horarios obligatorios excedidos para " + clienteRepo.getOne(idEmpleado).getNombre(), true));
+					    	hayMensajeObligatorio = true;
+					    }
+					}
 				}
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+			
+
+
+
 		return hayMensajeObligatorio;
 	}
 

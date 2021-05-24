@@ -40,9 +40,10 @@ public class GestionCoworking {
 	
 	@PostMapping("/newCoworking")
 	@ResponseBody
-	public void newCoworking(@RequestParam String ejeX,@RequestParam String ejeY,@RequestParam String color, @RequestParam String idEmpleado) {	
+	public CoworkingEntity newCoworking(@RequestParam String ejeX,@RequestParam String ejeY,@RequestParam String color, @RequestParam String idEmpleado) {	
 		CoworkingEntity coworkingEntity = new CoworkingEntity(Float.parseFloat(ejeX),Float.parseFloat(ejeY), color, clienteDao.getOne(Long.parseLong(idEmpleado)).getIdEmpresaFK());
 		coworkingDao.save(coworkingEntity);
+		return coworkingEntity;
 	}
 	
 	@PostMapping("/updateCoworking")

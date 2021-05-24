@@ -1,11 +1,10 @@
 <app-sidebar></app-sidebar>
 <div class="d-flex justify-content-center h-100" id="titulo">
-  <h1>Gráfica de Barras</h1>
+  <h1>ANÁLISIS DE DATOS</h1>
   <hr>
 </div>
-<div  class="row">
-    <div id="grafica" class="col">
-
+<div id="grafica" class="row">
+    <div class="col">
         <div style="display: block">
             <canvas baseChart
                     [datasets]="barChartData"
@@ -15,30 +14,32 @@
                     [chartType]="barChartType">
             </canvas>
         </div>
-
-        <button (click)="randomize()"
-                class="btn btn-primary float-end">
-            Actualizar
-        </button>
-
     </div>
-  <div id="grafica" class="col">
+  <div class="col">
 
-      <div style="display: block">
-          <canvas baseChart
-                  [datasets]="barChartData"
-                  [labels]="barChartLabels"
-                  [options]="barChartOptions"
-                  [legend]="barChartLegend"
-                  [chartType]="barChartType">
-          </canvas>
-      </div>
-
-      <button (click)="randomize()"
-              class="btn btn-primary float-end">
-          Actualizar
-      </button>
-
+    <div style="display: block">
+      <canvas baseChart class="chart"
+          [chartType]="circleChartType"
+          [datasets]="circleChartData"
+          [labels]="circleChartLabels"
+          [options]="circleChartOptions"
+          [legend]="true">
+      </canvas>
+    </div>
   </div>
 </div>
+
+
+<div id="pieRow" class="row">
+  <div class="chart-wrapper">
+    <canvas class="pieDiv" baseChart
+    [data]="doughnutChartData"
+    [labels]="doughnutChartLabels"
+    [options]="doughnutChartOptions"
+    [chartType]="doughnutChartType"
+    [colors]="colorCircles">
+  </canvas>
+</div>
+</div>
+
 

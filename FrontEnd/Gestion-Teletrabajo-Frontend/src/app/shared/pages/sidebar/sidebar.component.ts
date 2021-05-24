@@ -9,10 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
 
   public id: string;
-
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  public rol: string;
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.rol = localStorage.getItem('rol');
+   }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+
   }
 }

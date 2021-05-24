@@ -29,6 +29,8 @@ export class LogInComponent {
 
       empleadoObservable.subscribe((resp) => {
         if (resp) {
+          localStorage.setItem('auth', 'autentificado_' + resp.id);
+          localStorage.setItem('rol', resp.rol);
           this.router.navigate(['/listadoReuniones/' + resp.id]);
         } else {
           this.showErrorMessage = true;
