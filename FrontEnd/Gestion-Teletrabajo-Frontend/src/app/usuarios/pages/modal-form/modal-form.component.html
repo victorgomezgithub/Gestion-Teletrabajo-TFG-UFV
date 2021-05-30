@@ -49,7 +49,8 @@
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="fas fa-tag"></i></span>
         </div>
-        <select formControlName="rol" class="form-control">
+        <select aria-placeholder="rol" formControlName="rol" class="form-control">
+          <option value="" disabled selected>rol</option>
           <option value="Empleado" >empleado</option>
           <option value="Administrador">administrador</option>
       </select>
@@ -60,7 +61,7 @@
           <span class="input-group-text"><i class="fas fa-clock"></i></span>
         </div>
 
-        <input class="form-control" type="time" id="timepicker" formControlName="horarioEntrada" placeholder="hora entrada">
+        <input class="form-control" type="time" id="timepicker" formControlName="horarioEntrada">
 
       </div>
 
@@ -69,7 +70,7 @@
           <span class="input-group-text"><i class="fas fa-clock"></i></span>
         </div>
 
-        <input class="form-control" min="00:00" max="24:00" id="timepickerSalida" type="time" formControlName="horarioSalida" placeholder="hora salida">
+        <input class="form-control" min="00:00" max="24:00" id="timepickerSalida" type="time" formControlName="horarioSalida">
 
       </div>
 

@@ -22,7 +22,7 @@ export class ModalFormReunionComponent {
   integrantesReunion: number[] = [];
   nombresEmpleado: string[] = [];
   public id: string;
-  uploadFiles: any[] = [];
+  uploadedFile: string[] = [];
   isGuardar = false;
   mensajes: Reunion[] = [];
   ALERTSOBL: Alert[] = [];
@@ -63,6 +63,8 @@ export class ModalFormReunionComponent {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+    this.addReunionForm.reset();
+
   }
 
 
@@ -89,7 +91,7 @@ export class ModalFormReunionComponent {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.uploadFiles.push(reader.result);
+      this.uploadedFile.push(reader.result.toString() + 'filename' + file.name.split('.')[0] + 'OTROELEMENTO');
     };
   }
 
@@ -102,7 +104,7 @@ export class ModalFormReunionComponent {
     parametrosReunion.description = controls.descripcion.value;
     parametrosReunion.fechaInicio = controls.fechaInicio.value;
     parametrosReunion.fechaFin = controls.fechaFin.value;
-    parametrosReunion.files = this.uploadFiles;
+    parametrosReunion.file = this.uploadedFile;
     parametrosReunion.integrantes = this.integrantesReunion;
 
     const nuevoEmpleado: Observable<any[]> = this.reunionesService.nuevaReunion(parametrosReunion);
@@ -115,11 +117,11 @@ export class ModalFormReunionComponent {
           const reunionesPorEmpleado: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
           reunionesPorEmpleado.subscribe((response) => {
             this.empleadosTotales = [...response];
-            this.cd.checkNoChanges();
+            this.cd.detectChanges();
             modal.close('Save click');
           });
         }
-        this.cd.markForCheck();
+        this.cd.detectChanges();
       }
     });
   }

@@ -4,4 +4,7 @@
   <a [routerLink]="['/busquedaUsuarios/', id]"><i class="fa fa-fw fa-users animate__animated animate__fadeIn"></i></a>
   <a *ngIf="rol === 'administrador'" [routerLink]="['/estadisticas/', id]"><i class="fa fa-fw fa-chart-pie animate__animated animate__fadeIn"></i></a>
   <a *ngIf="rol === 'administrador'" [routerLink]="['/panelConfiguracion/', id]"><i class="fa fa-fw fa-wrench animate__animated animate__fadeIn"></i></a>
+  <a (click)="logOut()"><i class="fa fa-fw fa-sign-out-alt animate__animated animate__fadeIn"></i></a>
+  <span><p id="empresa">{{nombreEmpresa}}</p></span>
 </div>
+

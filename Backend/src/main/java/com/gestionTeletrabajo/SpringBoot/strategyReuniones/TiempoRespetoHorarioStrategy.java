@@ -24,7 +24,7 @@ public class TiempoRespetoHorarioStrategy implements IReunionStrategy {
 
 	@Override
 	public boolean isPosibleReunion(DatosReunion datosReunion, PanelDeConfiguracionEntity[] configuracionesEmpresa, List<MensajesReunion> mensajesReunion) {
-		boolean hayMensajeObligatorio = false;
+		boolean hayMensajeObligatorio = true;
 			
 			;
 			try {
@@ -39,7 +39,7 @@ public class TiempoRespetoHorarioStrategy implements IReunionStrategy {
 					    
 					    if (configuracionesEmpresa[3].getObligatoriedad().equals(Constantes.Obligatoriedad_Obligatorio)) {
 					    	mensajesReunion.add(new MensajesReunion("Respeto de horarios obligatorios excedidos para " + clienteRepo.getOne(idEmpleado).getNombre(), true));
-					    	hayMensajeObligatorio = true;
+					    	hayMensajeObligatorio = false;
 					    }
 					}
 				}

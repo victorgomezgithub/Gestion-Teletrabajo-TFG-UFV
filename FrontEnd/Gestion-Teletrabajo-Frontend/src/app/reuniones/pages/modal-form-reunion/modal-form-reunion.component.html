@@ -73,7 +73,9 @@
           <div class="uploadImages col-sm-9 col-md-7 col-lg-7">
             <input (change)="handleUpload($event.target.files)" type="file" name="file" id="file" class="inputfile" multiple/>
             <label for="file">
-              <img src="../../../../assets/images/upload.png"  alt="icon" class="upload animate__animated animate__flip">
+
+              <img *ngIf="uploadedFile.length === 0" src="../../../../assets/images/upload.png"  alt="icon" class="upload animate__animated animate__flip">
+              <p *ngIf="uploadedFile.length > 0">Documento Subido</p>
               <p class="imgDescription">Documentos de la Reunión</p>
             </label>
             <div class="invalid-feedback" style="text-align: left;">

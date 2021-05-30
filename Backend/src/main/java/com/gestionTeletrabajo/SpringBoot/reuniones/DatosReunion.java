@@ -1,7 +1,5 @@
 package com.gestionTeletrabajo.SpringBoot.reuniones;
 
-import java.util.Date;
-
 public class DatosReunion {
 	
 	private String creador;
@@ -9,7 +7,7 @@ public class DatosReunion {
 	private String description;
 	private String fechaInicio;
 	private String fechaFin;
-	private String[] files;
+	private String[] file;
 	private Long[] integrantes;
 	
 
@@ -43,11 +41,11 @@ public class DatosReunion {
 	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-	public String[] getFiles() {
-		return files;
+	public String[] getFile() {
+		return file;
 	}
-	public void setFiles(String[] files) {
-		this.files = files;
+	public void setFile(String[] file) {
+		this.file = file;
 	}
 	public Long[] getIntegrantes() {
 		return integrantes;

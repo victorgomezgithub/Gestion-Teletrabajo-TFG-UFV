@@ -30,7 +30,7 @@ public class DuracionMáximaReunionStrategy implements IReunionStrategy {
 		    }
 		    
 		    if (configuracionesEmpresa[0].getObligatoriedad().equals(Constantes.Obligatoriedad_Obligatorio) && Long.parseUnsignedLong(configuracionesEmpresa[0].getParametro()) < diff) {
-		    	mensajesReunion.add(new MensajesReunion("Tiempo máximo de la Reunión Excedido", true));
+		    	mensajesReunion.add(new MensajesReunion("Tiempo máximo recomendado de la Reunión Excedido", true));
 		    	return true;
 		    }
 		    

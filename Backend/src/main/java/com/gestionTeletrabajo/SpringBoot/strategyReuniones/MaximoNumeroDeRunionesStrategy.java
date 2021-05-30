@@ -21,7 +21,7 @@ public class MaximoNumeroDeRunionesStrategy implements IReunionStrategy {
 
 	@Override
 	public boolean isPosibleReunion(DatosReunion datosReunion, PanelDeConfiguracionEntity[] configuracionesEmpresa, List<MensajesReunion> mensajesReunion) {
-		boolean hayMensajeObligatorio = false;
+		boolean hayMensajeObligatorio = true;
 		for(Long idEmpleado: datosReunion.getIntegrantes()) {
 			if(reunionEmpleadoRepo.findAllReunionesPorIdEmpleado(clienteRepo.getOne(idEmpleado)).size() >= Long.parseLong(configuracionesEmpresa[2].getParametro())) {
 			    if (configuracionesEmpresa[2].getObligatoriedad().equals(Constantes.Obligatoriedad_Aviso)) {
@@ -30,7 +30,7 @@ public class MaximoNumeroDeRunionesStrategy implements IReunionStrategy {
 			    
 			    if (configuracionesEmpresa[0].getObligatoriedad().equals(Constantes.Obligatoriedad_Obligatorio)) {
 			    	mensajesReunion.add(new MensajesReunion("Máximo número de reuniones obligatorias excedidas para " + clienteRepo.getOne(idEmpleado).getNombre(), true));
-			    	hayMensajeObligatorio = true;
+			    	hayMensajeObligatorio = false;
 			    }
 			}
 		}

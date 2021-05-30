@@ -29,3 +29,26 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+#empresa {
+  transform: rotate(-90deg);
+  color: white;
+}
+
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
+
+
+span{
+  position: absolute;
+  margin-top: 800%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  font-size: 150%;
+	letter-spacing:0.1em;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: white;
+  text-shadow:
+						8px 8px #003572;
+}

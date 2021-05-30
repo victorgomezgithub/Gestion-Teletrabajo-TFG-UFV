@@ -1,11 +1,14 @@
 package com.gestionTeletrabajo.SpringBoot.models.entity;
 
+import java.sql.Blob;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity(name="ReunionEntity")
@@ -20,7 +23,8 @@ public class ReunionEntity {
 	private String description;
 	private Date startDate;
 	private Date endDate;
-	private String documento;
+	@Lob
+    private String documento;
 	
 	public ReunionEntity() {
 		

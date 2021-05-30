@@ -21,8 +21,8 @@ INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documen
 INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento) VALUES (2,'Reunion 2','Descripcion reunion 2','2021-05-24 18:00:00','2021-05-24 20:00:00','Excel');
 INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento) VALUES (3,'Reunion 3','Descripcion reunion 3','2021-04-27 10:00:00','2021-04-27 12:00:00','Word');
 INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento) VALUES (4,'Reunion 4','Descripcion reunion 4','2021-04-30 09:00:00','2021-04-30 10:00:00','Excel');
-INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento) VALUES (5,'Reunion 5','Descripcion reunion 5','2021-05-01 18:00:00','2021-05-01 10:00:00','Word');
-INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento) VALUES (6,'Reunion 6','Descripcion reunion 6','2021-06-25 18:00:00','2021-06-25 10:00:00','Excel');
+INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento) VALUES (5,'Reunion 5','Descripcion reunion 5','2021-05-01 10:00:00','2021-05-01 14:00:00','Word');
+INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento) VALUES (6,'Reunion 6','Descripcion reunion 6','2021-06-25 10:00:00','2021-06-25 12:00:00','Excel');
 
 
 INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (1,1,1);

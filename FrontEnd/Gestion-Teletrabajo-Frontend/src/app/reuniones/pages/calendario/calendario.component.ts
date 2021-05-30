@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReunionesService } from '../../services/reuniones.service';
+import { hasOnlyExpressionInitializer } from 'typescript';
 
 const colors: any = {
   red: {
@@ -94,6 +95,8 @@ export class CalendarioComponent implements OnInit{
             element.start = new Date(element.startDate);
             element.end = new Date(element.endDate);
             element.actions = this.actions;
+            getFilesProcesados(element.documento).then(res => element.files = res).catch(err => console.log(err));
+
           });
 
           this.cd.detectChanges();
@@ -146,4 +149,46 @@ export class CalendarioComponent implements OnInit{
   closeOpenMonthViewDay(): void {
     this.activeDayIsOpen = false;
   }
+
+
+  downloadPdf(base64String: string[]): any {
+    console.log(base64String);
+    base64String.forEach((element) => {
+      console.log(element);
+      const source = `${element.split('filename')[0]}`;
+      console.log(source);
+      const link = document.createElement('a');
+      link.href = source;
+
+      link.download = `${element.split('filename')[1]}.${element.split(';base64')[0].split('/')[1]}`;
+      console.log(element.split('filename')[1]);
+      console.log(element.split(';base64')[0].split('/')[1]);
+      link.click();
+    });
+  }
 }
+async function getFilesProcesados(documento: string): Promise<string[]> {
+  console.log('ENTRO');
+  documento = documento.split('[')[1].split(']')[0];
+  let hayMasArchivos = true;
+  const archivosTot: string[] = [];
+  while (hayMasArchivos) {
+    if (documento.split('OTROELEMENTO,').length > 1) {
+      console.log('IF');
+
+      archivosTot.push(documento.split('OTROELEMENTO,')[0]);
+      console.log(documento);
+
+      documento = documento.split('OTROELEMENTO,')[1];
+      console.log(documento);
+    } else {
+      console.log('ELSE');
+
+      archivosTot.push(documento.split('OTROELEMENTO')[0]);
+      hayMasArchivos = false;
+      return archivosTot;
+
+    }
+  }
+}
+

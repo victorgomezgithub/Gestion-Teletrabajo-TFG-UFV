@@ -1,8 +1,11 @@
 package com.gestionTeletrabajo.SpringBoot.controllers;
 
+import java.io.UnsupportedEncodingException;
+import java.sql.Blob;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +32,7 @@ import com.gestionTeletrabajo.SpringBoot.reuniones.MensajesReunion;
 import com.gestionTeletrabajo.SpringBoot.strategyReuniones.DescansoEntreReunionesStrategy;
 import com.gestionTeletrabajo.SpringBoot.strategyReuniones.DuracionMáximaReunionStrategy;
 import com.gestionTeletrabajo.SpringBoot.strategyReuniones.IReunionStrategy;
+import com.gestionTeletrabajo.SpringBoot.strategyReuniones.IntegrantesMaximosStrategy;
 import com.gestionTeletrabajo.SpringBoot.strategyReuniones.MaximoNumeroDeRunionesStrategy;
 import com.gestionTeletrabajo.SpringBoot.strategyReuniones.TiempoRespetoHorarioStrategy;
 
@@ -84,7 +88,7 @@ public class GestionReuniones {
 	
 	@PostMapping("/nuevaReunion")
 	@ResponseBody
-	public List<MensajesReunion> crearReunion(@RequestBody  String parametrosReunion) {
+	public List<MensajesReunion> crearReunion(@RequestBody  String parametrosReunion) throws UnsupportedEncodingException {
 	  DatosReunion datosReunion = parser.parserStringToArrayDatosReunion(parametrosReunion);
 	  ArrayList<MensajesReunion> mensajesReunion = new ArrayList<>();
 	  PanelDeConfiguracionEntity[] configuracionEmpresa = panelDeConfiguracionRepository.findAllByidEmpleado(Long.parseLong(datosReunion.getCreador()));
@@ -93,6 +97,7 @@ public class GestionReuniones {
 	  reunionesStrategy.add(descansoEntreReunionesStrategy);
 	  reunionesStrategy.add(maximoDeReunionesStrategy);
 	  reunionesStrategy.add(tiempoRespetoHorarioStrategy);
+	  reunionesStrategy.add(new IntegrantesMaximosStrategy());
 	  reunionesStrategy.add(new DuracionMáximaReunionStrategy());
 	  boolean hayAvisoObligatorio = false;
 	  for(IReunionStrategy estrategiaReunion: reunionesStrategy) {
@@ -100,9 +105,11 @@ public class GestionReuniones {
 			  hayAvisoObligatorio = true;
 		  }
 	  }
+	  
+
 	 if(!hayAvisoObligatorio) {
 		 try {
-			ReunionEntity nuevaReunion = new ReunionEntity(datosReunion.getTitle(), datosReunion.getDescription(),  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaInicio()),  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaFin()), datosReunion.getFiles().toString());
+			ReunionEntity nuevaReunion = new ReunionEntity(datosReunion.getTitle(), datosReunion.getDescription(),  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaInicio()),  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaFin()),  Arrays.toString(datosReunion.getFile()));
 			reunionRepo.save(nuevaReunion);
 			
 			for(Long idEmpleado: datosReunion.getIntegrantes()) {

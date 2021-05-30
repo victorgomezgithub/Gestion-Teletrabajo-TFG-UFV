@@ -33,7 +33,7 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 
 	@Override
 	public boolean isPosibleReunion(DatosReunion datosReunion, PanelDeConfiguracionEntity[] configuracionesEmpresa, List<MensajesReunion> mensajesReunion) {
-		boolean noObligatorio = true;
+		boolean isPosibleReunion = true;
 		
 		for (Long idEmpleado : datosReunion.getIntegrantes()) {
 			Optional<EmpleadoEntity> empleado = clienteRepo.findById(idEmpleado);
@@ -44,7 +44,7 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 						if(!checkDescancoEntreReunionesRespetado(relacionEmpleadoReunion, datosReunion, configuracionesEmpresa[1].getParametro())) {
 							if(configuracionesEmpresa[0].getObligatoriedad().equals(Constantes.Obligatoriedad_Obligatorio)) {
 								mensajesReunion.add(new MensajesReunion("Tiempo no respetado para X", true));
-								noObligatorio = false;
+								isPosibleReunion = false;
 							}
 							if(configuracionesEmpresa[0].getObligatoriedad().equals(Constantes.Obligatoriedad_Aviso)) {
 								mensajesReunion.add(new MensajesReunion("Tiempo no respetado para X", false));
@@ -54,7 +54,7 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 				}
 			}
 		}
-		return noObligatorio;
+		return isPosibleReunion;
 
 	}
 	

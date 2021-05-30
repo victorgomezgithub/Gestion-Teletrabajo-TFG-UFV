@@ -4,6 +4,7 @@ import { ConfiguracionService } from '../../services/configuraciones.service';
 import { Configuracion } from '../../interfaces/configuracion.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alert } from '../../../reuniones/interfaces/reuniones.interface';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-panel-configuracion',
@@ -35,10 +36,14 @@ export class PanelConfiguracionComponent implements OnInit{
     observableConfiguracion.subscribe((resp) => {
       if (resp) {
         this.configuraciones = [...resp];
-        this.configuraciones.forEach(() => {
-          this.formArray.push(new FormGroup({parametro: new FormControl(''), obligatoriedad: new FormControl('')}));
+        this.configuraciones.forEach((elem) => {
+          const formGroup = new FormGroup({parametro: new FormControl(''), obligatoriedad: new FormControl('')});
+          formGroup.controls.parametro.setValue(+elem.parametro);
+          formGroup.controls.obligatoriedad.setValue(elem.obligatoriedad);
+          this.formArray.push(formGroup);
         });
       }
+      console.log(this.formArray);
     });
   }
 

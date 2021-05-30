@@ -21,7 +21,7 @@ export class CoworkingMapComponent implements AfterViewInit {
 
   @ViewChild('mapa') divMapa!: ElementRef;
   mapa!: mapboxgl.Map;
-  zoomLevel = 15;
+  zoomLevel = 12;
   center: [number, number] = [-3.7027435849639327, 40.40651967652269];
 
   public id: string;
@@ -84,6 +84,27 @@ export class CoworkingMapComponent implements AfterViewInit {
       center: this.center,
       zoom: this.zoomLevel
     });
+
+    // tslint:disable-next-line:only-arrow-functions tslint:disable-next-line:typedef
+    // tslint:disable-next-line:typedef
+    this.mapa.on('click', this.marcadores, function(e) {
+      console.log(e);
+      console.log('HOLA');
+      const coordinates = e.features[0].geometry.coordinates.slice();
+      const description = e.features[0].properties.description;
+
+      // Ensure that if the map is zoomed out such that multiple
+      // copies of the feature are visible, the popup appears
+      // over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+
+      new mapboxgl.Popup()
+      .setLngLat(coordinates)
+      .setHTML(description)
+      .addTo(this.mapa);
+      });
   }
 
 
@@ -202,4 +223,15 @@ export class CoworkingMapComponent implements AfterViewInit {
       });
     }
   }
+
+  openNav(): void {
+    document.getElementById('mySidebar').style.width = '250px';
+    document.getElementById('main').style.marginLeft = '250px';
+  }
+
+  closeNav(): void {
+    document.getElementById('mySidebar').style.width = '0';
+    document.getElementById('main').style.marginLeft = '0';
+  }
+
 }
