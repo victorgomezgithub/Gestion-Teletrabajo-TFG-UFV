@@ -1,23 +1,72 @@
-
 <app-sidebar></app-sidebar>
 
+<!-- A sidebar -->
+<ng-sidebar-container style="height: 100vh;  position: absolute;">
 
-  <ul id="nav" class="list-group">
-    <li class="list-group-item list-group-item-info"
-        (click)="agregarMarcador()">
+  <ng-sidebar [(opened)]="opened" position="right" id="sidebar">
+    <ul id="nav" class="list-group">
+      <li class="list-group-item list-group-item-info" (click)="agregarMarcador()">
         + Agregar
-    </li>
+      </li>
 
-    <li class="list-group-item"
-        *ngFor="let marcador of marcadores; let i = index"
-        (click)="irMarcador( marcador.marker )"
-        (dblclick)="borrarMarcador( i )"
-        [ngStyle]="{
-            'background-color': marcador.color
-        }">
-        Punto de Coworking {{ i + 1 }}
-    </li>
-  </ul>
+      <div *ngFor="let marcador of marcadores; let i = index">
+        <li class="list-group-item" (click)="irMarcador( marcador.marker ); submenu( i );" (dblclick)="borrarMarcador( i )"
+          [ngStyle]="{
+              'background-color': marcador.color
+          }">
+          Punto de Coworking {{ i + 1 }}
+        </li>
+        <div *ngIf="this.formArray.controls[i].controls.abierto.value">
+          <form [formGroup]="formArray.controls[i]" id="configuracion">
+            <div class="form-group">
+              <div class="input-group form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input class="form-control" type="text" formControlName="user" placeholder="user">
+                </div>
 
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  </div>
+                  <input class="form-control" type="password" formControlName="password" placeholder="password">
+              </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </ul>
+  </ng-sidebar>
+
+  <div *ngIf="!this.subMenu" id="botonDiv" ng-sidebar-content class="outer">
+    <div class="container">
+      <div class="center">
+        <button (click)="toggleSidebar()" class="btn">
+          <svg id="svg" width="180px" height="60px" viewBox="0 0 180 60" class="border">
+            <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
+            <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
+          </svg>
+          <span>Coworkings</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.subMenu" id="botonDivDesplegado" ng-sidebar-content class="outer">
+    <div class="container">
+      <div class="center">
+        <button (click)="toggleSidebar()" class="btnDesplegado">
+          <svg id="svgDesplegado" width="180px" height="60px" viewBox="0 0 180 60" class="border">
+            <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
+            <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
+          </svg>
+          <span>Coworkings</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</ng-sidebar-container>
 <div #mapa class="mapa-container"></div>
-

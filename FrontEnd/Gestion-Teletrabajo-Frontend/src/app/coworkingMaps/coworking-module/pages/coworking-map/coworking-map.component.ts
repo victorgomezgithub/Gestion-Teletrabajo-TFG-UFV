@@ -4,6 +4,7 @@ import { environment } from '../../../../../environments/environment';
 import { CoworkingService } from '../../services/coworking.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Coworking } from '../../interfaces/coworking';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 
 
 interface MarcadorColor {
@@ -23,6 +24,10 @@ export class CoworkingMapComponent implements AfterViewInit {
   mapa!: mapboxgl.Map;
   zoomLevel = 12;
   center: [number, number] = [-3.7027435849639327, 40.40651967652269];
+  public opened = false;
+  public subMenu = false;
+
+  formArray = new FormArray([]);
 
   public id: string;
 
@@ -68,10 +73,14 @@ export class CoworkingMapComponent implements AfterViewInit {
               color,
               marker: nuevoMarcador
             });
+            const formGroup = new FormGroup({direccion: new FormControl(''), calle: new FormControl(''), abierto: new FormControl('')});
+            formGroup.controls.direccion.setValue('');
+            formGroup.controls.calle.setValue('');
+            formGroup.controls.abierto.setValue(false);
+            this.formArray.push(formGroup);
           });
         }
 
-        console.log(this.marcadores);
       });
     }
 
@@ -88,8 +97,6 @@ export class CoworkingMapComponent implements AfterViewInit {
     // tslint:disable-next-line:only-arrow-functions tslint:disable-next-line:typedef
     // tslint:disable-next-line:typedef
     this.mapa.on('click', this.marcadores, function(e) {
-      console.log(e);
-      console.log('HOLA');
       const coordinates = e.features[0].geometry.coordinates.slice();
       const description = e.features[0].properties.description;
 
@@ -129,6 +136,11 @@ export class CoworkingMapComponent implements AfterViewInit {
     coworkingNuevo.subscribe((resp) => {
       if (resp) {
         this.coworkings.push(resp);
+        const formGroup = new FormGroup({direccion: new FormControl(''), calle: new FormControl(''), abierto: new FormControl()});
+        formGroup.controls.direccion.setValue('');
+        formGroup.controls.calle.setValue('');
+        formGroup.controls.abierto.setValue(false);
+        this.formArray.push(formGroup);
       }
     });
 
@@ -212,7 +224,6 @@ export class CoworkingMapComponent implements AfterViewInit {
     this.marcadores.splice(i, 1);
     this.guardarMarcadoresLocalStorage();
 
-    console.log(this.coworkings[i].idCoworking);
 
     const deleteCoworking = this.coworkingService.deleteCoworking(this.coworkings[i].idCoworking);
     if (deleteCoworking) {
@@ -234,4 +245,15 @@ export class CoworkingMapComponent implements AfterViewInit {
     document.getElementById('main').style.marginLeft = '0';
   }
 
+  toggleSidebar(): void {
+    this.opened = !this.opened;
+    this.subMenu = !this.subMenu;
+
+  }
+
+  submenu(i: number): void {
+    this.subMenu = !this.subMenu;
+    (this.formArray.controls[i] as any).controls.abierto.value = !(this.formArray.controls[i] as any).controls.abierto.value;
+
+  }
 }

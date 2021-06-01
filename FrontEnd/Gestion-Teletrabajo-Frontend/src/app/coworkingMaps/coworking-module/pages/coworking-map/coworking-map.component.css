@@ -19,4 +19,116 @@ li {
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
+#botonDiv {
+  position:absolute;
+  top:0;
+  left:0;
+  margin-top: 3%;
+  margin-left: 7%;
+  z-index: 9;
 
+}
+
+#botonDivDesplegado {
+  position:absolute;
+  top:0;
+  left:0;
+  margin-top: 3%;
+  margin-left: 7%;
+  z-index: 9;
+
+}
+
+@import url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
+
+
+.container {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  margin-left: 50%;
+  margin-top: 30%;
+  width: 180px;
+  height: 60px;
+  position: absolute;
+}
+
+.btn {
+  width: 180px;
+  height: 60px;
+  cursor: pointer;
+  background: rgb(116, 202, 82);
+  border: 1px solid #91C9FF;
+  outline: none;
+  transition: 1s ease-in-out;
+}
+
+.btnDesplegado {
+  width: 180px;
+  height: 60px;
+  cursor: pointer;
+  background: rgb(255, 183, 67);
+  border: 1px solid #91C9FF;
+  outline: none;
+  transition: 1s ease-in-out;
+}
+
+#svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  fill: none;
+  stroke: rgb(173, 250, 142);
+  stroke-dasharray: 150 480;
+  stroke-dashoffset: 150;
+  transition: 1s ease-in-out;
+}
+
+#svgDesplegado {
+  position: absolute;
+  left: 0;
+  top: 0;
+  fill: none;
+  stroke: rgb(197, 88, 88);
+  stroke-dasharray: 150 480;
+  stroke-dashoffset: 150;
+  transition: 1s ease-in-out;
+}
+.btn:hover {
+  transition: 1s ease-in-out;
+  background: #16a340;
+}
+
+.btn:hover svg {
+  stroke-dashoffset: -480;
+}
+
+.btn span {
+  color: white;
+  font-size: 18px;
+  font-weight: 100;
+}
+
+.btnDesplegado:hover {
+  transition: 1s ease-in-out;
+  background: #b6cc53;
+}
+
+.btnDesplegado:hover svg {
+  stroke-dashoffset: -480;
+}
+
+.btnDesplegado span {
+  color: white;
+  font-size: 18px;
+  font-weight: 100;
+}

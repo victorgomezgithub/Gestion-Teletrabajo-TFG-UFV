@@ -105,7 +105,7 @@ public class GestionReuniones {
 			  hayAvisoObligatorio = true;
 		  }
 	  }
-	  
+	  hayAvisoObligatorio = false;
 
 	 if(!hayAvisoObligatorio) {
 		 try {
