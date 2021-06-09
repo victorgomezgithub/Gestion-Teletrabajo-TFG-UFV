@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from '../../../../../environments/environment';
 import { CoworkingService } from '../../services/coworking.service';
@@ -36,7 +36,8 @@ export class CoworkingMapComponent implements AfterViewInit {
   // Arreglo de marcadores
   marcadores: MarcadorColor[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private coworkingService: CoworkingService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private router: Router, private route: ActivatedRoute, private coworkingService: CoworkingService, private cd: ChangeDetectorRef) {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (localStorage.getItem('auth') !== ('autentificado_' + this.id)) {
@@ -73,12 +74,15 @@ export class CoworkingMapComponent implements AfterViewInit {
               color,
               marker: nuevoMarcador
             });
-            const formGroup = new FormGroup({direccion: new FormControl(''), calle: new FormControl(''), abierto: new FormControl('')});
-            formGroup.controls.direccion.setValue('');
-            formGroup.controls.calle.setValue('');
+            // tslint:disable-next-line:max-line-length
+            const formGroup = new FormGroup({direccion: new FormControl(''), descripcion: new FormControl(''), abierto: new FormControl('')});
+            formGroup.controls.direccion.setValue(element.direccion);
+            formGroup.controls.descripcion.setValue(element.descripcion);
             formGroup.controls.abierto.setValue(false);
             this.formArray.push(formGroup);
           });
+
+          this.cd.detectChanges();
         }
 
       });
@@ -94,24 +98,7 @@ export class CoworkingMapComponent implements AfterViewInit {
       zoom: this.zoomLevel
     });
 
-    // tslint:disable-next-line:only-arrow-functions tslint:disable-next-line:typedef
-    // tslint:disable-next-line:typedef
-    this.mapa.on('click', this.marcadores, function(e) {
-      const coordinates = e.features[0].geometry.coordinates.slice();
-      const description = e.features[0].properties.description;
 
-      // Ensure that if the map is zoomed out such that multiple
-      // copies of the feature are visible, the popup appears
-      // over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-      }
-
-      new mapboxgl.Popup()
-      .setLngLat(coordinates)
-      .setHTML(description)
-      .addTo(this.mapa);
-      });
   }
 
 
@@ -136,10 +123,10 @@ export class CoworkingMapComponent implements AfterViewInit {
     coworkingNuevo.subscribe((resp) => {
       if (resp) {
         this.coworkings.push(resp);
-        const formGroup = new FormGroup({direccion: new FormControl(''), calle: new FormControl(''), abierto: new FormControl()});
-        formGroup.controls.direccion.setValue('');
-        formGroup.controls.calle.setValue('');
-        formGroup.controls.abierto.setValue(false);
+        const formGroup = new FormGroup({direccion: new FormControl(''), descripcion: new FormControl(''), abierto: new FormControl()});
+        formGroup.controls.direccion.setValue(resp.direccion);
+        formGroup.controls.descripcion.setValue(resp.descripcion);
+        formGroup.controls.abierto.setValue(true);
         this.formArray.push(formGroup);
       }
     });
@@ -175,8 +162,9 @@ export class CoworkingMapComponent implements AfterViewInit {
         color,
         centro: [lng, lat]
       });
-
-      const updateCoworking = this.coworkingService.updateCoworking(lng, lat, this.coworkings[index].idCoworking.toString());
+      console.log((this.formArray.controls[index] as any).controls.direccion);
+      // tslint:disable-next-line:max-line-length
+      const updateCoworking = this.coworkingService.updateCoworking(lng, lat, this.coworkings[index].idCoworking.toString(), (this.formArray.controls[index] as any).value.descripcion, (this.formArray.controls[index] as any).value.direccion);
       updateCoworking.subscribe((resp) => {
         if (resp) {
         }

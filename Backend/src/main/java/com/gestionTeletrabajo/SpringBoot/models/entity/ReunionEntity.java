@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name="ReunionEntity")
@@ -26,16 +28,30 @@ public class ReunionEntity {
 	@Lob
     private String documento;
 	
+	
+	@ManyToOne
+	@JoinColumn(name = "id_coworking_fk", referencedColumnName = "idCoworking")
+	private CoworkingEntity idCoworkingFK;
+	
+	public CoworkingEntity getIdCoworkingFK() {
+		return idCoworkingFK;
+	}
+
+	public void setIdCoworkingFK(CoworkingEntity idCoworkingFK) {
+		this.idCoworkingFK = idCoworkingFK;
+	}
+
 	public ReunionEntity() {
 		
 	}
 	
-	public ReunionEntity(String title, String description, Date startDate, Date endDate, String documento) {
+	public ReunionEntity(String title, String description, Date startDate, Date endDate, String documento, CoworkingEntity idCoworkingFK) {
 		this.title = title;
 		this.description = description;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.documento = documento;
+		this.idCoworkingFK = idCoworkingFK;
 	}
 	
 	public Long getIdReunion() {

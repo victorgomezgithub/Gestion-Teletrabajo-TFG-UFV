@@ -40,18 +40,20 @@ public class GestionCoworking {
 	
 	@PostMapping("/newCoworking")
 	@ResponseBody
-	public CoworkingEntity newCoworking(@RequestParam String ejeX,@RequestParam String ejeY,@RequestParam String color, @RequestParam String idEmpleado) {	
-		CoworkingEntity coworkingEntity = new CoworkingEntity(Float.parseFloat(ejeX),Float.parseFloat(ejeY), color, clienteDao.getOne(Long.parseLong(idEmpleado)).getIdEmpresaFK());
+	public CoworkingEntity newCoworking(@RequestParam String ejeX,@RequestParam String ejeY,@RequestParam String color, @RequestParam String idEmpleado, @RequestParam String descripcion, @RequestParam String direccion) {	
+		CoworkingEntity coworkingEntity = new CoworkingEntity(Float.parseFloat(ejeX),Float.parseFloat(ejeY), color, clienteDao.getOne(Long.parseLong(idEmpleado)).getIdEmpresaFK(), descripcion, direccion);
 		coworkingDao.save(coworkingEntity);
 		return coworkingEntity;
 	}
 	
 	@PostMapping("/updateCoworking")
 	@ResponseBody
-	public void updateCoworking(@RequestParam String ejeX,@RequestParam String ejeY,@RequestParam String idCoworking) {	
+	public void updateCoworking(@RequestParam String ejeX,@RequestParam String ejeY,@RequestParam String idCoworking, @RequestParam String descripcion, @RequestParam String direccion) {	
 		CoworkingEntity coworkingEntity = coworkingDao.getOne(Long.parseLong(idCoworking));
 		coworkingEntity.setEjeX(Float.parseFloat(ejeX));
 		coworkingEntity.setEjeY(Float.parseFloat(ejeY));
+		coworkingEntity.setDescripcion(descripcion);
+		coworkingEntity.setDireccion(direccion);
 		coworkingDao.save(coworkingEntity);
 	}
 }

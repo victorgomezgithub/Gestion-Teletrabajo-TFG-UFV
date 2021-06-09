@@ -9,7 +9,7 @@ public class DatosReunion {
 	private String fechaFin;
 	private String[] file;
 	private Long[] integrantes;
-	
+	private Long idCoworking;
 
 	public String getCreador() {
 		return creador;
@@ -52,6 +52,12 @@ public class DatosReunion {
 	}
 	public void setIntegrantes(Long[] integrantes) {
 		this.integrantes = integrantes;
+	}
+	public Long getIdCoworking() {
+		return idCoworking;
+	}
+	public void setIdCoworking(Long idCoworking) {
+		this.idCoworking = idCoworking;
 	}
 
 

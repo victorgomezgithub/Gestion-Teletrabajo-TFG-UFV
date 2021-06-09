@@ -3,4 +3,6 @@ export interface Coworking {
   ejeX: number;
   ejeY: number;
   color: string;
+  direccion: string;
+  descripcion: string;
 }

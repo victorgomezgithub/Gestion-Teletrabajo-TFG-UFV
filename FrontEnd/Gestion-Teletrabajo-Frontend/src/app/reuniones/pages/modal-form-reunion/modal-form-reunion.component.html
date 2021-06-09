@@ -51,23 +51,30 @@
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-users"></i></span>
           </div>
-          <input type="text" list="FavoriteColor" id="course" name="course" class="form-control" formControlName="integrante" placeholder="integrantes">
-          <datalist id="FavoriteColor">
+          <select class="form-control" formControlName="integrante">
+            <option [selected]="true" [disabled]="true" [value]="" >integrante</option>
             <option *ngFor="let empleado of this.empleadosTotales" value="{{empleado.id}}" >{{empleado.nombre}}</option>
-          </datalist>
+          </select>
             <div class="input-group-append">
-              <button class="btn  btn-light btn-outline-secondary" type="button"(click)="addCourse()">Añadir</button>
+              <button class="btn btn-light btn-outline-secondary" type="button"(click)="addCourse()">Añadir</button>
             </div>
         </div>
-        <ul>
+        <ul style="list-style-type:none">
           <li *ngFor="let empleado of this.nombresEmpleado">
             <i class="fas fa-hands-helping"></i>
               {{empleado}}
           </li>
         </ul>
-        <!--https://stackblitz.com/edit/angular-hzh42b-->
 
-
+        <div class="input-group form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+          </div>
+          <select class="form-control" formControlName="integrante">
+            <option [selected]="true" [disabled]="true" [value]="" >coworking</option>
+            <option *ngFor="let coworking of this.coworkingEmpresa; index as i" value="{{coworking.idCoworking}}" >Punto de Coworking {{i+1}} - {{coworking.direccion}}</option>
+          </select>
+        </div>
 
         <div class="form-group row justify-content-center">
           <div class="uploadImages col-sm-9 col-md-7 col-lg-7">
@@ -75,8 +82,10 @@
             <label for="file">
 
               <img *ngIf="uploadedFile.length === 0" src="../../../../assets/images/upload.png"  alt="icon" class="upload animate__animated animate__flip">
-              <p *ngIf="uploadedFile.length > 0">Documento Subido</p>
-              <p class="imgDescription">Documentos de la Reunión</p>
+              <p class="upload" *ngIf="uploadedFile.length > 0 && uploadedFile.length < 2">Has subido {{uploadedFile.length}} archivo</p>
+              <p class="upload" *ngIf="uploadedFile.length >= 2">Has subido {{uploadedFile.length}} archivos</p>
+
+              <p class="imgDescription">¡Sube tus documentos!</p>
             </label>
             <div class="invalid-feedback" style="text-align: left;">
               Extension de imagen no valida

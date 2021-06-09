@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ReunionesService } from '../../services/reuniones.service';
 import { Reunion, Alert } from '../../interfaces/reuniones.interface';
 import { AlertService } from 'alert-service';
+import { CoworkingService } from '../../../coworkingMaps/coworking-module/services/coworking.service';
+import { Coworking } from '../../../coworkingMaps/coworking-module/interfaces/coworking';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { AlertService } from 'alert-service';
   templateUrl: './modal-form-reunion.component.html',
   styleUrls: ['./modal-form-reunion.component.css']
 })
-export class ModalFormReunionComponent {
+export class ModalFormReunionComponent implements OnInit{
 
   closeResult = '';
   empleadosTotales: Empleado[]  = [];
@@ -27,9 +29,10 @@ export class ModalFormReunionComponent {
   mensajes: Reunion[] = [];
   ALERTSOBL: Alert[] = [];
   ALERTSAVI: Alert[] = [];
+  coworkingEmpresa: Coworking[] = [];
 
   // tslint:disable-next-line:max-line-length
-  constructor(public alertService: AlertService, private cd: ChangeDetectorRef, private empleadoService: ClientesService, private modalService: NgbModal, private reunionesService: ReunionesService, private route: ActivatedRoute) {
+  constructor(public alertService: AlertService, private coworkingService: CoworkingService , private cd: ChangeDetectorRef, private empleadoService: ClientesService, private modalService: NgbModal, private reunionesService: ReunionesService, private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.integrantesReunion.push(+this.id);
     const reunionesPorEmpleado: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
@@ -43,7 +46,15 @@ export class ModalFormReunionComponent {
       });
       this.cd.markForCheck();
     });
+
+    const coworkings: Observable<Coworking[]> = this.coworkingService.cargarCoworkingEmpleado(this.id);
+    coworkings.subscribe((resp) => {
+      console.log(resp);
+      this.coworkingEmpresa = [...resp];
+      });
+    this.cd.markForCheck();
   }
+
 
   addReunionForm = new FormGroup({
     titulo: new FormControl('', Validators.minLength(1)),
@@ -51,9 +62,13 @@ export class ModalFormReunionComponent {
     fechaInicio: new FormControl(''),
     fechaFin: new FormControl(''),
     files: new FormControl(''),
-    integrante: new FormControl('')
+    integrante: new FormControl(''),
+    coworking: new FormControl('')
   });
 
+  ngOnInit(): void {
+
+  }
 
   open(content): any {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -64,7 +79,6 @@ export class ModalFormReunionComponent {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
     this.addReunionForm.reset();
-
   }
 
 
@@ -106,6 +120,7 @@ export class ModalFormReunionComponent {
     parametrosReunion.fechaFin = controls.fechaFin.value;
     parametrosReunion.file = this.uploadedFile;
     parametrosReunion.integrantes = this.integrantesReunion;
+    parametrosReunion.idCoworking = controls.coworking.value;
 
     const nuevoEmpleado: Observable<any[]> = this.reunionesService.nuevaReunion(parametrosReunion);
     this.cd.detectChanges();

@@ -42,14 +42,19 @@ public class CoworkingEntity {
 
 	private String color;
 	
+	private String direccion;
+	
+	private String descripcion;
 	
 	public CoworkingEntity() { }
 	
-	public CoworkingEntity(float ejeX, float ejeY, String color, EmpresaEntity idEmpresaFk) {
+	public CoworkingEntity(float ejeX, float ejeY, String color, EmpresaEntity idEmpresaFk, String descripcion, String direccion) {
 		this.ejeX = ejeX;
 		this.ejeY = ejeY;
 		this.color = color;
 		this.idEmpresaFK = idEmpresaFk;
+		this.descripcion = descripcion;
+		this.direccion = direccion;
 	}
 	
 	
@@ -75,6 +80,22 @@ public class CoworkingEntity {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	

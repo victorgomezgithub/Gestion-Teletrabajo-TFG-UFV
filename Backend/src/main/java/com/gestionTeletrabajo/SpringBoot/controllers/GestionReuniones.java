@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gestionTeletrabajo.SpringBoot.models.dao.IClienteRespository;
+import com.gestionTeletrabajo.SpringBoot.models.dao.ICoworkingRepository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IPanelDeConfiguracionRepository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionPorEmpleadoRespository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionRespository;
@@ -48,6 +49,8 @@ public class GestionReuniones {
 	private IClienteRespository clienteRepo;
 	@Autowired
 	private IPanelDeConfiguracionRepository panelDeConfiguracionRepository;
+	@Autowired
+	private ICoworkingRepository iCoworkingRepo;
 	@Autowired
 	private DescansoEntreReunionesStrategy descansoEntreReunionesStrategy;
 	@Autowired
@@ -109,7 +112,7 @@ public class GestionReuniones {
 
 	 if(!hayAvisoObligatorio) {
 		 try {
-			ReunionEntity nuevaReunion = new ReunionEntity(datosReunion.getTitle(), datosReunion.getDescription(),  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaInicio()),  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaFin()),  Arrays.toString(datosReunion.getFile()));
+			ReunionEntity nuevaReunion = new ReunionEntity(datosReunion.getTitle(), datosReunion.getDescription(),  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaInicio()),  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaFin()),  Arrays.toString(datosReunion.getFile()), iCoworkingRepo.getOne(datosReunion.getIdCoworking()) );
 			reunionRepo.save(nuevaReunion);
 			
 			for(Long idEmpleado: datosReunion.getIntegrantes()) {
