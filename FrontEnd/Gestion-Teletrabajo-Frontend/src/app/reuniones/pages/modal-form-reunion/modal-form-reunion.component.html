@@ -70,7 +70,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
           </div>
-          <select class="form-control" formControlName="integrante">
+          <select class="form-control" formControlName="coworking">
             <option [selected]="true" [disabled]="true" [value]="" >coworking</option>
             <option *ngFor="let coworking of this.coworkingEmpresa; index as i" value="{{coworking.idCoworking}}" >Punto de Coworking {{i+1}} - {{coworking.direccion}}</option>
           </select>

@@ -13,6 +13,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.sun.istack.Nullable;
+
 @Entity(name="ReunionEntity")
 @Table(name = "DREUNIONES")
 public class ReunionEntity {
@@ -31,6 +33,7 @@ public class ReunionEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_coworking_fk", referencedColumnName = "idCoworking")
+	@Nullable
 	private CoworkingEntity idCoworkingFK;
 	
 	public CoworkingEntity getIdCoworkingFK() {

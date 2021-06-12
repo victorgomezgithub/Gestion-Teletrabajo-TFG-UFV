@@ -79,6 +79,7 @@ export class CoworkingMapComponent implements AfterViewInit {
             formGroup.controls.direccion.setValue(element.direccion);
             formGroup.controls.descripcion.setValue(element.descripcion);
             formGroup.controls.abierto.setValue(false);
+            console.log('PASOOOOOOOOOO');
             this.formArray.push(formGroup);
           });
 
@@ -127,6 +128,8 @@ export class CoworkingMapComponent implements AfterViewInit {
         formGroup.controls.direccion.setValue(resp.direccion);
         formGroup.controls.descripcion.setValue(resp.descripcion);
         formGroup.controls.abierto.setValue(true);
+        console.log('PASOOOOOOOOOO');
+
         this.formArray.push(formGroup);
       }
     });
@@ -162,13 +165,17 @@ export class CoworkingMapComponent implements AfterViewInit {
         color,
         centro: [lng, lat]
       });
-      console.log((this.formArray.controls[index] as any).controls.direccion);
+
       // tslint:disable-next-line:max-line-length
       const updateCoworking = this.coworkingService.updateCoworking(lng, lat, this.coworkings[index].idCoworking.toString(), (this.formArray.controls[index] as any).value.descripcion, (this.formArray.controls[index] as any).value.direccion);
       updateCoworking.subscribe((resp) => {
         if (resp) {
         }
       });
+
+      this.formArray.controls.forEach((formGroup) => {
+        console.log(formGroup.value.direccion);
+          });
     });
 
     localStorage.setItem('marcadores', JSON.stringify(lngLatArr));

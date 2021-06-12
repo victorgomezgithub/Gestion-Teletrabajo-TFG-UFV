@@ -42,12 +42,14 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 				if (!idReuniones.isEmpty()) {
 					for (ReunionPorEmpleadoEntity relacionEmpleadoReunion : idReuniones) {
 						if(!checkDescancoEntreReunionesRespetado(relacionEmpleadoReunion, datosReunion, configuracionesEmpresa[1].getParametro())) {
-							if(configuracionesEmpresa[0].getObligatoriedad().equals(Constantes.Obligatoriedad_Obligatorio)) {
-								mensajesReunion.add(new MensajesReunion("Tiempo no respetado para X", true));
+							if(configuracionesEmpresa[1].getObligatoriedad().equals(Constantes.Obligatoriedad_Obligatorio)) {
+								mensajesReunion.add(new MensajesReunion("Descanso entre reuniones no respetado para " + empleado.get().getNombre(), true));
 								isPosibleReunion = false;
+								break;
 							}
-							if(configuracionesEmpresa[0].getObligatoriedad().equals(Constantes.Obligatoriedad_Aviso)) {
-								mensajesReunion.add(new MensajesReunion("Tiempo no respetado para X", false));
+							if(configuracionesEmpresa[1].getObligatoriedad().equals(Constantes.Obligatoriedad_Aviso)) {
+								mensajesReunion.add(new MensajesReunion("Descanso entre reuniones recomendado no respetado para " + empleado.get().getNombre(), false));
+								break;
 							}
 						}
 					}
@@ -67,12 +69,18 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 	
 	private boolean checkDescansoPreReunionRespetado(ReunionEntity reunion, DatosReunion datosReunion, String parametro) {
 		try {
-			Date fechaInicio = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaFin());
-			Date fechaFin = reunion.getStartDate();
-			long diffInMillies = Math.abs(fechaFin.getTime() - fechaInicio.getTime());
-		    long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			Date fechaFin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaFin());
+			Date fechaInit = reunion.getStartDate();
+			long diffInMillies = Math.abs(fechaInit.getTime() - fechaFin.getTime());
+			diffInMillies = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		    
-		    if ( Long.parseUnsignedLong(parametro) < diff) {
+		    
+			Date fechaFinit = reunion.getStartDate();
+			long diffEndEnd = Math.abs(fechaFinit.getTime() - fechaFin.getTime());
+			diffEndEnd = TimeUnit.MINUTES.convert(diffEndEnd, TimeUnit.MILLISECONDS);
+		    
+		    
+		    if ( Long.parseUnsignedLong(parametro) <= diffInMillies && Long.parseUnsignedLong(parametro) <= diffEndEnd) {
 		    	return true;
 		    }
 		    
@@ -87,9 +95,14 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 			Date fechaInicio = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(datosReunion.getFechaInicio());
 			Date fechaFin = reunion.getEndDate();
 			long diffInMillies = Math.abs(fechaFin.getTime() - fechaInicio.getTime());
-		    long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			diffInMillies = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		    
-		    if ( Long.parseUnsignedLong(parametro) < diff) {
+			Date fechaInit = reunion.getStartDate();
+			long diffStartStart = Math.abs(fechaInit.getTime() - fechaInicio.getTime());
+			diffStartStart = TimeUnit.MINUTES.convert(diffStartStart, TimeUnit.MILLISECONDS);
+		    
+		    
+		    if ( Long.parseUnsignedLong(parametro) < diffInMillies && Long.parseUnsignedLong(parametro) < diffStartStart) {
 		    	return true;
 		    }
 		    

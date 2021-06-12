@@ -17,23 +17,23 @@ INSERT INTO DEMPLEADOS (username,nombre,email,password,rol,hora_entrada,hora_sal
 INSERT INTO DEMPLEADOS (username,nombre,email,password,rol,hora_entrada,hora_salida,id_empresa_fk,equipo) VALUES ('user4','Paco Sanchez', 'emailInventado@gmail.com','1234','Empleado' ,'09:00','17:00','1','RH');
 INSERT INTO DEMPLEADOS (username,nombre,email,password,rol,hora_entrada,hora_salida,id_empresa_fk,equipo) VALUES ('admin','Administrador', 'emailInventado@gmail.com','1234','administrador' ,'09:00','17:00','1','RH');
 
-INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (1,'Reunion 1','Descripcion reunion 1','2021-03-19 18:00:00','2021-03-19 20:00:00','Word',1);
-INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (2,'Reunion 2','Descripcion reunion 2','2021-05-24 18:00:00','2021-05-24 20:00:00','Excel',1);
-INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (3,'Reunion 3','Descripcion reunion 3','2021-04-27 10:00:00','2021-04-27 12:00:00','Word',1);
-INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (4,'Reunion 4','Descripcion reunion 4','2021-04-30 09:00:00','2021-04-30 10:00:00','Excel',2);
-INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (5,'Reunion 5','Descripcion reunion 5','2021-05-01 10:00:00','2021-05-01 14:00:00','Word',2);
-INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (6,'Reunion 6','Descripcion reunion 6','2021-06-25 10:00:00','2021-06-25 12:00:00','Excel',2);
+INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (1,'Reunion 1','Descripcion reunion 1','2021-06-12 18:00:00','2021-06-12 19:00:00','Word',1);
+INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (2,'Reunion 2','Descripcion reunion 2','2021-06-12 18:00:00','2021-06-12 20:00:00','Excel',1);
+INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (3,'Reunion 3','Descripcion reunion 3','2021-06-13 10:00:00','2021-06-13 12:00:00','Word',1);
+INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (4,'Reunion 4','Descripcion reunion 4','2021-06-13 11:00:00','2021-06-13 13:00:00','Excel',2);
+INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (5,'Reunion 5','Descripcion reunion 5','2021-06-14 10:00:00','2021-06-14 12:00:00','Word',2);
+INSERT INTO DREUNIONES (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (6,'Reunion 6','Descripcion reunion 6','2021-06-14 10:00:00','2021-06-14 12:00:00','Excel',2);
 
 
 INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (1,1,1);
-INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (2,1,2);
-INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (3,2,3);
+INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (2,1,5);
+INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (3,2,5);
 INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (5,3,4);
 INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (6,3,1);
 INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (7,4,2);
-INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (8,4,3);
-INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (9,5,2);
+INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (8,4,5);
+INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (9,5,5);
 INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (10,5,1);
 INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (11,6,3);
-INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (12,6,4);
+INSERT INTO DREUNIONESEMPLEADO (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (12,6,5);
 

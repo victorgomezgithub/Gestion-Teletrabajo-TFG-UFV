@@ -9,7 +9,7 @@
         + Agregar
       </li>
 
-      <div *ngFor="let marcador of marcadores; let i = index">
+      <div *ngFor="let marcador of marcadores; index as i">
         <li class="list-group-item" (click)="irMarcador( marcador.marker ); submenu( i );" (dblclick)="borrarMarcador( i )"
           [ngStyle]="{
               'background-color': marcador.color
@@ -17,26 +17,28 @@
           Punto de Coworking {{ i + 1 }}
         </li>
         <div *ngIf="this.formArray.controls[i].controls.abierto.value">
-          <form [formGroup]="this.formArray.controls[i]" id="configuracion">
+          <form [formGroup]="formArray.controls[i]" id="configuracion">
+            {{ i }}
             <div class="form-group">
               <div class="input-group form-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-road"></i></span>
                 </div>
-                <input class="form-control" type="text" formControlName="direccion" placeholder="direccion" value="{{coworkings[i].direccion}}">
+                <input class="form-control" type="text" formControlName="direccion" placeholder="direccion" value="{{formArray.controls[i].controls.direccion.value}}">
                 </div>
 
                 <div class="input-group form-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                   </div>
-                  <input class="form-control" type="text" formControlName="coworking" placeholder="descripcion" value="{{coworkings[i].descripcion}}">
+                  <input class="form-control" type="text" formControlName="descripcion" placeholder="descripcion" value="{{formArray.controls[i].controls.descripcion.value}}">
               </div>
           </div>
+
+          </form>
           <div class="d-flex justify-content-center h-100">
             <button type="button" (click) = "guardarMarcadoresLocalStorage();" id="botonCoworking" class="btn btn-danger">Actualizar</button>
           </div>
-          </form>
         </div>
       </div>
     </ul>

@@ -32,7 +32,7 @@
   </div>
 </div>
 <br />
-<div [ngSwitch]="view">
+<div [ngSwitch]="view" id="view">
   <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
     [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
     (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
@@ -56,11 +56,7 @@
   </div>
   <div class="modal-body">
     <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
-    </div>
-    <div>
-      Event:
+      Reunión:
       <pre>
           <div class="input-group form-group">
             <div class="input-group-prepend">
@@ -94,9 +90,18 @@
 
           </div>
 
+          <div *ngIf="modalData?.event.idCoworkingFK !== undefined" class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-road"></i></span>
+            </div>
+
+            <input class="form-control" type="text" value="{{modalData?.event.idCoworkingFK?.direccion}}" disabled>
+
+          </div>
+
           <div class="input-group form-group">
 
-            <button (click)="downloadPdf(modalData?.event.files)" class="btn" style="width:50%"><i class="fa fa-download"></i> Descargar documento de la Reunión</button>
+            <button (click)="downloadPdf(modalData?.event.files)" class="btn" style="width:50%"><i class="fa fa-download"></i> Descargar documentos de la Reunión</button>
 
           </div>
       </pre>

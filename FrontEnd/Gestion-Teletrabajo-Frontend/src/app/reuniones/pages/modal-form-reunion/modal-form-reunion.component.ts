@@ -57,10 +57,10 @@ export class ModalFormReunionComponent implements OnInit{
 
 
   addReunionForm = new FormGroup({
-    titulo: new FormControl('', Validators.minLength(1)),
-    descripcion: new FormControl(''),
-    fechaInicio: new FormControl(''),
-    fechaFin: new FormControl(''),
+    titulo: new FormControl('', Validators.required),
+    descripcion: new FormControl('', Validators.required),
+    fechaInicio: new FormControl('', Validators.required),
+    fechaFin: new FormControl('', Validators.required),
     files: new FormControl(''),
     integrante: new FormControl(''),
     coworking: new FormControl('')
@@ -121,7 +121,6 @@ export class ModalFormReunionComponent implements OnInit{
     parametrosReunion.file = this.uploadedFile;
     parametrosReunion.integrantes = this.integrantesReunion;
     parametrosReunion.idCoworking = controls.coworking.value;
-
     const nuevoEmpleado: Observable<any[]> = this.reunionesService.nuevaReunion(parametrosReunion);
     this.cd.detectChanges();
     nuevoEmpleado.subscribe((resp) => {

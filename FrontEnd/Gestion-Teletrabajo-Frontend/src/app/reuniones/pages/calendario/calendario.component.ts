@@ -90,7 +90,7 @@ export class CalendarioComponent implements OnInit{
           console.log('Reuniones');
           console.log(resp);
           this.events = [...resp];
-
+          console.log(this.events);
           this.events.forEach(element => {
             element.start = new Date(element.startDate);
             element.end = new Date(element.endDate);
