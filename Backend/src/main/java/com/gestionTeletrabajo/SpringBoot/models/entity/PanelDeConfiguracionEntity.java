@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity(name="PanelDeConfiguracionEntity")
-@Table(name = "DCONFIGURACION")
+@Table(name = "dconfiguracion")
 public class PanelDeConfiguracionEntity {
 
 	@Id

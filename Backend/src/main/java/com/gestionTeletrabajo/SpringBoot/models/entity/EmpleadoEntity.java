@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import com.sun.istack.Nullable;
 
 @Entity(name = "EmpleadoEntity")
-@Table(name = "DEMPLEADOS")
+@Table(name = "dempleados")
 public class EmpleadoEntity {
 
 	@Id

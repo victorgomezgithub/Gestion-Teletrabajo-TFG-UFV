@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "CoworkingEntity")
-@Table(name = "DCOWORKINGS")
+@Table(name = "dcoworkings")
 public class CoworkingEntity {
 	
 	@Id
