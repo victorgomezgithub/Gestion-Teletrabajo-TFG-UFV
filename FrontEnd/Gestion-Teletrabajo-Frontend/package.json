@@ -43,6 +43,7 @@
     "ng2-charts": "^2.4.2",
     "ngx-bootstrap": "^6.2.0",
     "rxjs": "~6.6.0",
+    "jquery": "^3.4.1",
     "zone.js": "~0.10.2",
     "typescript": "~4.0.2",
     "@types/datatables.net": "^1.10.19",
