@@ -11,7 +11,7 @@ export class BarrasService {
 
   constructor(private http: HttpClient) { }
 
-  private servicioUrl = 'https://gestionteletrabajobackend.herokuapp.com/analisis';
+  private servicioUrl = 'http://localhost:8080/analisis';
 
   getReunionesTot(): Observable<any[]> {
     return this.http.get<any[]>(`${this.servicioUrl}/findGraficaReusTot`, {  });

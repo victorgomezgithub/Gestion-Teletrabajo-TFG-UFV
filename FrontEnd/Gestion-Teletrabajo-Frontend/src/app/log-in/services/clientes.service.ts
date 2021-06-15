@@ -11,7 +11,7 @@ export class ClientesService {
   constructor(private http: HttpClient) { }
   private empleadoBuscado: Empleado;
   private grupoEmpleados: Empleado[];
-  private servicioUrl = 'https://gestionteletrabajobackend.herokuapp.com/empleados';
+  private servicioUrl = 'http://localhost:8080/empleados';
 
   get empleado(): Empleado {
     return {...this.empleadoBuscado};

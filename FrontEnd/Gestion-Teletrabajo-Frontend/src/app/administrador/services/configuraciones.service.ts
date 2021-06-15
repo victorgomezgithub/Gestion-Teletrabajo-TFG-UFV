@@ -9,7 +9,7 @@ import { Configuracion } from '../interfaces/configuracion.interface';
 export class ConfiguracionService {
 
   constructor(private http: HttpClient) { }
-  private servicioUrl = 'https://gestionteletrabajobackend.herokuapp.com/configuracion';
+  private servicioUrl = 'http://localhost:8080/configuracion';
 
 
   cargarConfiguraciones(idEmpleado: string): Observable<Configuracion[]> {
