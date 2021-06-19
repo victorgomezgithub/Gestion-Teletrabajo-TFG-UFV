@@ -11,7 +11,7 @@ export class ReunionesService {
 
   constructor(private http: HttpClient) { }
 
-  private servicioUrl = 'https://gestionteletrabajobackend.herokuapp.com/reuniones';
+  private servicioUrl = 'http://localhost:8080/reuniones';
 
 
   cargarReunionesEmpleado(id: string): Observable<any[]> {

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class EmpresaService {
 
   constructor(private http: HttpClient) { }
-  private servicioUrl = 'https://gestionteletrabajobackend.herokuapp.com/empresas';
+  private servicioUrl = 'http://localhost:8080/empresas';
 
 
   cargarEmpresa(id: string): Observable<any> {
