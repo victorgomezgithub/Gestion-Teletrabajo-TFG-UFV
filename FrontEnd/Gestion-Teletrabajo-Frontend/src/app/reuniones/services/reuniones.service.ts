@@ -11,7 +11,7 @@ export class ReunionesService {
 
   constructor(private http: HttpClient) { }
 
-  private servicioUrl = 'https://gestionteletrabajobackend.herokuapp.com/reuniones';
+  private servicioUrl = 'https://localhost:8081/reuniones';
   private subject = new Subject<any>();
 
 
