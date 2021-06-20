@@ -11,7 +11,7 @@ export class ClientesService {
   constructor(private http: HttpClient) { }
   private empleadoBuscado: Empleado;
   private grupoEmpleados: Empleado[];
-  private servicioUrl = 'https://localhost:8081/empleados';
+  private servicioUrl = 'http://localhost:8081/empleados';
 
   get empleado(): Empleado {
     return {...this.empleadoBuscado};

@@ -11,7 +11,7 @@ export class ReunionesService {
 
   constructor(private http: HttpClient) { }
 
-  private servicioUrl = 'https://localhost:8081/reuniones';
+  private servicioUrl = 'http://localhost:8081/reuniones';
   private subject = new Subject<any>();
 
 

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class EmpresaService {
 
   constructor(private http: HttpClient) { }
-  private servicioUrl = 'https://localhost:8081/empresas';
+  private servicioUrl = 'http://localhost:8081/empresas';
 
 
   cargarEmpresa(id: string): Observable<any> {

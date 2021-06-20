@@ -9,7 +9,7 @@ import { Configuracion } from '../interfaces/configuracion.interface';
 export class ConfiguracionService {
 
   constructor(private http: HttpClient) { }
-  private servicioUrl = 'https://localhost:8081/configuracion';
+  private servicioUrl = 'http://localhost:8081/configuracion';
 
 
   cargarConfiguraciones(idEmpleado: string): Observable<Configuracion[]> {

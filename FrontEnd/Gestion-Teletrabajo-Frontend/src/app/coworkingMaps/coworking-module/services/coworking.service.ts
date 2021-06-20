@@ -12,7 +12,7 @@ export class CoworkingService {
 
   constructor(private http: HttpClient) { }
 
-  private servicioUrl = 'https://localhost:8081/coworking';
+  private servicioUrl = 'http://localhost:8081/coworking';
 
 
   cargarCoworkingEmpleado(id: string): Observable<Coworking[]> {
