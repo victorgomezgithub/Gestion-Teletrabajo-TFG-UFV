@@ -65,3 +65,30 @@
   align-items: center;
   justify-content: center;
 }
+
+.archivos {
+  width: 100%;
+  margin-left: 25%;
+}
+
+.required:after {
+  content:" *";
+  color: red;
+}
+
+#timepicker:before {
+  content:'Fecha Inicio:';
+  margin-right:.6em;
+  color:#9d9d9d;
+  }
+
+  #timepickerSalida:before {
+    content:'Fecha Fin:';
+    margin-right:.6em;
+    color:#9d9d9d;
+    }
+
+  #alerta {
+    margin-top: 0;
+    margin-bottom: 0;
+  }

@@ -1,11 +1,10 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit, ChangeDetectorRef } from '@angular/core';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
-import { Subject } from 'rxjs';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit, ChangeDetectorRef, Injectable, Input, OnDestroy } from '@angular/core';
+import { isSameDay, isSameMonth, } from 'date-fns';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReunionesService } from '../../services/reuniones.service';
-import { hasOnlyExpressionInitializer } from 'typescript';
 
 const colors: any = {
   red: {
@@ -28,12 +27,16 @@ const colors: any = {
   styleUrls: ['calendario.component.css'],
   templateUrl: 'calendario.component.html',
 })
-export class CalendarioComponent implements OnInit{
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-
+@Injectable({
+  providedIn: 'root',
+})
+export class CalendarioComponent implements OnInit, OnDestroy {
+    @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
+  subscription: Subscription;
+  messages: any[] = [];
 
   viewDate: Date = new Date();
 
@@ -67,7 +70,6 @@ export class CalendarioComponent implements OnInit{
 
   activeDayIsOpen = true;
 
-
   public id: string;
 
   // tslint:disable-next-line:max-line-length
@@ -78,12 +80,22 @@ export class CalendarioComponent implements OnInit{
       this.router.navigate(['/']);
     }
 
+    this.subscription = this.reunionService.getMessage().subscribe(message => {
+      if (message) {
+        this.messages.push(message);
+        this.ngOnInit();
+      } else {
+        this.messages = [];
+      }
+    });
+
+
   }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     const reuniones = this.reunionService.cargarReunionesEmpleado(this.id);
-
+    console.log('paso');
     if (reuniones){
       reuniones.subscribe((resp) => {
         if (resp) {
@@ -103,6 +115,11 @@ export class CalendarioComponent implements OnInit{
         }
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -139,6 +156,7 @@ export class CalendarioComponent implements OnInit{
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
+    console.log(this.modalData);
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 

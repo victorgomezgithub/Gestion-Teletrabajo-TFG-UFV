@@ -40,3 +40,15 @@
 .fa-times-circle {
   color: #f44336;
 }
+
+td {
+  vertical-align: middle;
+}
+
+i {
+  margin-top: 8%;
+}
+
+#information {
+  text-align: center;
+}

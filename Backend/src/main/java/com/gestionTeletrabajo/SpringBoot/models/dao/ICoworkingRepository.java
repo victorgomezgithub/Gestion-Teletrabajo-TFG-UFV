@@ -19,7 +19,7 @@ public interface ICoworkingRepository extends JpaRepository<CoworkingEntity, Lon
     @Query(value ="SELECT  DATE_FORMAT(start_date, '%Y') as 'year',"
     		+ "DATE_FORMAT(start_date, '%m') as 'month',"
     		+ "COUNT(id_reunion) as 'total' "
-    		+ "FROM DREUNIONES "
+    		+ "FROM dreuniones "
     		+ "GROUP BY DATE_FORMAT(start_date, '%Y %m');", nativeQuery = true) 
     List<ChartDataSets> findDataPorMesAno();
 	

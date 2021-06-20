@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gestionTeletrabajo.SpringBoot.models.dao.IClienteRespository;
 import com.gestionTeletrabajo.SpringBoot.models.dao.ICoworkingRepository;
+import com.gestionTeletrabajo.SpringBoot.models.dao.IReunionRespository;
 import com.gestionTeletrabajo.SpringBoot.models.entity.CoworkingEntity;
 
 @Controller
@@ -23,17 +24,21 @@ public class GestionCoworking {
 	@Autowired
 	private ICoworkingRepository coworkingDao;
 	
+	@Autowired
+	private IReunionRespository reunionDao;
+	
+	
 	@GetMapping("/getCoworkingEmpresa")
 	@ResponseBody
 	public CoworkingEntity[] getEmpleadosPorEmpresa(@RequestParam String idEmpleado) {	
-
 		return coworkingDao.findCoworkingPorEmpresa(clienteDao.getOne(Long.parseLong(idEmpleado)).getIdEmpresaFK());
 	}
 	
 	
 	@DeleteMapping("/deleteCoworking")
 	@ResponseBody
-	public void deleteCoworking(@RequestParam String idCoworking) {	
+	public void deleteCoworking(@RequestParam String idCoworking) {
+		reunionDao.updateWithNullsCoworkingValueInReunion(coworkingDao.getOne(Long.parseLong(idCoworking)));
 		coworkingDao.deleteById(Long.parseLong(idCoworking));
 	}
 	

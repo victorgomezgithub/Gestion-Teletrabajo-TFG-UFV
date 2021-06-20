@@ -79,7 +79,6 @@ export class CoworkingMapComponent implements AfterViewInit {
             formGroup.controls.direccion.setValue(element.direccion);
             formGroup.controls.descripcion.setValue(element.descripcion);
             formGroup.controls.abierto.setValue(false);
-            console.log('PASOOOOOOOOOO');
             this.formArray.push(formGroup);
           });
 
@@ -128,7 +127,6 @@ export class CoworkingMapComponent implements AfterViewInit {
         formGroup.controls.direccion.setValue(resp.direccion);
         formGroup.controls.descripcion.setValue(resp.descripcion);
         formGroup.controls.abierto.setValue(true);
-        console.log('PASOOOOOOOOOO');
 
         this.formArray.push(formGroup);
       }
@@ -173,10 +171,33 @@ export class CoworkingMapComponent implements AfterViewInit {
         }
       });
 
-      this.formArray.controls.forEach((formGroup) => {
-        console.log(formGroup.value.direccion);
-          });
     });
+
+    localStorage.setItem('marcadores', JSON.stringify(lngLatArr));
+
+  }
+
+
+  guardarMarcadores(i: string, direccion: string, descripcion: string): void {
+
+
+    const lngLatArr: MarcadorColor[] = [];
+
+    const color = this.marcadores[i].color;
+      // tslint:disable-next-line:no-non-null-assertion
+    const { lng, lat } = this.marcadores[i].marker!.getLngLat();
+
+    lngLatArr.push({
+      color,
+      centro: [lng, lat]
+    });
+
+      // tslint:disable-next-line:max-line-length
+    const updateCoworking = this.coworkingService.updateCoworking(lng, lat, this.coworkings[i].idCoworking.toString(), (descripcion as any).value, (direccion as any).value);
+    updateCoworking.subscribe((resp) => {
+        if (resp) {
+        }
+      });
 
     localStorage.setItem('marcadores', JSON.stringify(lngLatArr));
 
@@ -217,17 +238,60 @@ export class CoworkingMapComponent implements AfterViewInit {
 
     this.marcadores[i].marker?.remove();
     this.marcadores.splice(i, 1);
+    this.formArray.controls.splice(i, 1);
     this.guardarMarcadoresLocalStorage();
-
+    this.cd.detectChanges();
 
     const deleteCoworking = this.coworkingService.deleteCoworking(this.coworkings[i].idCoworking);
     if (deleteCoworking) {
       deleteCoworking.subscribe((resp) => {
         if (resp) {
           this.coworkings.splice(i, 1);
+          const coworkings = this.coworkingService.cargarCoworkingEmpleado(this.id);
+
+          if (coworkings) {
+            coworkings.subscribe((response) => {
+              if (response) {
+
+                this.coworkings = [...response];
+
+                this.coworkings.forEach(element => {
+
+                  const color = element.color;
+
+                  const nuevoMarcador = new mapboxgl.Marker({
+                    draggable: true,
+                    color
+                  })
+                    .setLngLat([element.ejeX, element.ejeY])
+                    .addTo(this.mapa);
+
+
+                  nuevoMarcador.on('dragend', () => {
+                    this.guardarMarcadoresLocalStorage();
+                  });
+                  this.marcadores.push({
+                    color,
+                    marker: nuevoMarcador
+                  });
+                  // tslint:disable-next-line:max-line-length
+                  const formGroup = new FormGroup({direccion: new FormControl(''), descripcion: new FormControl(''), abierto: new FormControl('')});
+                  formGroup.controls.direccion.setValue(element.direccion);
+                  formGroup.controls.descripcion.setValue(element.descripcion);
+                  formGroup.controls.abierto.setValue(false);
+                  this.formArray.push(formGroup);
+                });
+
+                this.cd.detectChanges();
+              }
+
+            });
+          }
         }
       });
     }
+    this.cd.detectChanges();
+
   }
 
   openNav(): void {

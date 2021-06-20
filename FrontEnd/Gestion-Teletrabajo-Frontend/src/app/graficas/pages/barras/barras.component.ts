@@ -39,7 +39,7 @@ export class BarrasComponent implements OnInit {
 
   public circleArrayData: any[] = [];
   public circleChartData: any[] = [
-    { data: [ ], label: 'Media empleados por Reuniones', backgroundColor: '#097CFF', hoverBackgroundColor: '#004593' }
+    { data: [ ], label: 'Número de reuniones por número de empleados por reuión', backgroundColor: '#097CFF', hoverBackgroundColor: '#004593' }
   ];
 
 
@@ -51,7 +51,7 @@ export class BarrasComponent implements OnInit {
   public doughnutChartOptions: ChartOptions = {
 
     title: {
-      text: 'Proporción Panel de Configuración',
+      text: 'Proporción de Obligatoriedad en el Panel de Configuración',
       display: true
     }
   };

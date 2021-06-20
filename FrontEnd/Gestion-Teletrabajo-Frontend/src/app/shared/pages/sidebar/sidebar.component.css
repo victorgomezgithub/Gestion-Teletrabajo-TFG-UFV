@@ -40,15 +40,20 @@
 
 
 span{
-  position: absolute;
-  margin-top: 800%;
-  left: 35%;
   transform: translate(-50%, -50%);
   font-size: 150%;
 	letter-spacing:0.1em;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: white;
-  text-shadow:
-						8px 8px #003572;
+  -webkit-text-stroke-color: #003572;
+}
+
+#watermark
+{
+ position:fixed;
+ bottom:10px;
+ right:1px;
+ font-size: 100%;
+ opacity: 0.8;
+ z-index:99;
 }

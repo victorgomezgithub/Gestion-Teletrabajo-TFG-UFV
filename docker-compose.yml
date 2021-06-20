@@ -1,11 +1,10 @@
-
 version: '3'
 
 services:
   db:
     image: 'mysql/mysql-server:5.7'
     ports:
-           - "3306:3306"
+           - "3307:3307"
     environment:
            - MYSQL_ROOT_PASSWORD=Welcome123
            - MYSQL_DATABASE=CRUD
@@ -20,7 +19,7 @@ services:
            retries: 10
     restart: always
   backendserver:
-    build: ./crud-backend/
+    build: ./Backend/
     ports:
            - "8081"
     links:
@@ -29,10 +28,10 @@ services:
            - "db"
     restart: always
   frontend:
-    build: ./CRUD/
+    build: ./FrontEnd/Gestion-Teletrabajo-Frontend/
     links:
            - "backendserver"
     depends_on:
            - "backendserver"
     ports:
-           - "80:80"    
+           - "80:80" 

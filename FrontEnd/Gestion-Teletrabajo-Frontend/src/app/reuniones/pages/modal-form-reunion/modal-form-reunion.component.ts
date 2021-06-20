@@ -19,8 +19,10 @@ import { Coworking } from '../../../coworkingMaps/coworking-module/interfaces/co
 })
 export class ModalFormReunionComponent implements OnInit{
 
+  reunionGuarada = false;
   closeResult = '';
   empleadosTotales: Empleado[]  = [];
+  empleadosTotalesSinUtilizar: Empleado[]  = [];
   integrantesReunion: number[] = [];
   nombresEmpleado: string[] = [];
   public id: string;
@@ -39,6 +41,7 @@ export class ModalFormReunionComponent implements OnInit{
     reunionesPorEmpleado.subscribe((resp) => {
       console.log(resp);
       this.empleadosTotales = [...resp];
+      this.empleadosTotalesSinUtilizar = [...resp];
       this.empleadosTotales.forEach(element => {
         if (element.id === +this.id) {
           this.nombresEmpleado.push(element.nombre);
@@ -54,8 +57,6 @@ export class ModalFormReunionComponent implements OnInit{
       });
     this.cd.markForCheck();
   }
-
-
   addReunionForm = new FormGroup({
     titulo: new FormControl('', Validators.required),
     descripcion: new FormControl('', Validators.required),
@@ -70,15 +71,25 @@ export class ModalFormReunionComponent implements OnInit{
 
   }
 
+  sendMessage(): void {
+    this.reunionesService.sendMessage('Nueva Reunion');
+  }
+
   open(content): any {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      if (result === 'Save click') {
-      }
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
     this.addReunionForm.reset();
+    this.nombresEmpleado = [];
+    this.integrantesReunion = [];
+    this.integrantesReunion.push(+this.id);
+    this.reunionGuarada = false;
+    this.ALERTSAVI = [];
+    this.ALERTSOBL = [];
+    this.empleadosTotalesSinUtilizar = [...this.empleadosTotales];
+    this.uploadedFile = [];
   }
 
 
@@ -94,9 +105,9 @@ export class ModalFormReunionComponent implements OnInit{
 
 
   addCourse(): void{
-    console.log(this.addReunionForm.controls.integrante.value);
-    this.integrantesReunion.push(this.empleadosTotales[this.addReunionForm.controls.integrante.value - 1].id);
-    this.nombresEmpleado.push(this.empleadosTotales[this.addReunionForm.controls.integrante.value - 1].nombre);
+    this.integrantesReunion.push(this.empleadosTotalesSinUtilizar[this.addReunionForm.controls.integrante.value].id);
+    this.nombresEmpleado.push(this.empleadosTotalesSinUtilizar[this.addReunionForm.controls.integrante.value].nombre);
+    this.empleadosTotalesSinUtilizar.splice(this.addReunionForm.controls.integrante.value, 1);
     this.addReunionForm.controls.integrante.reset();
   }
 
@@ -110,6 +121,7 @@ export class ModalFormReunionComponent implements OnInit{
   }
 
   guardar(modal: any): void {
+    let camposCorrectos = true;
     this.id = this.route.snapshot.paramMap.get('id');
     const controls = this.addReunionForm.controls;
     const parametrosReunion: any = {};
@@ -122,12 +134,27 @@ export class ModalFormReunionComponent implements OnInit{
     parametrosReunion.integrantes = this.integrantesReunion;
     parametrosReunion.idCoworking = controls.coworking.value;
     const nuevoEmpleado: Observable<any[]> = this.reunionesService.nuevaReunion(parametrosReunion);
+    console.log(parametrosReunion);
+    // tslint:disable-next-line:max-line-length
+    if (parametrosReunion.fechaInicio === null || parametrosReunion.fechaFin === null || parametrosReunion.title === null  || parametrosReunion.description === null) {
+      this.ALERTSOBL.push({type: 'danger', message: 'Campos obligatorios sin rellenar'});
+      camposCorrectos = false;
+    } else {
+      if (Date.parse(parametrosReunion.fechaInicio) > Date.parse(parametrosReunion.fechaFin)) {
+        this.ALERTSOBL.push({type: 'danger', message: 'La fecha de fin debe ser despues de la fecha de inicio'});
+        camposCorrectos = false;
+      }
+    }
+
     this.cd.detectChanges();
+    if (camposCorrectos) {
     nuevoEmpleado.subscribe((resp) => {
       if (resp) {
         this.mensajes = [...resp];
         this.procesarMensajes();
         if (!this.isMensajesObligatorios()) {
+          this.sendMessage();
+          this.reunionGuarada = true;
           const reunionesPorEmpleado: Observable<Empleado[]> = this.empleadoService.cargarEmpleadosDeUnaEmpresa(this.id);
           reunionesPorEmpleado.subscribe((response) => {
             this.empleadosTotales = [...response];
@@ -138,6 +165,7 @@ export class ModalFormReunionComponent implements OnInit{
         this.cd.detectChanges();
       }
     });
+  }
   }
 
   procesarMensajes(): void {
@@ -165,7 +193,11 @@ export class ModalFormReunionComponent implements OnInit{
   }
 
 
-  close(alert: Alert): void {
-    this.ALERTSOBL.splice(this.ALERTSOBL.indexOf(alert), 1);
+  closeObl(alert: number): void {
+    this.ALERTSOBL.splice(alert, 1);
+  }
+
+  closeAvi(alert: number): void {
+    this.ALERTSAVI.splice(alert, 1);
   }
 }

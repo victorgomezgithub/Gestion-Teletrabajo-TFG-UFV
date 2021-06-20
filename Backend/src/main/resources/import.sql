@@ -19,10 +19,10 @@ INSERT INTO dempleados (username,nombre,email,password,rol,hora_entrada,hora_sal
 
 INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (1,'Reunion 1','Descripcion reunion 1','2021-06-12 18:00:00','2021-06-12 19:00:00','Word',1);
 INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (2,'Reunion 2','Descripcion reunion 2','2021-06-12 18:00:00','2021-06-12 20:00:00','Excel',1);
-INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (3,'Reunion 3','Descripcion reunion 3','2021-06-13 10:00:00','2021-06-13 12:00:00','Word',1);
+INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (3,'Reunion 3','Descripcion reunion 3','2021-06-13 08:00:00','2021-06-13 10:00:00','Word',1);
 INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (4,'Reunion 4','Descripcion reunion 4','2021-06-13 11:00:00','2021-06-13 13:00:00','Excel',2);
-INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (5,'Reunion 5','Descripcion reunion 5','2021-06-14 10:00:00','2021-06-14 12:00:00','Word',2);
-INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (6,'Reunion 6','Descripcion reunion 6','2021-06-14 10:00:00','2021-06-14 12:00:00','Excel',2);
+INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (5,'Reunion 5','Descripcion reunion 5','2021-06-14 10:30:00','2021-06-14 12:00:00','Word',2);
+INSERT INTO dreuniones (id_reunion,title,description,start_date,end_date,documento, id_coworking_fk) VALUES (6,'Reunion 6','Descripcion reunion 6','2021-06-14 12:00:00','2021-06-14 14:00:00','Excel',2);
 
 
 INSERT INTO dreunionesempleado (id_relacion_reunion, id_reunion_fk,id_empleado_fk) VALUES (1,1,1);

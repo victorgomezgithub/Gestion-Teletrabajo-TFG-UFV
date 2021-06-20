@@ -3,14 +3,14 @@
     <div class="btn-group">
       <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
         (viewDateChange)="closeOpenMonthViewDay()">
-        Previous
+        Anterior
       </div>
       <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-        Today
+        Hoy
       </div>
       <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
         (viewDateChange)="closeOpenMonthViewDay()">
-        Next
+        Siguiente
       </div>
     </div>
   </div>
@@ -20,13 +20,13 @@
   <div class="col-md-4">
     <div class="btn-group">
       <div class="btn btn-primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
-        Month
+        Mes
       </div>
       <div class="btn btn-primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
-        Week
+        Semanal
       </div>
       <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
-        Day
+        Diario
       </div>
     </div>
   </div>
@@ -49,61 +49,48 @@
 
 <ng-template #modalContent let-close="close">
   <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
+    <h5 class="modal-title">Menú de Consulta</h5>
     <button type="button" class="close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div>
-      Reunión:
+      <p id="reunionTitulo">Reunión <span *ngIf="modalData?.action === 'Deleted'">Borrada</span> <span
+          *ngIf="modalData?.action === 'Clicked'">Consultada</span>:</p>
       <pre>
-          <div class="input-group form-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-heading"></i></span>
+            <div class="container">
+              <div class="row">
+              <div class="card card-1 col">
+                <div class="card__icon"><i class="fas fa-heading"></i></div>
+                <h2 class="card__title">{{modalData?.event.title}}</h2>
+              </div>
+              <div class="card card-2 col">
+                <div class="card__icon"><i class="fas fa-quote-right"></i></div>
+                <h2 class="card__title">{{modalData?.event.description}}</h2>
+              </div>
             </div>
-            <input class="form-control" type="text" value="{{modalData?.event.title}}" disabled>
-          </div>
+            <div class="row">
+              <div class="card card-3 col">
+                <div class="card__icon"><i class="fas fa-hourglass-start"></i></div>
+                <h2 class="card__title">Inicio: {{modalData?.event.start | date:'medium' }}</h2>
+              </div>
+              <div class="card card-4 col">
+                <div class="card__icon"><i class="fas fa-hourglass-end"></i></div>
+                <h2 class="card__title">Fin: {{modalData?.event.end | date:'medium' }}</h2>
+              </div>
+              </div>
+              <div class="row">
 
-          <div class="input-group form-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-quote-right"></i></span>
+              <div *ngIf="modalData?.event.idCoworkingFK" class="card card-5 col">
+                <div class="card__icon"><i class="fas fa-road"></i></div>
+                <h2 class="card__title">Punto de Coworking {{modalData?.event.idCoworkingFK?.idCoworking}}: {{modalData?.event.idCoworkingFK?.direccion}}</h2>
+              </div>
+              </div>
             </div>
-            <input class="form-control" type="text" value="{{modalData?.event.description}}" disabled>
-          </div>
-
-          <div class="input-group form-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-hourglass-start"></i></span>
-            </div>
-
-            <input class="form-control" type="text" value="{{modalData?.event.start | date:'medium' }}" disabled>
-
-          </div>
-
-          <div class="input-group form-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-hourglass-end"></i></span>
-            </div>
-
-            <input class="form-control" type="text" value="{{modalData?.event.end | date:'medium' }}" disabled>
-
-          </div>
-
-          <div *ngIf="modalData?.event.idCoworkingFK !== undefined" class="input-group form-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-road"></i></span>
-            </div>
-
-            <input class="form-control" type="text" value="{{modalData?.event.idCoworkingFK?.direccion}}" disabled>
-
-          </div>
-
-          <div class="input-group form-group">
-
-            <button (click)="downloadPdf(modalData?.event.files)" class="btn" style="width:50%"><i class="fa fa-download"></i> Descargar documentos de la Reunión</button>
-
-          </div>
+          <div *ngIf="modalData?.event.documento.length > 2" class="d-flex justify-content-center h-100">
+            <button (click)="downloadPdf(modalData?.event.files)" class="btn btn-info" style="width:50%"><i class="fa fa-download"></i> Descargar documentos de la Reunión</button>
+        </div>
       </pre>
     </div>
   </div>
