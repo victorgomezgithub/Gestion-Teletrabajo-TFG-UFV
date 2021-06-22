@@ -43,7 +43,7 @@
     </ul>
   </ng-sidebar>
 
-  <div *ngIf="!this.subMenu" id="botonDiv" ng-sidebar-content class="outer">
+  <div *ngIf="!this.opened" id="botonDiv" ng-sidebar-content class="outer">
     <div class="container">
       <div class="center">
         <button (click)="toggleSidebar()" class="btn">
@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  <div *ngIf="this.subMenu" id="botonDivDesplegado" ng-sidebar-content class="outer">
+  <div *ngIf="this.opened" id="botonDivDesplegado" ng-sidebar-content class="outer">
     <div class="container">
       <div class="center">
         <button (click)="toggleSidebar()" class="btnDesplegado">
