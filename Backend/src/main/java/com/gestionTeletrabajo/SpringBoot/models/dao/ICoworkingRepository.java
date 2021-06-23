@@ -34,7 +34,7 @@ public interface ICoworkingRepository extends JpaRepository<CoworkingEntity, Lon
      }
     
     
-    @Query(value ="SELECT count(id_empleado_fk) as integrantes  from DREUNIONESEMPLEADO group by id_reunion_fk;", nativeQuery = true) 
+    @Query(value ="SELECT count(id_empleado_fk) as integrantes  from dreunionesempleado group by id_reunion_fk;", nativeQuery = true) 
     List<ChartCircularEmployee> findIntegrantesPorReunion();
     
     public static interface ChartCircularEmployee {

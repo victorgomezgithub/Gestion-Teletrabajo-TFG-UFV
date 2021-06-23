@@ -1,6 +1,5 @@
 package com.gestionTeletrabajo.SpringBoot.models.dao;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
