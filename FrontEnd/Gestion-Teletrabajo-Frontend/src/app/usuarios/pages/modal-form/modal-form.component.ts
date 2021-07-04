@@ -6,6 +6,7 @@ import { ClientesService } from '../../../log-in/services/clientes.service';
 import { Observable } from 'rxjs';
 import { Empleado } from '../../../log-in/interfaces/logIn.interface';
 import { ActivatedRoute } from '@angular/router';
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -18,7 +19,8 @@ export class ModalFormComponent {
   public id: string;
   public rol: string;
 
-  constructor(private modalService: NgbModal, private clienteService: ClientesService, private route: ActivatedRoute) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private usuariosService: UsuariosService, private modalService: NgbModal, private clienteService: ClientesService, private route: ActivatedRoute) {
     this.rol = localStorage.getItem('rol');
   }
 
@@ -45,6 +47,7 @@ export class ModalFormComponent {
         const nuevoEmpleado: Observable<Empleado> = this.clienteService.anadirUsuario(this.id, controls.nombreCompleto.value, controls.user.value, controls.email.value, controls.password.value, controls.rol.value, controls.horarioEntrada.value, controls.horarioSalida.value, controls.equipo.value);
         nuevoEmpleado.subscribe((resp) => {
           if (resp) {
+            this.sendMessage();
           }
         });
       }
@@ -61,6 +64,10 @@ export class ModalFormComponent {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  sendMessage(): void {
+    this.usuariosService.sendMessage('Nuevo Usuario');
   }
 }
 

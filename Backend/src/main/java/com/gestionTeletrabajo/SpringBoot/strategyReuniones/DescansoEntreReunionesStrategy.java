@@ -75,7 +75,7 @@ public class DescansoEntreReunionesStrategy implements IReunionStrategy {
 			diffInMillies = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		    
 		    
-			Date fechaFinit = reunion.getStartDate();
+			Date fechaFinit = reunion.getEndDate();
 			long diffEndEnd = Math.abs(fechaFinit.getTime() - fechaFin.getTime());
 			diffEndEnd = TimeUnit.MINUTES.convert(diffEndEnd, TimeUnit.MILLISECONDS);
 		    

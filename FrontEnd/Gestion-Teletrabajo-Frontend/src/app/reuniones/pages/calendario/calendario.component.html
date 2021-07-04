@@ -88,7 +88,7 @@
               </div>
               </div>
             </div>
-          <div *ngIf="modalData?.event.documento.length > 2" class="d-flex justify-content-center h-100">
+          <div *ngIf="modalData?.event.documento?.length > 2" class="d-flex justify-content-center h-100">
             <button (click)="downloadPdf(modalData?.event.files)" class="btn btn-info" style="width:50%"><i class="fa fa-download"></i> Descargar documentos de la Reunión</button>
         </div>
       </pre>
